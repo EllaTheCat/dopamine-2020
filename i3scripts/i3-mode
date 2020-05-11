@@ -1,0 +1,44 @@
+#!/bin/bash
+#
+# i3-mode
+#
+# Dim the screen and label the title bar of the current window to
+# indicate swtching to Primary and Secondary modes.  Labels are
+# removed when the current window loses focus.
+#
+
+outputs=$(xrandr | grep ' connect' | awk '{print $1}')
+
+case "$1" in
+    (default)
+	i3-msg 'mode "default"'
+	i3-msg "unmark default, unmark Primary, unmark Secondary"
+	for output in ${outputs} ; do
+            xrandr --output "${output}" --brightness 1.0
+	done
+	;;
+    (Primary)
+	i3-msg 'mode "Primary"'
+	i3-msg "unmark default, unmark Secondary"
+	i3-msg "mark --add --toggle Primary"
+	for output in ${outputs} ; do
+            xrandr --output "${output}" --brightness 0.8
+	done
+	i3-msg -t subscribe  '[ "window" ]'
+	i3-msg "unmark Primary"
+	;;
+    (Secondary)
+	i3-msg 'mode "Secondary"'
+	i3-msg "unmark Primary, unmark default"
+	i3-msg "mark --add --toggle Secondary"
+	for output in ${outputs} ; do
+            xrandr --output "${output}" --brightness 0.6
+	done
+	i3-msg -t subscribe  '[ "window" ]'
+	i3-msg "unmark Secondary"
+	;;
+esac
+
+#
+# Done.
+#

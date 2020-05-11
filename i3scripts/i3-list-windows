@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+#
+
+#
+# Inside a dmenu, display the title and the mark for all marked
+# windows. Select a dmenu item to visit the associated window.
+#
+menu ()
+{
+    # I must do better with 'jq', the following code was crufted up on
+    # the command line to extract text blocks like this from the jq:
+    #
+    # "reddit: the front page of the internet - Google Chrome"
+    # [
+    #   "36"
+    # ]
+    menu="$(i3-msg -t get_tree | jq '.. | objects | .name,.marks' | \
+                  grep -B1 -A1 [[] | tr -d \\n[  | sed 's/--/\n/g')"
+    # Argument parsing is order dependent. $1 required $2 optional.
+    # S1 How menu items are laid out. $2 Where to put the window.
+    case "$1" in
+        (row)
+        pair=$(echo  "${menu}" | dmenu -b -m 0 -fn 'pango:DejaVu Sans 11') ;;
+        (column)
+        pair=$(echo "${menu}" | dmenu -b -m 0 -fn 'pango:DejaVu Sans 11' -l 25) ;;
+    esac
+    # The list item format is ->"string1" "string2"<- e.g. the above
+    # becomes: "reddit...Google Chrome" "36"
+    for s in ${pair}; do mark=${s/,/}; done
+    if [ "_${mark}" != "_" ]; then
+        i3-msg "[ con_mark=${mark} ] focus"
+        i3-msg "[ con_mark=${mark} ] move workspace to output $2"
+    fi
+}
+
+#
+# Start here.
+#
+
+eval "$1" "${@:2}"
+
+#
+# Done.
+#

@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Writing to the $i3/command file causes the $i3/execute file to
+# evaluate the contents of the $i3/command file.
+#
+
+#
+# Sttart here.
+#
+
+i3=/dev/shm/$USER/i3
+mkdir -p $i3
+
+touch $i3/command
+chmod 755 $i3/command
+touch $i3/execute
+chmod 755 $i3/execute
+
+# Use single quotes such that the command file contents are evaluted
+# when the dispatcher runs. ("echo" joins its string arguments.) 
+echo 'eval /bin/false' > $i3/command
+echo 'eval $HOME/local/bin/i3-dispatcher forward' \
+     '$(cat /dev/shm/$USER/i3/command)' > $i3/execute
+
+i3-msg "workspace --no-auto-back-and-forth \"wm\""
+sleep 0.2
+i3-msg '[workspace="__focused__"] kill'
+
+pkill -f "inotify-hookable --watch-files $i3/command"
+xfce4-terminal \
+    -T "Command Interface" \
+    -e "inotify-hookable --watch-files $i3/command --on-modify-command $i3/execute" &
+
+#
+# Done.
+#

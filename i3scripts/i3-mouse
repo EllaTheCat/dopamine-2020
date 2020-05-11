@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# i3-mouse
+
+#
+# Set how fast or slow the mouse moves, enable or disable it.
+#
+movement ()
+{
+    # This works on 20.04 LTS, unchanged from 16.04 LT
+    id=$(xinput list | grep Mouse | cut -d= -f 2 | cut -f 1)
+    ### cd=$(xinput --list-props "${id}" | grep "Constant Deceleration" | cut -d: -f 1 | awk '{print $1}')
+
+    case "$1" in
+        (disable)
+        xinput --set-prop "${id}" "Device Enabled" "0"
+        ;;
+        (enable)
+        xinput --set-prop "${id}" "Device Enabled" "1"
+        ;;
+        (fast)
+        xset m 2 0
+        xinput --set-prop "${id}" "Device Accel Constant Deceleration" 1
+        ;;
+        (slow)
+        xset m 1 0
+        xinput --set-prop "${id}" "Device Accel Constant Deceleration" 8
+	;;
+    esac
+}
+
+#
+# Start here.
+#
+
+eval "$@"
+
+#
+# Done.
+#

@@ -1,0 +1,70 @@
+#!/bin/bash
+#
+# i3-keyboard (Xubuntu 20.04 LTS)
+#
+
+#
+# Bind standalone modifier keys.
+#
+
+#
+# Put Menu and Escape keys on both sides of the space bar. If your
+# machine is a laptop, consider using Print to provide Menu.
+#
+xcapekeys()
+{
+    killall -q xcape
+    # Keycode 108 is ISO_Level3_Shift on my keyboard.
+    k1='Super_L=Menu'
+    k2='Alt_L=Escape'
+    k3='#108=Escape'
+    # The timeout is a compromise. ymmv.
+    xcape -t 667 -e "$k1;$k2;$k3"
+}
+
+#
+# Set the keyboard layout.
+#
+xmodmapkeys()
+{
+    # Keycode 51 is to the lower left of Return on my UK keyboard.
+    # This function makes the asciitilde easier to type than the key
+    # left of 1, and makes Return better resemble a US keyboard.
+    xmodmap -e 'keycode 51 = Return asciitilde'
+    xmodmap -e 'pointer = default'
+}
+
+#
+# Housekeeping.
+#
+resetkeys()
+{
+    # In the past "stuck" modifier keys have been an issue,. This
+    # should let the user type again.
+    i3-msg mode default
+    xdotool key --clearmodifiers Return
+}
+
+#
+# Troubleshooting.
+#
+# - This is the fix for "setxkbmap" settings that revert spontaneously.
+# - Using the file "/etc/default/keyboard" to store settings is persistent.
+# - These are EllaTheCat's settings:
+# 
+# KBMODEL="pc105"'
+# XKBLAYOUT="us"'
+# 'XKBVARIANT="altgr-intl"'
+# 'XKBOPTIONS="ctrl:nocaps"'
+#
+
+#
+# Start here.
+#
+
+eval "$@"
+
+#
+# Done.
+#
+

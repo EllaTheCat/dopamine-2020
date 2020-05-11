@@ -1,0 +1,596 @@
+# -*- Mode: Shell-script -*-
+#
+# i3 config file (v4).17.1.1 Xubuntu 20.04 LTS 01 May 2020
+# Combines EllaTheCat dopamine with the de facto standard i3 bindings.
+# "HJKL" replaces "JKL:" because "vi", "b" replaces "h" because similar.
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+#
+# NON NEGOTIABLE EXPLICIT MODIFIER KEY.
+#
+
+# EllaTheCat recommends that the terminal binding comes before
+# anything that could inhibit it.
+bindsym Mod4+Return exec --no-startup-id xfce4-terminal
+
+# Reload the configuration file.
+bindsym Mod4+Shift+c reload
+# Restart i3 in place.
+bindsym Mod4+Shift+r restart
+
+#
+# CONSTANTS.
+#
+
+# Mod4 (Windows) key is the default, Mod1 (Alt) is the alternative.
+# Setting $mod to Mod3 "disables" the classic bindings.
+set $mod Mod4
+
+# In default mode, this facilitates move and resize using the mouse
+# without having to precisely position the mouse on window edges.
+floating_modifier Mod4
+
+set $default exec --no-startup-id ~/local/bin/i3-mode default
+set $primary exec --no-startup-id ~/local/bin/i3-mode Primary
+set $secondary exec --no-startup-id ~/local/bin/i3-mode Secondary
+
+# Helpers. Embedding the path explicitly is belt and braces.
+set $i3cmdprompt exec --no-startup-id ~/local/bin/i3-command-prompt
+set $i3filewatcher exec_always --no-startup-id ~/local/bin/i3-file-watcher
+set $i3focusapps exec --no-startup-id ~/local/bin/i3-focus-app-by-alias
+set $i3mode exec --no-startup-id ~/local/bin/i3-mode
+set $i3scratchpad exec --no-startup-id ~/local/bin/i3-scratchpad
+set $i3listwindows exec --no-startup-id ~/local/bin/i3-list-windows
+
+# Use 'xrandr' with no arguments to list monitor names and geometry.
+# Assign outputs to monitors from left to right, repeat last assignment,
+# thus a dual monitor config can refer to $lmon and $rmon.
+set $lmon HDMI-2
+set $cmon HDMI-1
+set $rmon HDMI-1
+
+## Type 'pactl list sinks' to list audio outputs.
+set $analogaudiosink alsa_output.pci-0000_00_1b.0.analog-stereo
+set $bluetoothaudiosink bluez_sink.00_01_01_00_12_CB
+set $hdmiaudiosink alsa_output.pci-0000_00_03.0.hdmi-stereo
+set $usbaudiosink alsa_output.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.analog-stereo
+# Type 'pactl list sources' to list audio inputs.
+# Between 20.04 and 16.04 there are minor differences.
+set $webcamaudiosource alsa_input.usb-Alcor_Micro__Corp._TeckNet-02.mono-fallback
+set $analogaudiosource alsa_input.pci-0000_00_1b.0.analog-stereo
+set $usbaudiosource alsa_input.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.mono-fallback
+
+# Font for i3-input.
+set $i3inputfont "pango:DejaVu Sans 11"
+
+# Refactoring the associated script(s) requires stubs
+set $stub nop
+
+#
+# CLASSIC BINDINGS BEGIN HERE.
+#
+
+# EllaTheCat enhanced terminal bindings with preceding splits.
+# The standard terminal binding is defined at the head of this file.
+bindsym $mod+t  split h, exec  --no-startup-id xfce4-terminal -T "xfce4-terminal"
+bindsym $mod+y  split v, exec  --no-startup-id xfce4-terminal -T "xfce4-terminal"
+ 
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# Start dmenu (a program launcher).
+bindsym $mod+d exec dmenu_run
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+semicolon split h
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle the window between tiling | floating.
+bindsym $mod+Shift+space floating toggle
+
+# Change focus between tiling | floating windows.
+bindsym $mod+space focus mode_toggle
+
+# Focus the parent container. 'A' for adult.
+bindsym $mod+Shift+a focus parent 
+# Focus the child container. 'D' for daughter.
+bindsym $mod+Shift+d focus child
+
+# Switch to workspace.
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+# EllaTheCat support for 10 to 99.
+bindsym $mod+0 \
+        mode default, exec i3-input -f $i3inputfont  -l 2 \
+        -P '(workspace): ' -F 'workspace "%s"'
+
+# Move focused container to workspace.
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+# EllaTheCat support for 10 to 99.
+bindsym $mod+Shift+0 \
+        mode default, exec i3-input -f $i3inputfont  -l 2 \
+        -P '(move container to workspace): ' \
+        -F 'move container to workspace "%s"'
+
+# Resize window. 
+mode "resize" {
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # Same bindings, but for the arrow keys.
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # Back to the default.
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym space mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# EllaTheCat support for multiple monitors.
+bindsym $mod+z move workspace to output $lmon
+bindsym $mod+x move workspace to output $cmon
+bindsym $mod+c move workspace to output $rmon
+
+#
+# CLASSIC BINDINGS END HERE.
+#
+
+#
+# BINDINGS
+#
+
+# Menu is a design decision please do not change.
+# I have used 'xcape' to bind Super_L to Menu for the left hand.
+# Pressing cycles through the three modes. Def->Pri->Sec->Def.
+bindsym Menu  $primary
+
+# A key chord to toggle the scratchpad terminal.
+# This key chord works for my right hand.
+bindsym Control+Delete $i3scratchpad toggle
+# Kill a window, kill a workspace.
+bindsym Control+Mod1+Delete kill
+bindsym Control+Mod4+Delete [workspace="__focused__"] kill
+
+# Numpad keys that are unaffected by the NumLock state:
+# There are five: arithmetic signs / * - + and the enter key.
+# Do not rebind KP_Enter! This is a design decision.
+
+# Inverted T cursor keys.
+bindsym KP_Divide move up
+bindsym KP_Home move left
+bindsym KP_Up move down
+bindsym KP_Prior move right
+
+# Inverted T cursor keys.
+bindsym KP_Begin focus up
+bindsym KP_End focus left
+bindsym KP_Down focus down
+bindsym KP_Next focus right
+
+# Rotated T unused.
+bindsym KP_Left workspace prev 
+bindsym KP_Right workspace next_on_output
+bindsym KP_Multiply nop
+bindsym KP_Delete nop
+
+# Microphone muting (for privacy and phone conferencing).
+# The i3bar displays the status of two  microphones:
+# 0 == muted; 1 == not muted == a "hot" microphone.
+# These are NOT bound in Primary or Secondary modes.
+bindsym KP_Subtract \
+        exec --no-startup-id pactl set-source-mute $webcamaudiosource toggle
+bindsym KP_Add \
+        exec --no-startup-id pactl set-source-mute $usbaudiosource toggle
+
+# Disable DPMS. The complementary action uses the same key in
+# Secondary mode.
+bindsym Pause exec --no-startup-id xset -dpms;
+
+#
+# MODES
+#
+
+# Primary mode.
+# Use this mode for window management, not settings.
+mode "Primary" {
+
+    # Protect the exit from this mode.
+    # Using space is a design decision, please do not change.
+    bindsym space $default
+
+    # This is independent of the similarly named configuration setting.
+    bindsym q $default, workspace back_and_forth
+
+    # (W)orkspace.
+    bindsym w  \
+            $default, exec i3-input -f $i3inputfont  -l 2 \
+            -P '(workspace): ' -F 'workspace "%s"'
+
+    # (R)ename a workspace.
+    bindsym r \
+            $default, exec i3-input -f $i3inputfont -l 2 \
+            -P '(rename this workspace to): ' \
+            -F 'rename workspace to "%s"'
+
+    # Launch a terminal. 
+    bindsym t $default, split h, exec  --no-startup-id xfce4-terminal -T "xfce4-terminal"
+    bindsym y $default, split v, exec  --no-startup-id xfce4-terminal -T "xfce4-terminal"
+
+    # Focus the workspace with the latest [u]rgency hint.
+    bindsym u $default, [urgent=latest] focus
+
+    # [I]nfo on keyboard bindings.
+    bindsym i $stub
+
+    # P for Parent. O for Offspring.
+    bindsym o $default, focus child
+    bindsym p $default, focus parent
+
+    # Scratchpad for the pulseaudio sound settings.
+    bindsym bracketleft $default,  [title="Volume Control"]  move scratchpad
+    bindsym bracketright $default,  [title="Volume Control"]  scratchpad show
+
+    # Command prompt.
+    bindsym Tab $default, $i3cmdprompt
+    # The backslash to the left of Z on a UK keyboard US intl layout.
+    bindcode 94 $default, $i3cmdprompt
+
+    # Toggle a side-by-side pair to one-above-the-other.
+    # A for Above.
+    bindsym a $default, focus right, split v, focus left, move right, move up ;
+    # Toggle a one-above-the-other pair to side-by-side.
+    # S for Side by Side.
+    bindsym s $default, focus down, split h, focus up, move down, move left;
+
+    # Layouts.
+    bindsym d $default, layout default
+    bindsym e $default, layout tabbed
+
+    # Enter [f]ullscreen mode for the focused container.
+    bindsym f $default, fullscreen toggle
+    bindsym g $default, fullscreen toggle global
+
+    # Increase or decrease the height or width symmetrically.
+    # I orient myself by how the border separating windows moves.
+    # Consider swapping the HL or JK directions if not to your liking.
+    bindsym h resize grow right 6 px or 1 ppt, resize grow left 6 px or 1 ppt
+    bindsym j resize shrink down 6 px or 1 ppt, resize shrink up 6 px or 1 ppt
+    bindsym k resize grow up 6 px or 1 ppt, resize grow down 6 px or 1 ppt
+    bindsym l resize shrink left 6 px or 1 ppt, resize shrink right 6 px or 1 ppt
+
+    # Toggle between being a tiled|floating window.
+    # Toggle focus between tiled|floating windows.
+    bindsym semicolon floating toggle
+    bindsym apostrophe focus mode_toggle
+
+    # When the phone rings, related images overlay all monitors, this
+    # dismisses them with one keypress.
+    bindsym Return $default, [workspace="phonecall1"] kill, \
+            [workspace="phonecall2"] kill, \
+            focus output HDMI1, workspace prev_on_output, \
+            focus output HDMI2, workspace prev_on_output;
+
+    # Move workspace to another output.
+    bindsym z $default, move workspace to output $lmon
+    bindsym x $default, move workspace to output $cmon
+    bindsym c $default, move workspace to output $rmon
+
+    # Split directions.
+    bindsym v split v
+    bindsym b split h
+
+    # Place a unique two digit mark on the focused window's title bar.
+    # [u] and [m] are already in use. The mark is a two digit [n]umber.
+    # The prompt doesn't work because it forgets where the focus was.
+    bindsym n $default, $i3wrapper --unique-mark
+
+    # (M)ove container to named workspace.
+    bindsym m \
+            $default, exec i3-input -f $i3inputfont  -l 2 \
+            -P '(move container to workspace): ' \
+            -F 'move container to workspace "%s"'
+
+    # [D]menu showing window titles and their associated marks.
+    # The use case is finding the title a mark is associated with.
+    # Selecting an item visits the mark.
+    bindsym comma $default, $i3listwindows menu column $lmon
+    bindsym period $default, $i3listwindows menu column $cmon
+    bindsym slash $default, $i3listwindows menu column $rmon
+
+    # Pressing cycles through the three modes. Pri->Sec->Def->Pri.
+    bindsym Menu  $secondary
+}
+
+# Secondary Mode.
+# Entered from primary mode using Menu.
+# Keyboard & Mouse. Display & Desktop. USB drives.
+# Use this mode for settings, not window management.
+mode "Secondary" {
+
+    # Protect the exit from this mode.
+    # Using space is a design decision, please do not change.
+    bindsym space $default
+
+    # I'm not pressing keys hard enough to register. This script makes
+    # an IBM PC clicky sound as feedback. It's in the dopamine (my git
+    # repo) scripts folder. Mnemonic q often sounds like k.
+    bindsym q $default, $i3keyclick
+
+    # Reddit asked how to inject text, this is a proof-of-concept demo.
+    bindsym w $default, exec  --no-startup-id \
+            sleep 0.3 && xdotool getwindowfocus windowfocus type "hello world"
+
+    bindsym e nop
+    bindsym r nop
+    bindsym y nop	
+    bindsym u nop
+    bindsym i nop
+    bindsym o nop
+
+    # Benq DVI and HDMI auto-switching to save wear & tear.
+    # https://raspberrypi.stackexchange.com/a/53267
+    bindsym p $default, $i3display menu
+
+    # Scratchpad.
+    bindsym bracketleft $default, move scratchpad
+    bindsym bracketright $default, scratchpad show
+
+    # Command prompt.
+    bindsym Tab $default, $i3cmdprompt
+
+    # Select an audio output.
+    bindsym a  $default, exec  --no-startup-id pactl move-sink-input \
+            "$(pactl list short sink-inputs | awk '{print $1}')" $analogaudiosink ;
+    bindsym h  $default, exec  --no-startup-id pactl move-sink-input \
+            "$(pactl list short sink-inputs | awk '{print $1}')" $hdmiaudiosink ;
+    bindsym b  $default, exec  --no-startup-id pactl move-sink-input \
+            "$(pactl list short sink-inputs | awk '{print $1}')" $bluetoothaudiosink ;
+    bindsym u  $default, exec  --no-startup-id pactl move-sink-input \
+            "$(pactl list short sink-inputs | awk '{print $1}')" $usbaudiosink ;
+
+    # Mnemonic mouse keys
+    bindsym s $default, $i3mouse slow
+    bindsym f $default, $i3mouse fast
+    bindsym d $default, $i3mouse disable
+    bindsym e $default, $i3mouse enable
+  
+    # See the 'my-usb-disks' script.
+    bindsym g exec --no-startup-id my-usb-disks configure
+    bindsym j  exec --no-startup-id my-usb-disks dismount
+    bindsym l  exec --no-startup-id my-usb-disks spindown
+
+    # Set modifiers with 'xcape', set CapsLock to Control,
+    # mimic US layout on UK keyboard.
+    bindsym k $default, $i3keyboard
+
+    bindsym Return nop
+
+    # Focus is on output P, output Q shows workspace W, focus Q,
+    # switch to Primary mode ready to move W to P using {z,x,c}.
+    bindsym z focus output $lmon, $primary;
+    bindsym x focus output $cmon, $primary;
+    bindsym c focus output $rmon, $primary;
+
+    # This switches to the emacs buffer used as a clipboard
+    # for AutoVoice speech-to-text. The buffer is created if it
+    # does not exist. Mnemonic is V for Voice.
+    bindsym v $default, $i3tasker :shell emacs-clipboard-buffer
+
+    # Desktop background.
+    bindsym n $default, exec --no-startup-id nitrogen --restore
+    bindsym m nop
+
+    bindsym comma nop
+    bindsym period nop
+    bindsym slash nop
+
+    # All monitors turn OFF.
+    bindsym Pause $default,  exec --no-startup-id xset dpms force off
+
+    # Pressing cycles through the three modes. Sec->Def->Pri->Sec.
+    bindsym Menu $default
+}
+
+#
+# SETTINGS
+#
+
+# Font for window titles. The font for the bar is set explicitly.
+font pango:DejaVu Sans 11
+
+# Do not set this to yes. The toggling behaviour this would provide is
+# described in the User Guide and is not my cup of tea. Setting 'no' 
+# does not preclude a ' toggle workspaces' key binding that works.
+workspace_auto_back_and_forth no
+
+# Status to the side.
+workspace "wm" output $lmon
+
+# Media to the side.
+workspace "tv" output $lmon
+workspace "mp" output $lmon
+workspace "fp" output $lmon
+workspace "vp" output $lmon
+
+# Emacs opposite Chrome, alternating positions, 6 pairs..
+workspace "e0" output $rmon
+workspace "g0" output $lmon
+workspace "g1" output $rmon
+workspace "e1" output $lmon
+workspace "e2" output $rmon
+workspace "g2" output $lmon
+workspace "g3" output $rmon
+workspace "e3" output $lmon
+workspace "e4" output $rmon
+workspace "g4" output $lmon
+workspace "g5" output $rmon
+workspace "e5" output $lmon
+
+# Assign applications to workspaces.
+# Use this method when launching applications indirectly.
+# For example tvheadend calls mpv automatically.
+assign [instance="xfce4-terminal" title="tvheadend"] tv
+assign [class="mpv"]  mp
+assign [title="VLC media player$"] vp
+assign [title="Meld$"] md
+assign [instance="wireshark"]  ws
+assign [title="DVB Inspector"] di
+assign [title="SM-G930F"] s7
+
+# Windows that look'n'feel better when floating.
+for_window [instance="dtvkit"] floating enable;
+for_window [instance="xfce4-notifyd$"] floating enable;
+for_window [instance="yad"] floating enable;
+for_window [title="Bluetooth Devices"] floating enable;
+for_window [title="Cheese"] floating enable;
+for_window [title="Do Not Panic"] floating enable;
+for_window [title="File Operation Progress"] floating enable;
+for_window [title="Scratchpad"] floating enable;
+for_window [title="Unlock Keyring"] floating enable;
+for_window [class="ffplay"] floating enable;
+for_window [title="Volume Control"] \
+           floating enable, move absolute position 2400 48, \
+           resize set 50 ppt 80 ppt;
+for_window [class="Display"] floating enable;
+for_window [class="Display-im6"] floating enable;
+
+# Application windows.
+for_window [instance="xfce4-terminal"] $stub
+for_window [instance="emacs"] $stub
+for_window [instance="google-chrome"] $stub
+for_window [instance="gl" class="mpv"] $stub
+
+# VirtualBox windows assume full screen dimensions.
+for_window [title="VirtualBox Manager"] layout tabbed;
+for_window [title="Software Updater"] layout tabbed;
+for_window [title="Meld$"] layout tabbed;
+for_window [title="Spotify"] layout tabbed;
+for_window [title="Clementine"] layout tabbed;
+
+# Windows to hide.
+for_window [title="KeyClick"] move scratchpad;
+
+# Windows that annoy me, that I can't fix.
+for_window [title="Add Security Exception"] kill;
+
+# Colours for windows. Defaults changed to better distinguish are:
+# 1. green title bar and border when focused.
+# 2. gold title bar when focused inactive,
+# 3. grey title bar otherwise.
+# class | border | background | text | indicator | child_border
+client.focused          #333333 #008800 #ffffff #2e9ef4   #185522
+client.focused_inactive #333333 #555500 #dddddd #484e50   #5f676a
+client.unfocused        #333333 #444444 #bbbbbb #292d2e   #222222
+client.urgent           #880000 #444444 #ffffff #880000   #900000
+client.placeholder      #000000 #444444 #ffffff #000000   #0c0c0c
+
+# Mouse behaviour wrt windows. Prefer click-to-focus, default is no.
+focus_follows_mouse no
+# Focus wrapping isn't as simple as I was lead to believe.
+focus_wrapping off
+
+# Wallpaper for those empty workspaces.
+# https://commons.wikimedia.org/wiki/
+# File:London_360%C2%B0_Panorama_from_the_London_Eye.jpg,
+# Photo by Gregg M. Erickson, cropped into overlapping 5760x1080 images.
+exec --no-startup-id nitrogen --restore
+
+# Microphones' defaults (see key bindings). 1 = mute here.
+exec --no-startup-id pactl set-source-mute $usbaudiosource 1
+exec --no-startup-id pactl set-source-mute $analogaudiosource 1
+exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    # Show the bar on the 1920x1080 screens:
+    output $lmon
+    output $rmon
+    i3bar_command /usr/bin/i3bar
+    position bottom
+    status_command ~/local/bin/i3-status
+    ### tray_output $rmon
+    font pango:DejaVu Sans 11
+    #
+    bindsym button2 $stub
+    bindsym button3 $stub
+    # Scroll up to increase transparency (decrease opacity).  This is
+    # the better choice when the mouse wanders into the bar while
+    # scrolling down in the window.
+    ### bindsym button4 exec --no-startup-id compton-trans -c -o -5
+    ### bindsym button5 exec --no-startup-id compton-trans -c -o +5
+}
+
+# Additional Menu and Escape keys.
+# It's OK to restart a small utllity like this when i3 is restarted..
+exec_always --no-startup-id  ~/local/bin/i3-keyboard xmodmapkeys
+exec_always --no-startup-id  ~/local/bin/i3-keyboard xcapekeys
+
+# Command Interface.
+# It's OK to restart this script lwhen i3 is restarted.
+exec_always --no-startup-id  ~/local/bin/i3-file-watcher
+
+#
+# Done.
+#
