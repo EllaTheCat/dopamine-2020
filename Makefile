@@ -13,7 +13,6 @@ I3CFG=$(HOME)/.i3/config
 
 # The i3status config file to be installed. 
 I3STATUSCFG=$(HOME)/.i3status.conf
-
 # Directory where helper scripts will be installed.  I've tried to use
 # absolute paths that take this into account so users don't have to.
 # Including this directory on your ${PATH} is recommended.
@@ -57,7 +56,7 @@ all :  .installdirs .installscripts .installconfigs
 
 
 vars:
-	@echo "$(DOPAMINE)\n$(I3SCRIPTS)\n$(MYSCRIPTS)\n"
+	@echo "$(DOPAMINE)\n$(I3CFG)\n$(I3STATUSCFG)\n$(I3SCRIPTS)\n$(MYSCRIPTS)\n"
 
 $(i3BIN):  
 	@install -m $(DIRMODE) -d $(I3BIN)
