@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# Spin down the USB drives attached to my desktop PC, their blue
+# LEDs should stay dark. One drive automatically spins down, one
+# drive only spins down when requested. 
+#
+# USB HDDs sdc and sdd should be Banana and Tabasco but I sometimes
+# manage to swap them with each other, hence I treat them as a pair.
+#
+# My concern is that they may be spun up again to be un-mounted as the
+# machine shuts down, but is it safe to spindown a mounted disk?
+#
+
+configure ()
+{
+    sudo hd-idle -i 0 -a sdc -i 1200 -a sdd -i 1200
+}
+
+dismount ()
+{
+    sudo umount  /mnt/usb-Seagate_M3_Portable_NM14ATY5-0:0-part2
+    sudo umount  /mnt/usb-Seagate_M3_Portable_BFF77E010D000086-0:0-part1
+}
+
+spindown ()
+{
+    sudo /usr/sbin/hd-idle -t sdc
+    sudo /usr/sbin/hd-idle -t sdd
+}
+
+shutdown ()
+{
+    eval $0 dismount
+    eval $0 spindown
+    xfce4-session-logout --halt
+}
+
+#
+# Start here.
+#
+
+eval "$1"
+
+#
+# Done.
+#
+x

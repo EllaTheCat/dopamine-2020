@@ -20,12 +20,6 @@ bindsym Mod4+Return exec --no-startup-id xfce4-terminal
 bindsym Mod4+Shift+c reload
 # Restart i3 in place.
 bindsym Mod4+Shift+r restart
-#
-# EllaTheCat keeps config files and scripts in a git hub repo and uses
-# make to install them. Scripts must pass Shellcheck. i3 reload and
-# i3 restart are invoked automatically when required.
-#
-bindsym Control+Menu exec --no-startup-id make
 
 #
 # CONSTANTS.
@@ -459,6 +453,18 @@ mode "Secondary" {
     # Pressing cycles through the three modes. Sec->Def->Pri->Sec.
     bindsym Menu $default
 }
+
+mode "make" {
+    bindsym space $default
+ }
+
+mode "reload" {
+    bindsym space $default
+ }
+
+mode "restart" {
+    bindsym space $default
+ }
 
 #
 # SETTINGS

@@ -3,6 +3,7 @@
 #
 # Requires : shellcheck
 #
+SHELL=/bin/bash
 
 # Installing each config in these two places is defensive programming.
 # If someone can confirm Regolith's placement and naming of the i3
@@ -33,8 +34,9 @@ DIRMODE=755
 EXEMODE=755
 CFGMODE=644
 
-.installdirs: \
-	$(I3BIN)
+.installdirs:  $(I3BIN)
+
+.installconfigs:  $(I3CFG) $(I3STATUSCFG)
 
 .installscripts: \
     $(I3BIN)/i3-command-prompt \
@@ -47,29 +49,35 @@ CFGMODE=644
     $(I3BIN)/i3-scratchpad \
     $(I3BIN)/i3-list-windows \
     $(I3BIN)/i3-status
- 
-.installconfigs: \
-    $(I3CFG) $(I3STATUSCFG)
+
+  .installextras:  $(I3BIN)/my-usb-disks
 
 
-all :  .installdirs .installscripts .installconfigs
+all :  .installdirs .installconfigs .installscripts .installextras
+	@i3-msg  'mode "default"'
 
+# .installdirs
 
-vars:
-	@echo "$(DOPAMINE)\n$(I3CFG)\n$(I3STATUSCFG)\n$(I3SCRIPTS)\n$(MYSCRIPTS)\n"
-
-$(i3BIN):  
+$(i3BIN):
 	@install -m $(DIRMODE) -d $(I3BIN)
+
+# .installconfigs
 
 $(I3CFG):  i3-config
 	@mv $@ $@.save	
 	@install -m $(CFGMODE)  i3-config $@
-	i3-msg "reload"
+	@i3-msg 'mode "reload"'
+	@sleep 2
+	@i3-msg "reload"
 
 $(I3STATUSCFG):  i3-status-config
 	@mv $@ $@.save	
 	@install -m $(CFGMODE)  i3-status-config $@
-	i3-msg "restart"
+	@i3-msg 'mode "restart"'
+	@sleep 2
+	@i3-msg "restart"
+
+# .installscripts
 
 $(I3BIN)/i3-command-prompt: $(I3SCRIPTS)/i3-command-prompt
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-command-prompt $(I3BIN)
@@ -100,6 +108,15 @@ $(I3BIN)/i3-list-windows: $(I3SCRIPTS)/i3-list-windows
 
 $(I3BIN)/i3-status: $(I3SCRIPTS)/i3-status
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-status $(I3BIN)
+
+# .installextras
+
+$(I3BIN)/my-usb-disks: $(MYSCRIPTS)/my-usb-disks
+	@install -m $(EXEMODE) $(MYSCRIPTS)/my-usb-disks $(I3BIN)
+
+# Debug use only.
+vars:
+	@echo "$(DOPAMINE)\n$(I3CFG)\n$(I3STATUSCFG)\n$(I3SCRIPTS)\n$(MYSCRIPTS)\n"
 
 
 
