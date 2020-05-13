@@ -54,7 +54,7 @@ CFGMODE=644
 
 
 all :  .installdirs .installconfigs .installscripts .installextras
-	@i3-msg  'mode "default"'
+
 
 # .installdirs
 
@@ -118,7 +118,11 @@ $(I3BIN)/my-usb-disks: $(MYSCRIPTS)/my-usb-disks
 vars:
 	@echo "$(DOPAMINE)\n$(I3CFG)\n$(I3STATUSCFG)\n$(I3SCRIPTS)\n$(MYSCRIPTS)\n"
 
-
+# Stack Exchange shared this: https://unix.stackexchange.com/a/49438
+apps:
+	sed -e '/INSERTAPPSHERE/ {' -e 'r $(MYSCRIPTS)/my-apps' -e 'd' -e '}' \
+                                                                           -i   $(MYSCRIPTS)/my-focus-app-by-alias
+	diff i3scripts/i3-focus-app-by-alias myscripts/my-focus-app-by-alias
 
 #
 # Done
