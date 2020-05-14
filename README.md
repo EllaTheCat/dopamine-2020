@@ -1,7 +1,5 @@
-<header>
 dopamine-2020
-</header>
-<main>
+
 # Overview
 - i3 window manager config and scripts, tuned to help me manage my
   Parkinson's Disease symptoms, but adaptable to meet others' needs.
