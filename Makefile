@@ -90,7 +90,7 @@ $(I3BIN)/i3-dispatcher: $(I3SCRIPTS)/i3-dispatcher
 
 # This rule is unlike the others in that it immediately modifies the
 # recently installed file,
-$(I3B IN)/i3-focus-app-by-alias: \
+$(I3BIN)/i3-focus-app-by-alias: \
 $(I3SCRIPTS)/i3-focus-app-by-alias $(MYSCRIPTS)/my-apps
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-focus-app-by-alias $(I3BIN)
 	@sed -e '/INSERT_MY_APPS_HERE/ {' -e 'r $(MYSCRIPTS)/my-apps' -e 'd' -e '}' \
