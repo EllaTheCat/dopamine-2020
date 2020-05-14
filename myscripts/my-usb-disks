@@ -13,7 +13,7 @@
 
 configure ()
 {
-    sudo hd-idle -i 0 -a sdc -i 1200 -a sdd -i 1200
+    sudo  /usr/sbin/hd-idle -i 0 -a sdc -i 1200 -a sdd -i 1200
 }
 
 dismount ()
@@ -30,8 +30,10 @@ spindown ()
 
 shutdown ()
 {
-    eval $0 dismount
-    eval $0 spindown
+    dismount
+    sleep 2
+    spindown
+    sleep 2
     xfce4-session-logout --halt
 }
 
@@ -44,4 +46,3 @@ eval "$1"
 #
 # Done.
 #
-x
