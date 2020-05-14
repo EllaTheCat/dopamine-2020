@@ -4,35 +4,16 @@
 #
 
 #
-# apps : Please configure this dictionary.
+# - Please personalise the "my-apps" table in the myscripts folder.
 # 
 # - value - The command that launches the application.
 # - [key] - The command alias, length 2, NaN.
 #
-# - Note the absence of commas in the syntax
+# - Note the absence of commas in the syntax of bash arrays.
 #
 declare -A apps=( \
-		  ["e0"]="emacsclient -c"      ["e1"]="emacsclient -c"
-		  ["e2"]="emacsclient -c"      ["e3"]="emacsclient -c"
-		  ["e4"]="emacsclient -c"      ["e5"]="emacsclient -c"
-		  ["e6"]="emacsclient -c"      ["e7"]="emacsclient -c"
-		  ["e8"]="emacsclient -c"      ["e9"]="emacsclient -c"
-		  ["f0"]="firefox"     ["f1"]="firefox"
-		  ["f2"]="firefox"     ["f3"]="firefox"
-		  ["f4"]="firefox"     ["f5"]="firefox"
-		  ["f6"]="firefox"     ["f7"]="firefox"
-		  ["f8"]="firefox"     ["f9"]="firefox"
-		  ["gc"]="google-chrome"
-		  ["th"]="exo-open --launch FileManager"
-		  ["aw"]="writer"
-		  ["ae"]="calc"
-		  ["ap"]="impress"
-                  ["tb"]="thunderbird"
-		  ["sk"]="skype"
-		  ["sp"]="spotify"
-		  ["sy"]="synaptic-pkexec"
-		  ["tv"]="my-tvheadend start"
-) 
+		  INSERT_MY_APPS_HERE
+)   
 
 #
 # Focus an instance of an app given its command alias, launching the

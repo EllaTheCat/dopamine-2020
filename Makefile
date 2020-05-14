@@ -88,8 +88,13 @@ $(I3BIN)/i3-file-watcher: $(I3SCRIPTS)/i3-file-watcher
 $(I3BIN)/i3-dispatcher: $(I3SCRIPTS)/i3-dispatcher
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-dispatcher $(I3BIN)
 
-$(I3BIN)/i3-focus-app-by-alias: $(I3SCRIPTS)/i3-focus-app-by-alias
+# This rule is unlike the others in that it immediately modifies the
+# recently installed file,
+$(I3B IN)/i3-focus-app-by-alias: \
+$(I3SCRIPTS)/i3-focus-app-by-alias $(MYSCRIPTS)/my-apps
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-focus-app-by-alias $(I3BIN)
+	@sed -e '/INSERT_MY_APPS_HERE/ {' -e 'r $(MYSCRIPTS)/my-apps' -e 'd' -e '}' \
+         -i   $(I3BIN)/i3-focus-app-by-alias
 
 $(I3BIN)/i3-mode: $(I3SCRIPTS)/i3-mode
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-mode $(I3BIN)
@@ -117,12 +122,6 @@ $(I3BIN)/my-usb-disks: $(MYSCRIPTS)/my-usb-disks
 # Debug use only.
 vars:
 	@echo "$(DOPAMINE)\n$(I3CFG)\n$(I3STATUSCFG)\n$(I3SCRIPTS)\n$(MYSCRIPTS)\n"
-
-# Stack Exchange shared this: https://unix.stackexchange.com/a/49438
-apps:
-	sed -e '/INSERTAPPSHERE/ {' -e 'r $(MYSCRIPTS)/my-apps' -e 'd' -e '}' \
-                                                                           -i   $(MYSCRIPTS)/my-focus-app-by-alias
-	diff i3scripts/i3-focus-app-by-alias myscripts/my-focus-app-by-alias
 
 #
 # Done
