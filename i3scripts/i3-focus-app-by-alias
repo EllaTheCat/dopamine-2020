@@ -5,15 +5,15 @@
 
 #
 # - Please personalise the "my-apps" table in the myscripts folder.
-# 
+#
 # - value - The command that launches the application.
 # - [key] - The command alias, length 2, NaN.
 #
 # - Note the absence of commas in the syntax of bash arrays.
 #
 declare -A apps=( \
-		  INSERT_MY_APPS_HERE
-)   
+                  INSERT_MY_APPS_HERE
+)
 
 #
 # Focus an instance of an app given its command alias, launching the
@@ -34,9 +34,23 @@ focus ()
 		    i3-msg "workspace --no-auto-back-and-forth \"$1\""
 		    ;;
 		(*false*)
+                    # "No window matches given criteria" is not an
+                    # error here, it's one of two desired outcomes.
 		    i3-msg "workspace --no-auto-back-and-forth \"$1\""
+                    # Getting this to work was fun!
+                    # We want the script to terminate hence using i3-msg.
 		    # The enhanced PATH is exported by the dispatcher.
-		    (eval  ${apps["$1"]})&
+                    # The i3-msg recipient can't see the enhanced PATH.
+                    # Extract and prepend the path directoriy components.
+                    app=${apps[$1]}
+                    # The executable name remains after removing the
+                    # "longest matching suffix", defined by space star.
+                    arg0=${app%% *}
+                    # Get the full path to the executable, remove the
+                    # name part, prepend the rest to the command.
+                    path=$(which ${arg0})
+                    path=${path/${arg0}/}
+                    i3-msg "exec --no-startup-id ${path}${app}"
 		    # Allow the app enough time to initialise before applying
 		    # the mark. The underscore makes the mark invisible; to
 		    # confirm the mark. Use "i3-msg -t get_marks".
@@ -62,7 +76,7 @@ emacsserver ()
 		sleep $delay
 	    fi
 	    ;;
-	(stop) 
+	(stop)
 	    pkill -f 'emacs -rv --daemon'
 	    ;;
     esac
