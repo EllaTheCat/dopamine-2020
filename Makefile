@@ -7,12 +7,12 @@ SHELL=/bin/bash
 
 # Installing each config in these two places is defensive programming.
 # If someone can confirm Regolith's placement and naming of the i3
-# config and i3status config, I'd like to support it. 
+# config and i3status config, I'd like to support it.
 
 # The i3 config file to be installed..
 I3CFG=$(HOME)/.i3/config
 
-# The i3status config file to be installed. 
+# The i3status config file to be installed.
 I3STATUSCFG=$(HOME)/.i3status.conf
 # Directory where helper scripts will be installed.  I've tried to use
 # absolute paths that take this into account so users don't have to.
@@ -63,15 +63,20 @@ $(i3BIN):
 
 # .installconfigs
 
-$(I3CFG):  i3-config
-	@mv $@ $@.save	
+# This rule immediately modifies the recently installed file.
+$(I3CFG):  i3-config cfg00 cfg01 cfg02
 	@install -m $(CFGMODE)  i3-config $@
+	@sed -e '/###INSERT_CFG00_HERE###/ {' -e 'r cfg00' -e 'd' -e '}' \
+         -i   $(I3CFG)
+	@sed -e '/###INSERT_CFG01_HERE###/ {' -e 'r cfg01' -e 'd' -e '}' \
+         -i   $(I3CFG)
+	@sed -e '/###INSERT_CFG02_HERE###/ {' -e 'r cfg02' -e 'd' -e '}' \
+         -i   $(I3CFG)
 	@i3-msg 'mode "reload"'
 	@sleep 2
 	@i3-msg "reload"
 
 $(I3STATUSCFG):  i3-status-config
-	@mv $@ $@.save	
 	@install -m $(CFGMODE)  i3-status-config $@
 	@i3-msg 'mode "restart"'
 	@sleep 2
@@ -88,12 +93,11 @@ $(I3BIN)/i3-file-watcher: $(I3SCRIPTS)/i3-file-watcher
 $(I3BIN)/i3-dispatcher: $(I3SCRIPTS)/i3-dispatcher
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-dispatcher $(I3BIN)
 
-# This rule is unlike the others in that it immediately modifies the
-# recently installed file,
+# This rule immediately modifies the recently installed file.
 $(I3BIN)/i3-focus-app-by-alias: \
-$(I3SCRIPTS)/i3-focus-app-by-alias $(MYSCRIPTS)/my-apps
+$(I3SCRIPTS)/i3-focus-app-by-alias apps00
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-focus-app-by-alias $(I3BIN)
-	@sed -e '/INSERT_MY_APPS_HERE/ {' -e 'r $(MYSCRIPTS)/my-apps' -e 'd' -e '}' \
+	@sed -e '/###INSERT_APPS00_HERE###/ {' -e 'r apps00' -e 'd' -e '}' \
          -i   $(I3BIN)/i3-focus-app-by-alias
 
 $(I3BIN)/i3-mode: $(I3SCRIPTS)/i3-mode
@@ -126,4 +130,3 @@ vars:
 #
 # Done
 #
-

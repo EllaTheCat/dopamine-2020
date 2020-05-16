@@ -4,16 +4,10 @@
 #
 
 #
-# - Please personalise the "my-apps" table in the myscripts folder.
+# Please personalise the "my-apps" table in the myscripts folder.
 #
-# - value - The command that launches the application.
-# - [key] - The command alias, length 2, NaN.
-#
-# - Note the absence of commas in the syntax of bash arrays.
-#
-declare -A apps=( \
-                  INSERT_MY_APPS_HERE
-)
+
+###INSERT_APPS00_HERE###
 
 #
 # Focus an instance of an app given its command alias, launching the

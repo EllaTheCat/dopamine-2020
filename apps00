@@ -1,4 +1,5 @@
-		  ["e0"]="emacsclient -c"      ["e1"]="emacsclient -c"
+declare -A apps=(
+  		  ["e0"]="emacsclient -c"      ["e1"]="emacsclient -c"
 		  ["e2"]="emacsclient -c"      ["e3"]="emacsclient -c"
 		  ["e4"]="emacsclient -c"      ["e5"]="emacsclient -c"
 		  ["e6"]="emacsclient -c"      ["e7"]="emacsclient -c"
@@ -18,3 +19,4 @@
 		  ["sp"]="spotify"
 		  ["sy"]="synaptic-pkexec"
 		  ["tv"]="my-tvheadend start"
+)
