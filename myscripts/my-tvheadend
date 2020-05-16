@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# my-tvheadend
+#
+# -  tvheadend built from source, running from build directory.
+#
+
+tvhpath=/home/shevek/Zebra/packages/tvheadend/tvheadend/build.linux
+
+case "$1" in
+    (start)
+	(eval xfce4-terminal -T 'tvheadend' -x ${tvhpath}/tvheadend --noacl) &
+	;;
+    (stop)
+	pkill -f "xfce4-terminal -T 'tvheadend' -x  ${tvhpath}tvheadend --no-acl"
+	;;
+esac
+
+#
+# Done.
+#
