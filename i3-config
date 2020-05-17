@@ -201,7 +201,6 @@ mode "Primary" {
 
 # Secondary Mode.
 # Entered from primary mode using Menu.
-# Keyboard & Mouse. Display & Desktop. USB drives.
 # Use this mode for settings, not window management.
 mode "Secondary" {
 
@@ -209,25 +208,16 @@ mode "Secondary" {
     # Using space is a design decision, please do not change.
     bindsym space $default
 
-    # I'm not pressing keys hard enough to register. This script makes
-    # an IBM PC clicky sound as feedback. It's in the dopamine (my git
-    # repo) scripts folder. Mnemonic q often sounds like k.
-    bindsym q $default, $i3keyclick
+    bindsym q nop
+    bindsym w nop
 
-    # Reddit asked how to inject text, this is a proof-of-concept demo.
-    bindsym w $default, exec  --no-startup-id \
-            sleep 0.3 && xdotool getwindowfocus windowfocus type "hello world"
-
-    bindsym e nop
     bindsym r nop
+    bindsym t nop
     bindsym y nop
-    bindsym u nop
+
     bindsym i nop
     bindsym o nop
-
-    # Benq DVI and HDMI auto-switching to save wear & tear.
-    # https://raspberrypi.stackexchange.com/a/53267
-    bindsym p $default, $i3display menu
+    bindsym p nop
 
     # Scratchpad.
     bindsym bracketleft $default, move scratchpad
@@ -252,10 +242,9 @@ mode "Secondary" {
     bindsym d $default, $i3mouse disable
     bindsym e $default, $i3mouse enable
 
-    # See the 'my-usb-disks' script.
-    bindsym g exec --no-startup-id my-usb-disks configure
-    bindsym j  exec --no-startup-id my-usb-disks dismount
-    bindsym l  exec --no-startup-id my-usb-disks spindown
+    bindsym g nop
+    bindsym j nop
+    bindsym l nop
 
     # Set modifiers with 'xcape', set CapsLock to Control,
     # mimic US layout on UK keyboard.
@@ -269,25 +258,23 @@ mode "Secondary" {
     bindsym x focus output $cmon, $primary;
     bindsym c focus output $rmon, $primary;
 
-    # This switches to the emacs buffer used as a clipboard
-    # for AutoVoice speech-to-text. The buffer is created if it
-    # does not exist. Mnemonic is V for Voice.
-    bindsym v $default, $i3tasker :shell emacs-clipboard-buffer
+    # Reddit asked how to inject text, this is a proof-of-concept demo.
+    bindsym v $default, exec  --no-startup-id \
+            sleep 0.3 && xdotool getwindowfocus windowfocus type "hello world"
 
     # Desktop background.
     bindsym n $default, exec --no-startup-id nitrogen --restore
-    bindsym m nop
+    # All monitors turn OFF.
+    bindsym m $default,  exec --no-startup-id xset dpms force off
 
     bindsym comma nop
     bindsym period nop
     bindsym slash nop
 
-    # All monitors turn OFF.
-    bindsym Pause $default,  exec --no-startup-id xset dpms force off
-
     # Pressing cycles through the three modes. Sec->Def->Pri->Sec.
     bindsym Menu $default
 }
+
 
 mode "make" {
     bindsym space $default

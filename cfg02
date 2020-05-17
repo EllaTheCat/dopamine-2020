@@ -1,5 +1,5 @@
 #
-#  CLUSTER  BINDINGS BEGIN HERE
+# CLUSTER BINDINGS BEGIN HERE
 #
 
 # A key chord to toggle the scratchpad terminal.
@@ -14,5 +14,5 @@ bindsym Control+Mod4+Delete [workspace="__focused__"] kill
 bindsym Pause exec --no-startup-id xset -dpms;
 
 #
-#  CLUSTER BINDINGS END HERE
+# CLUSTER BINDINGS END HERE
 #
