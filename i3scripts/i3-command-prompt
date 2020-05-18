@@ -7,15 +7,15 @@
 dir=/dev/shm/${USER}/i3
 file=command
 
-# Start with a value of 5 seconds, and reduce in 1 second steps to fine-tune.
-commandtimeout=5
 
 #
 #  Provide a text entry command prompt for command aliases and command
 #  numbers.
 #
-apps()
+menu()
 {
+    # Start with a value of 5 seconds, and reduce in 1 second steps to fine-tune.
+    commandtimeout=${2:-5}
     if [ "$1" != "help" ]; then
         # This branch is intended to be taken first.  In order to
         # reduce manual keystrokes, the Return key is pressed
@@ -33,7 +33,7 @@ apps()
         # and does not timeout.
 	list="e0 g0 e1 g1 e2 g2 e3 g3"
 	list="${list} ff tb sk t0 t1 ss "
-        list="cancel ${list}" 
+        list="cancel ${list}"
     fi
     # Numpad enters digits.
     numlockx on
@@ -54,7 +54,7 @@ apps()
 # Start here.
 #
 
-apps
+eval  $1 $2
 
 #
 # Done.

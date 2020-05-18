@@ -1,7 +1,7 @@
 # -*- Mode: Shell-script -*-
 
 #
-# EXEC SETUP BEGIN.
+# EXECUTABLE SETTINGS BEGIN HERE.
 #
 
 # Wallpaper for those empty workspaces.
@@ -36,5 +36,5 @@ bar {
 }
 
 #
-# EXEC SETUP END.
+# EXECUTABLE SETTINGS END HERE.
 #

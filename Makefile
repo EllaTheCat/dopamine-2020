@@ -72,6 +72,8 @@ $(I3CFG):  i3-config cfg00 cfg01 cfg02 cfg07 cfg08
          -i   $(I3CFG)
 	@sed -e '/###INSERT_CFG02_HERE###/ {' -e 'r cfg02' -e 'd' -e '}' \
          -i   $(I3CFG)
+	@sed -e '/###INSERT_CFG05_HERE###/ {' -e 'r cfg05' -e 'd' -e '}' \
+         -i   $(I3CFG)
 	@sed -e '/###INSERT_CFG07_HERE###/ {' -e 'r cfg07' -e 'd' -e '}' \
          -i   $(I3CFG)
 	@sed -e '/###INSERT_CFG08_HERE###/ {' -e 'r cfg08' -e 'd' -e '}' \

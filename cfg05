@@ -1,0 +1,80 @@
+# -*- Mode: Shell-script -*-
+#
+# SECONDARY MODE BEGINS HERE.
+#
+
+# Secondary Mode.
+# Entered from primary mode using Menu.
+# Use this mode for settings, not window management.
+mode "Secondary" {
+
+    # Protect the exit from this mode.
+    # Using space is a design decision, please do not change.
+    bindsym space $default
+
+    bindsym q nop
+    bindsym w nop
+
+    bindsym r nop
+    bindsym t nop
+    bindsym y nop
+
+    bindsym i nop
+    bindsym o nop
+    bindsym p nop
+
+    bindsym bracketleft nop
+    bindsym bracketright nop
+
+    # Select an audio output.
+    bindsym a  $default, exec  --no-startup-id pactl move-sink-input \
+            "$(pactl list short sink-inputs | awk '{print $1}')" $analogaudiosink ;
+    bindsym h  $default, exec  --no-startup-id pactl move-sink-input \
+            "$(pactl list short sink-inputs | awk '{print $1}')" $hdmiaudiosink ;
+    bindsym b  $default, exec  --no-startup-id pactl move-sink-input \
+            "$(pactl list short sink-inputs | awk '{print $1}')" $bluetoothaudiosink ;
+    bindsym u  $default, exec  --no-startup-id pactl move-sink-input \
+            "$(pactl list short sink-inputs | awk '{print $1}')" $usbaudiosink ;
+
+    # Mnemonic mouse keys
+    bindsym s $default, $i3mouse slow
+    bindsym f $default, $i3mouse fast
+    bindsym d $default, $i3mouse disable
+    bindsym e $default, $i3mouse enable
+
+    bindsym g nop
+    bindsym j nop
+    bindsym l nop
+
+    # Set modifiers with 'xcape', set CapsLock to Control,
+    # mimic US layout on UK keyboard.
+    bindsym k $default, $i3keyboard
+
+    bindsym Return nop
+
+    # Focus is on output P, output Q shows workspace W, focus Q,
+    # switch to Primary mode ready to move W to P using {z,x,c}.
+    bindsym z focus output $lmon, $primary;
+    bindsym x focus output $cmon, $primary;
+    bindsym c focus output $rmon, $primary;
+
+    # Reddit asked how to inject text, this is a proof-of-concept demo.
+    bindsym v $default, exec  --no-startup-id \
+            sleep 0.3 && xdotool getwindowfocus windowfocus type "hello world"
+
+    # Desktop background.
+    bindsym n $default, exec --no-startup-id nitrogen --restore
+    # All monitors turn OFF.
+    bindsym m $default,  exec --no-startup-id xset dpms force off
+
+    bindsym comma nop
+    bindsym period nop
+    bindsym slash nop
+
+    # Pressing cycles through the three modes. Sec->Def->Pri->Sec.
+    bindsym Menu $default
+}
+
+#
+# SECONDARY MODE ENDS HERE.
+#

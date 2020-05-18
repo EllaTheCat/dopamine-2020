@@ -1,7 +1,7 @@
 # -*- Mode: Shell-script -*-
 
 #
-# SETTINGS BEGIN
+# NON EXECuTABLE  SETTINGS BEGIN HERE.
 #
 
 # Font for window titles. The font for the bar is set explicitly.
@@ -90,5 +90,5 @@ focus_follows_mouse no
 focus_wrapping off
 
 #
-# SETTINGS END
+# NON EXECuTABLE SETTINGS END HERE.
 #
