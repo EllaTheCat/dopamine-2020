@@ -1,3 +1,5 @@
+# -*- Mode: Shell-script -*-
+
 declare -A apps=(
   		  ["e0"]="emacsclient -c"      ["e1"]="emacsclient -c"
 		  ["e2"]="emacsclient -c"      ["e3"]="emacsclient -c"

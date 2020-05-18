@@ -64,7 +64,7 @@ $(i3BIN):
 # .installconfigs
 
 # This rule immediately modifies the recently installed file.
-$(I3CFG):  i3-config cfg00 cfg01 cfg02
+$(I3CFG):  i3-config cfg00 cfg01 cfg02 cfg07 cfg08
 	@install -m $(CFGMODE)  i3-config $@
 	@sed -e '/###INSERT_CFG00_HERE###/ {' -e 'r cfg00' -e 'd' -e '}' \
          -i   $(I3CFG)
@@ -72,14 +72,20 @@ $(I3CFG):  i3-config cfg00 cfg01 cfg02
          -i   $(I3CFG)
 	@sed -e '/###INSERT_CFG02_HERE###/ {' -e 'r cfg02' -e 'd' -e '}' \
          -i   $(I3CFG)
+	@sed -e '/###INSERT_CFG07_HERE###/ {' -e 'r cfg07' -e 'd' -e '}' \
+         -i   $(I3CFG)
+	@sed -e '/###INSERT_CFG08_HERE###/ {' -e 'r cfg08' -e 'd' -e '}' \
+         -i   $(I3CFG)
 	@i3-msg 'mode "reload"'
 	@sleep 2
+	@i3-msg 'mode "default"'
 	@i3-msg "reload"
 
 $(I3STATUSCFG):  i3-status-config
 	@install -m $(CFGMODE)  i3-status-config $@
 	@i3-msg 'mode "restart"'
 	@sleep 2
+	@i3-msg 'mode "default"'
 	@i3-msg "restart"
 
 # .installscripts

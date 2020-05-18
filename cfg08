@@ -1,0 +1,40 @@
+# -*- Mode: Shell-script -*-
+
+#
+# EXEC SETUP BEGIN.
+#
+
+# Wallpaper for those empty workspaces.
+# https://commons.wikimedia.org/wiki/
+# File:London_360%C2%B0_Panorama_from_the_London_Eye.jpg,
+# Photo by Gregg M. Erickson, cropped into overlapping 5760x1080 images.
+exec --no-startup-id nitrogen --restore
+
+# Microphones' defaults (see key bindings). 1 = mute here.
+exec --no-startup-id pactl set-source-mute $usbaudiosource 1
+exec --no-startup-id pactl set-source-mute $analogaudiosource 1
+exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    # Show the bar on the 1920x1080 screens:
+    output $lmon
+    output $cmon
+    i3bar_command /usr/bin/i3bar
+    position bottom
+    status_command ~/local/bin/i3-status
+    font pango:DejaVu Sans 11
+    #
+    bindsym button2 $stub
+    bindsym button3 $stub
+    # Scroll up to increase transparency (decrease opacity).  This is
+    # the better choice when the mouse wanders into the bar while
+    # scrolling down in the window.
+    ### bindsym button4 exec --no-startup-id compton-trans -c -o -5
+    ### bindsym button5 exec --no-startup-id compton-trans -c -o +5
+}
+
+#
+# EXEC SETUP END.
+#

@@ -1,0 +1,94 @@
+# -*- Mode: Shell-script -*-
+
+#
+# SETTINGS BEGIN
+#
+
+# Font for window titles. The font for the bar is set explicitly.
+font pango:DejaVu Sans 11
+
+# Do not set this to yes. The toggling behaviour this would provide is
+# described in the User Guide and is not my cup of tea. Setting 'no'
+# does not preclude a ' toggle workspaces' key binding that works.
+workspace_auto_back_and_forth no
+
+# Status to the side.
+workspace "wm" output $lmon
+
+# Media to the side.
+workspace "tv" output $lmon
+workspace "mp" output $lmon
+workspace "fp" output $lmon
+workspace "vp" output $lmon
+
+# Editor and browser straight ahead.  I assume dual monitors are
+# positioned in the left and centre of the three monitor layout.
+workspace "e0" output $cmon
+workspace "f0" output $cmon
+
+# Assign applications to workspaces.
+# Use this method when launching applications indirectly.
+# For example tvheadend calls mpv automatically.
+assign [instance="xfce4-terminal" title="tvheadend"] tv
+assign [class="mpv"]  mp
+assign [title="VLC media player$"] vp
+assign [title="Meld$"] md
+assign [instance="wireshark"]  ws
+assign [title="DVB Inspector"] di
+assign [title="SM-G930F"] s7
+
+# Windows that look'n'feel better when floating.
+for_window [instance="dtvkit"] floating enable;
+for_window [instance="xfce4-notifyd$"] floating enable;
+for_window [instance="yad"] floating enable;
+for_window [title="Bluetooth Devices"] floating enable;
+for_window [title="Cheese"] floating enable;
+for_window [title="Do Not Panic"] floating enable;
+for_window [title="File Operation Progress"] floating enable;
+for_window [title="Scratchpad"] floating enable;
+for_window [title="Unlock Keyring"] floating enable;
+for_window [class="ffplay"] floating enable;
+for_window [title="Volume Control"] \
+           floating enable, move absolute position 2400 48, \
+           resize set 50 ppt 80 ppt;
+for_window [class="Display"] floating enable;
+for_window [class="Display-im6"] floating enable;
+
+# Application windows.
+for_window [instance="xfce4-terminal"] $stub
+for_window [instance="emacs"] $stub
+for_window [instance="google-chrome"] $stub
+for_window [instance="gl" class="mpv"] $stub
+
+# VirtualBox windows assume full screen dimensions.
+for_window [title="VirtualBox Manager"] layout tabbed;
+for_window [title="Software Updater"] layout tabbed;
+for_window [title="Meld$"] layout tabbed;
+for_window [title="Spotify"] layout tabbed;
+for_window [title="Clementine"] layout tabbed;
+
+# Windows to hide.
+for_window [title="KeyClick"] move scratchpad;
+
+# Windows that annoy me, that I can't fix.
+for_window [title="Add Security Exception"] kill;
+
+# Colours for windows. Defaults changed to better distinguish are:
+# 1. green title bar and border when focused.
+# 2. gold title bar when focused inactive,
+# 3. grey title bar otherwise.
+# class | border | background | text | indicator | child_border
+client.focused          #333333 #008800 #ffffff #2e9ef4   #185522
+client.focused_inactive #333333 #555500 #dddddd #484e50   #5f676a
+client.unfocused        #333333 #444444 #bbbbbb #292d2e   #222222
+client.urgent           #880000 #444444 #ffffff #880000   #900000
+client.placeholder      #000000 #444444 #ffffff #000000   #0c0c0c
+
+# Mouse behaviour wrt windows. Prefer click-to-focus, default is no.
+focus_follows_mouse no
+# Focus wrapping isn't as simple as I was lead to believe.
+focus_wrapping off
+
+#
+# SETTINGS END
+#
