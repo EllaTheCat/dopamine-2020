@@ -34,6 +34,9 @@ bindsym KP_Subtract \
 bindsym KP_Add \
         exec --no-startup-id pactl set-source-mute $usbaudiosource toggle
 
+# Command prompt in one keypress.
+bindsym KP_Insert $i3cmdprompt menu 4
+
 #
 # NUMPAD BINDINGS END HERE.
 #

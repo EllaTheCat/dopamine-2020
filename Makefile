@@ -64,19 +64,22 @@ $(i3BIN):
 # .installconfigs
 
 # This rule immediately modifies the recently installed file.
-$(I3CFG):  i3-config cfg00 cfg01 cfg02 cfg07 cfg08
+$(I3CFG):  i3-config \
+	i3-config.d/cfg00 i3-config.d/cfg01 i3-config.d/cfg02 \
+	i3-config.d/cfg05 \
+	i3-config.d/cfg07 i3-config.d/cfg08
 	@install -m $(CFGMODE)  i3-config $@
-	@sed -e '/###INSERT_CFG00_HERE###/ {' -e 'r cfg00' -e 'd' -e '}' \
+	@sed -e '/###INSERT_CFG00_HERE###/ {' -e 'r i3-config.d/cfg00' -e 'd' -e '}' \
          -i   $(I3CFG)
-	@sed -e '/###INSERT_CFG01_HERE###/ {' -e 'r cfg01' -e 'd' -e '}' \
+	@sed -e '/###INSERT_CFG01_HERE###/ {' -e 'r i3-config.d/cfg01' -e 'd' -e '}' \
          -i   $(I3CFG)
-	@sed -e '/###INSERT_CFG02_HERE###/ {' -e 'r cfg02' -e 'd' -e '}' \
+	@sed -e '/###INSERT_CFG02_HERE###/ {' -e 'r i3-config.d/cfg02' -e 'd' -e '}' \
          -i   $(I3CFG)
-	@sed -e '/###INSERT_CFG05_HERE###/ {' -e 'r cfg05' -e 'd' -e '}' \
+	@sed -e '/###INSERT_CFG05_HERE###/ {' -e 'r i3-config.d/cfg05' -e 'd' -e '}' \
          -i   $(I3CFG)
-	@sed -e '/###INSERT_CFG07_HERE###/ {' -e 'r cfg07' -e 'd' -e '}' \
+	@sed -e '/###INSERT_CFG07_HERE###/ {' -e 'r i3-config.d/cfg07' -e 'd' -e '}' \
          -i   $(I3CFG)
-	@sed -e '/###INSERT_CFG08_HERE###/ {' -e 'r cfg08' -e 'd' -e '}' \
+	@sed -e '/###INSERT_CFG08_HERE###/ {' -e 'r i3-config.d/cfg08' -e 'd' -e '}' \
          -i   $(I3CFG)
 	@i3-msg 'mode "reload"'
 	@sleep 2
