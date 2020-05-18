@@ -128,10 +128,12 @@ mode "Primary" {
     bindsym bracketleft $default,  [title="Volume Control"]  move scratchpad
     bindsym bracketright $default,  [title="Volume Control"]  scratchpad show
 
-    # Command prompt.
+    # Command prompt. Thumb and middle finger of the left hand.
     bindsym Tab $default, $i3cmdprompt menu 4
     # The backslash to the left of Z on a UK keyboard US intl layout.
     bindcode 94 $default, $i3cmdprompt menu 4
+    # Command prompt in one keypress.  Faciltates 3 digit commands.
+    bindsym KP_Insert $i3cmdprompt menu 4
 
     # Toggle a side-by-side pair to one-above-the-other.
     # A for Above.
