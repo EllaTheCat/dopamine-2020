@@ -14,36 +14,19 @@ file=command
 #
 menu()
 {
-    # Start with a value of 5 seconds, and reduce in 1 second steps to fine-tune.
+    # In order to reduce manual keystrokes, the Return key is pressed
+    # automatically after the timeout expires.
     commandtimeout=${2:-5}
-    if [ "$1" != "help" ]; then
-        # This branch is intended to be taken first.  In order to
-        # reduce manual keystrokes, the Return key is pressed
-        # automatically, typically after three or four seconds.
-        ( sleep $commandtimeout && \
-              [ $(pgrep -c -f "dmenu -b -m 0 -fn pango:DejaVu Sans 11 -p Command:") -gt 0 ]  && \
-              xdotool key Return) &
-        # The menu is kept short because of the timeout. The user is
-        # expected to type commands, but menu help is available.
-        # You may prefer these menu items in the opposite order.
-        list="cancel help"
-    else
-        # This branch is taken by _highlighting_ help without pressing
-        # the Return key. The menu is displayed with a command list
-        # and does not timeout.
-	list="e0 g0 e1 g1 e2 g2 e3 g3"
-	list="${list} ff tb sk t0 t1 ss "
-        list="cancel ${list}"
-    fi
-    # Numpad enters digits.
+    ( sleep $commandtimeout && \
+          [ $(pgrep -c -f "dmenu -b -m 0 -fn pango:DejaVu Sans 11 -p Command:") -gt 0 ]  && \
+          xdotool key Return) &
     numlockx on
-    cmd=$(echo "${list}" | sed 's/\ /\n/g' | \
+    # This is the stub of a menu because the timeout doesn't allow
+    # enough time to navigate.  Spaces are mapped to linefeeds.
+    cmd=$(echo "cancel" | sed 's/\ /\n/g' | \
                  dmenu -b -m 0 -fn 'pango:DejaVu Sans 11' -p 'Command: ')
     if [ "${cmd}" = "cancel" ]; then
         numlockx off
-    elif [ "${cmd}" = "help" ]; then
-        numlockx off
-        apps "help"
     else
         numlockx off
         echo "${cmd}" > "${dir}/${file}"
