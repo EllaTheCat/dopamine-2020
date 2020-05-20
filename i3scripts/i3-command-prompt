@@ -4,8 +4,8 @@
 #
 
 # The "Command Interface" file is frequently modified.
-dir=/dev/shm/${USER}/i3
-file=command
+dir="/dev/shm/${USER}/i3"
+file="command"
 
 
 #
@@ -17,9 +17,10 @@ menu()
     # In order to reduce manual keystrokes, the Return key is pressed
     # automatically after the timeout expires.
     commandtimeout=${2:-5}
-    ( sleep $commandtimeout && \
-          [ $(pgrep -c -f "dmenu -b -m 0 -fn pango:DejaVu Sans 11 -p Command:") -gt 0 ]  && \
-          xdotool key Return) &
+    ( sleep "${commandtimeout}" && \
+          [ "$(pgrep -c -f 'dmenu -b -m 0 -fn pango:DejaVu Sans 11 -p Command: ')" -gt 0 ]  && \
+          xdotool key Return
+    ) &  # Explicit  subshell.
     numlockx on
     # This is the stub of a menu because the timeout doesn't allow
     # enough time to navigate.  Spaces are mapped to linefeeds.
@@ -37,7 +38,7 @@ menu()
 # Start here.
 #
 
-eval  $1 $2
+eval  "$1" "$2"
 
 #
 # Done.

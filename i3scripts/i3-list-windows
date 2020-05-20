@@ -16,7 +16,7 @@ menu ()
     #   "36"
     # ]
     menu="$(i3-msg -t get_tree | jq '.. | objects | .name,.marks' | \
-                  grep -B1 -A1 [[] | tr -d \\n[  | sed 's/--/\n/g')"
+                  grep -B1 -A1' [[]' | tr -d \\n[  | sed 's/--/\n/g')"
     # Argument parsing is order dependent. $1 required $2 optional.
     # S1 How menu items are laid out. $2 Where to put the window.
     case "$1" in

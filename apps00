@@ -21,4 +21,4 @@ declare -A apps=(
 		  ["sp"]="spotify"
 		  ["sy"]="synaptic-pkexec"
 		  ["tv"]="my-tvheadend start"
-)
+)    #  ---------------------------------------------------------------- #

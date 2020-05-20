@@ -5,7 +5,7 @@
 
 #
 # Please personalise the "my-apps" table in the myscripts folder.
-#
+# This comment requires sshellcheck  c2154
 
 ###INSERT_APPS00_HERE###
 
@@ -35,14 +35,17 @@ focus ()
                     # We want the script to terminate hence using i3-msg.
 		    # The enhanced PATH is exported by the dispatcher.
                     # The i3-msg recipient can't see the enhanced PATH.
-                    # Extract and prepend the path directoriy components.
+                    # Extract and prepend the path directory components.
+
+                    # shellcheck disable=SC2154
                     app=${apps[$1]}
+
                     # The executable name remains after removing the
                     # "longest matching suffix", defined by space star.
                     arg0=${app%% *}
                     # Get the full path to the executable, remove the
                     # name part, prepend the rest to the command.
-                    path=$(which ${arg0})
+                    path=$(command -v  "${arg0}")    # "which"
                     path=${path/${arg0}/}
                     i3-msg "exec --no-startup-id ${path}${app}"
 		    # Allow the app enough time to initialise before applying
@@ -64,10 +67,10 @@ emacsserver ()
     case "$1" in
 	(start|restart)
 	    delay=${2:-3}
-	    if [ $(pgrep  -c -f 'emacs -rv --daemon') -eq 0 ]; then
+	    if [ "$(pgrep  -c -f 'emacs -rv --daemon')" -eq 0 ]; then
 		(emacs -rv --daemon) &
 		# Ensure enogh time for the server to have started.
-		sleep $delay
+		sleep "${delay}"
 	    fi
 	    ;;
 	(stop)

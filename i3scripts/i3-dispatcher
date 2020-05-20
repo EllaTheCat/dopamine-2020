@@ -4,43 +4,46 @@
 #
 
 # Forward a command or command alias or indeed anything with a
-# recognisable header to a handler function. 
+# recognisable header to a handler function.
 forward ()
 {
     export PATH=${HOME}/local/bin:${PATH}
     case "$1" in
 	([a-z][0-9])
-	    nohup i3-focus-app-by-alias focus $1
+	    nohup i3-focus-app-by-alias focus "$1"
 	    ;;
 	([a-z][a-z])
-	    nohup i3-focus-app-by-alias focus $1
+	    nohup i3-focus-app-by-alias focus "$1"
 	    ;;
-	([0-9][0-9][0-9])
-	    nohup i3-triple-digit-command $1
+        ([1-9]][0-9][0-9][0-9])
+            nohup i3-launcher "$@"
+            ;;
+	([1-9][0-9][0-9])
+	    nohup i3-triple-digit-command "$1"
 	    ;;
 	([0-9][0-9])
-	    nohup i3-double-digit-command $1
+	    nohup i3-double-digit-command "$1"
 	    ;;
 	(*)
-	    nomatchfound $1 3
+	nomatchfound "$1" 3
 	    ;;
     esac
 }
 
-# Error message handler.  
+# Error message handler.
 nomatchfound ()
 {
     case "$2" in
 	([1-5])
-	    # Setting $2 to anythiing outside this range of integer
+	    # Setting $2 to anything outside this range of integer
 	    # values in seconds disables the error message. The
 	    # message delivery is non-blocking.
 	    (echo "No match found for \"$1\"" |
 		 dmenu -b -fn "pango:DejaVu Sans 11") &
-	    sleep $2
+	    sleep "$2"
 	    # This key event effects a timeout, but only if the user
 	    # hasn't dismissed the dmenu first. It isn't watertight.
-	    if [ $(pgrep -c -af "dmenu -b -fn pango:DejaVu Sans 11") -eq 1 ]; then
+	    if [ "$(pgrep -c -af 'dmenu -b -fn pango:DejaVu Sans 11')" -eq 1 ]; then
 	       xdotool key --clearmodifiers  Escape
 	    fi
 	    ;;

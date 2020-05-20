@@ -73,6 +73,7 @@ mode "Secondary" {
 
     # Pressing cycles through the three modes. Sec->Def->Pri->Sec.
     bindsym Menu $default
+    bindsym Print $default
 }
 
 #

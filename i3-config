@@ -14,7 +14,7 @@
 #
 
 # Define the terminal binding.
-bindsym Mod4+Return exec --no-startup-id xfce4-terminal
+bindsym Mod4+Return exec  --no-startup-id xfce4-terminal
 
 # Reload the configuration file.
 bindsym Mod4+Shift+c reload
@@ -78,9 +78,15 @@ set $stub nop
 # Menu is a design decision please do not change.
 # I have used 'xcape' to bind Super_L to Menu for the left hand.
 # Pressing cycles through the three modes. Def->Pri->Sec->Def.
-bindsym Menu  $primary
+bindsym Menu $primary
+bindsym Print $primary
 
-###INSERT_CFG01_HERE###
+# KP_Insert  is a design decision please do not change.
+# Command prompt in one keypress.  Faciltates 3 digit commands.
+bindsym KP_Insert $i3cmdprompt menu 4
+
+
+    ###INSERT_CFG01_HERE###
 
 ###INSERT_CFG02_HERE###
 
@@ -112,13 +118,13 @@ mode "Primary" {
 
     # Launch a terminal.
     bindsym t $default, split h, exec  --no-startup-id xfce4-terminal -T "xfce4-terminal"
-    bindsym y $default, split v, exec  --no-startup-id xfce4-terminal -T "xfce4-terminal"
+    bindsym y $default, split v, exec --no-startup-id xfce4-terminal -T "xfce4-terminal"
 
     # Focus the workspace with the latest [u]rgency hint.
     bindsym u $default, [urgent=latest] focus
 
     # [I]nfo on keyboard bindings.
-    bindsym i $stub
+    bindsym i nop
 
     # P for Parent. O for Offspring.
     bindsym o $default, focus child
@@ -132,8 +138,6 @@ mode "Primary" {
     bindsym Tab $default, $i3cmdprompt menu 4
     # The backslash to the left of Z on a UK keyboard US intl layout.
     bindcode 94 $default, $i3cmdprompt menu 4
-    # Command prompt in one keypress.  Faciltates 3 digit commands.
-    bindsym KP_Insert $i3cmdprompt menu 4
 
     # Toggle a side-by-side pair to one-above-the-other.
     # A for Above.
@@ -198,7 +202,8 @@ mode "Primary" {
     bindsym slash $default, $i3listwindows menu column $rmon
 
     # Pressing cycles through the three modes. Pri->Sec->Def->Pri.
-    bindsym Menu  $secondary
+    bindsym Menu $secondary
+    bindsym Print $secondary
 }
 
 ###INSERT_CFG05_HERE###
