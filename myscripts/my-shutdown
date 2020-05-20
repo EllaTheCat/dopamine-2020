@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# my-shutdown
+#
+
+#
+#
+#
+shutdown ()
+{
+    # I prefer to start the session with a minimal set of programs,
+    # and to finish the session with an orderly dismissal of running
+    # programs. This list isn't exhaustive.
+    i3-msg [instance="Navigator"] klil
+    i3-msg [instance="emacs"] klil
+    i3-msg [instance="xfce4-terminal"] kill
+    sleep 5
+   my-usb-disks  dismount
+    sleep 5
+    my-usb-disks  spindown
+    sleep 5
+    # Shutdown without saving the session.
+    xfce4-session-logout --fast
+}
+
+#
+# Start here.
+#
+
+eval shutdown  # There are no options by design.
+
+#
+# Done.
+#

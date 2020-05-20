@@ -2,7 +2,7 @@
 #
 # Spin down the USB drives attached to my desktop PC, their blue
 # LEDs should stay dark. One drive automatically spins down, one
-# drive only spins down when requested. 
+# drive only spins down when requested.
 #
 # USB HDDs sdc and sdd should be Banana and Tabasco but I sometimes
 # manage to swap them with each other, hence I treat them as a pair.
@@ -26,15 +26,6 @@ spindown ()
 {
     sudo /usr/sbin/hd-idle -t sdc
     sudo /usr/sbin/hd-idle -t sdd
-}
-
-shutdown ()
-{
-    dismount
-    sleep 2
-    spindown
-    sleep 2
-    xfce4-session-logout --halt
 }
 
 #
