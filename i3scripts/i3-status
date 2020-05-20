@@ -4,7 +4,7 @@
 
 i3status "$@" | while :
 do
-    read line
+    read -r line
     wcam=$(lsof /dev/video0 | awk '{print $1}' | grep -v COMMAND | uniq | sed 's/skypeforl*/skype/g')
     wcam=${wcam:-'idle'}
     wmic=$(pactl list sources | grep -A 7  alsa_input.usb-Alcor_Micro__Corp._TeckNet-02.mono-fallback | grep -c 'Mute: no')

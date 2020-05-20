@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# i3-launcher
+#
+# - This provides barebones start-stop functionality over a
+# - unidirectional connection.
+#
+
+#
+# Launch a program.
+#
+start ()
+{
+    i3-msg "exec --no-startup-id ${*:2}"
+    sleep 0.5
+    i3-msg "mark --add --replace  _$1_"
+}
+
+#
+# Kill a program.
+#
+stop ()
+{
+    # shellcheck disable=SC2102
+    i3-msg [con_mark=\"_$1_\"] kill
+}
+
+#
+# Start here.
+#
+
+if [ $# -ne 1 ]
+then
+    eval start "$1" "${@:2}"
+else
+    eval stop "$1"
+fi
+
+
+
+#
+# Done.
+#

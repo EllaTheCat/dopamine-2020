@@ -1,6 +1,13 @@
 #!/bin/bash
 #
 # i3-scratchpad
+#
+
+#  Constants copied from i3-config must maintain consistency.
+
+###export lmon="HDMI-2"
+export cmon="HDMI-1"
+###export rmon="HDMI-1"
 
 #
 # Toggle the scratchpad terminal between show and hide.
@@ -29,7 +36,7 @@ toggle ()
 # Start here.
 #
 
-eval $1
+eval "$1"
 
 #
 # Done.

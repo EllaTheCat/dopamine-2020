@@ -43,14 +43,18 @@ CFGMODE=644
     $(I3BIN)/i3-file-watcher \
     $(I3BIN)/i3-dispatcher \
     $(I3BIN)/i3-focus-app-by-alias \
-    $(I3BIN)/i3-mode \
+    $(I3BIN)/i3-launcher \
     $(I3BIN)/i3-keyboard \
+    $(I3BIN)/i3-mode \
     $(I3BIN)/i3-mouse \
     $(I3BIN)/i3-scratchpad \
     $(I3BIN)/i3-list-windows \
     $(I3BIN)/i3-status
 
-  .installextras:  $(I3BIN)/my-usb-disks
+  .installextras:  \
+	$(I3BIN)/my-tvheadend \
+	$(I3BIN)/my-usb-disks \
+	$(I3BIN)/my-shutdown
 
 
 all :  .installdirs .installconfigs .installscripts .installextras
@@ -92,47 +96,131 @@ $(I3STATUSCFG):  i3-status-config
 	@sleep 2
 	@i3-msg 'mode "default"'
 	@i3-msg "restart"
+	@sleep 2
+	@i3-msg "exec --no-startup-id xfce4-panel --restart"
 
 # .installscripts
 
-$(I3BIN)/i3-command-prompt: $(I3SCRIPTS)/i3-command-prompt
+$(I3BIN)/i3-command-prompt: \
+	$(I3SCRIPTS)/i3-command-prompt \
+	$(I3SCRIPTS)/i3-command-prompt.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-command-prompt $(I3BIN)
 
-$(I3BIN)/i3-file-watcher: $(I3SCRIPTS)/i3-file-watcher
+$(I3SCRIPTS)/i3-command-prompt.log: $(I3SCRIPTS)/i3-command-prompt
+	@shellcheck $(I3SCRIPTS)/i3-command-prompt > $@
+
+$(I3BIN)/i3-file-watcher:  \
+	$(I3SCRIPTS)/i3-file-watcher \
+	$(I3SCRIPTS)/i3-file-watcher.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-file-watcher $(I3BIN)
 
-$(I3BIN)/i3-dispatcher: $(I3SCRIPTS)/i3-dispatcher
+$(I3SCRIPTS)/i3-file-watcher.log: $(I3SCRIPTS)/i3-file-watcher
+	@shellcheck $(I3SCRIPTS)/i3-file-watcher > $@
+
+$(I3BIN)/i3-dispatcher: \
+	$(I3SCRIPTS)/i3-dispatcher \
+	$(I3SCRIPTS)/i3-dispatcher.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-dispatcher $(I3BIN)
+
+$(I3SCRIPTS)/i3-dispatcher.log: $(I3SCRIPTS)/i3-dispatcher
+	@shellcheck $(I3SCRIPTS)/i3-dispatcher > $@
 
 # This rule immediately modifies the recently installed file.
 $(I3BIN)/i3-focus-app-by-alias: \
-$(I3SCRIPTS)/i3-focus-app-by-alias apps00
+	$(I3SCRIPTS)/i3-focus-app-by-alias \
+	$(I3SCRIPTS)/i3-focus-app-by-alias.log  \
+	apps00
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-focus-app-by-alias $(I3BIN)
 	@sed -e '/###INSERT_APPS00_HERE###/ {' -e 'r apps00' -e 'd' -e '}' \
          -i   $(I3BIN)/i3-focus-app-by-alias
 
-$(I3BIN)/i3-mode: $(I3SCRIPTS)/i3-mode
-	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-mode $(I3BIN)
+$(I3SCRIPTS)/i3-focus-app-by-alias.log: $(I3SCRIPTS)/i3-focus-app-by-alias
+	@shellcheck $(I3SCRIPTS)/i3-focus-app-by-alias > $@
 
-$(I3BIN)/i3-keyboard: $(I3SCRIPTS)/i3-keyboard
+$(I3BIN)/i3-launcher: \
+	$(I3SCRIPTS)/i3-launcher \
+	$(I3SCRIPTS)/i3-launcher.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-launcher $(I3BIN)
+
+$(I3SCRIPTS)/i3-launcher.log: $(I3SCRIPTS)/i3-launcher
+	@shellcheck $(I3SCRIPTS)/i3-launcher  > $@
+
+$(I3BIN)/i3-keyboard: \
+	$(I3SCRIPTS)/i3-keyboard \
+	$(I3SCRIPTS)/i3-keyboard.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-keyboard $(I3BIN)
 
-$(I3BIN)/i3-mouse: $(I3SCRIPTS)/i3-mouse
+$(I3SCRIPTS)/i3-keyboard.log: $(I3SCRIPTS)/i3-keyboard
+	@shellcheck $(I3SCRIPTS)/i3-keyboard > $@
+
+$(I3BIN)/i3-mode: \
+	$(I3SCRIPTS)/i3-mode \
+	$(I3SCRIPTS)/i3-mode.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-mode $(I3BIN)
+
+$(I3BIN)/i3-mouse: \
+	$(I3SCRIPTS)/i3-mouse \
+	$(I3SCRIPTS)/i3-mouse.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-mouse $(I3BIN)
 
-$(I3BIN)/i3-scratchpad: $(I3SCRIPTS)/i3-scratchpad
+$(I3SCRIPTS)/i3-mouse.log: $(I3SCRIPTS)/i3-mouse
+	@shellcheck $(I3SCRIPTS)/i3-mouse > $@
+
+$(I3BIN)/i3-scratchpad: \
+	$(I3SCRIPTS)/i3-scratchpad \
+	$(I3SCRIPTS)/i3-scratchpad.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-scratchpad $(I3BIN)
 
-$(I3BIN)/i3-list-windows: $(I3SCRIPTS)/i3-list-windows
+$(I3SCRIPTS)/i3-scratchpad.log: $(I3SCRIPTS)/i3-scratchpad
+	@shellcheck $(I3SCRIPTS)/i3-scratchpad > $@
+
+$(I3BIN)/i3-list-windows: \
+	$(I3SCRIPTS)/i3-list-windows \
+	$(I3SCRIPTS)/i3-list-windows.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-list-windows $(I3BIN)
 
-$(I3BIN)/i3-status: $(I3SCRIPTS)/i3-status
+$(I3SCRIPTS)/i3-list-windows.log: $(I3SCRIPTS)/i3-list-windows
+	@shellcheck $(I3SCRIPTS)/i3-list-windows > $@
+
+$(I3BIN)/i3-status: \
+	$(I3SCRIPTS)/i3-status \
+	$(I3SCRIPTS)/i3-status.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-status $(I3BIN)
+	@i3-msg 'mode "restart"'
+	@sleep 2
+	@i3-msg 'mode "default"'
+	@i3-msg "restart"
+	@sleep 2
+	@i3-msg "exec --no-startup-id xfce4-panel --restart"
+
+$(I3SCRIPTS)/i3-status.log: $(I3SCRIPTS)/i3-status
+	@shellcheck $(I3SCRIPTS)/i3-status > $@
 
 # .installextras
 
-$(I3BIN)/my-usb-disks: $(MYSCRIPTS)/my-usb-disks
+$(I3BIN)/my-tvheadend: \
+	$(MYSCRIPTS)/my-tvheadend \
+	$(MYSCRIPTS)/my-tvheadend.log
+	@install -m $(EXEMODE) $(MYSCRIPTS)/my-tvheadend $(I3BIN)
+
+$(MYSCRIPTS)/my-tvheadend.log: $(MYSCRIPTS)/my-tvheadend
+	@shellcheck $(MYSCRIPTS)/my-tvheadend > $@
+
+(I3BIN)/my-usb-disks: \
+	$(MYSCRIPTS)/my-usb-disks \
+	$(MYSCRIPTS)/my-usb-disks.log
 	@install -m $(EXEMODE) $(MYSCRIPTS)/my-usb-disks $(I3BIN)
+
+$(MYSCRIPTS)/my-usb-disks.log: $(MYSCRIPTS)/my-usb-disks
+	@shellcheck $(MYSCRIPTS)/my-usb-disks > $@
+
+$(I3BIN)/my-shutdown: \
+	$(MYSCRIPTS)/my-shutdown \
+	$(MYSCRIPTS)/my-shutdown.log
+	@install -m $(EXEMODE) $(MYSCRIPTS)/my-shutdown $(I3BIN)
+
+$(MYSCRIPTS)/my-shutdown.log: $(MYSCRIPTS)/my-shutdown
+	@shellcheck $(MYSCRIPTS)/my-shutdown > $@
 
 # Debug use only.
 vars:

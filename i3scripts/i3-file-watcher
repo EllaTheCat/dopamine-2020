@@ -5,22 +5,25 @@
 #
 
 #
-# Sttart here.
+# Start here.
 #
 
 i3=/dev/shm/$USER/i3
-mkdir -p $i3
+mkdir -p "${i3}"
 
-touch $i3/command
-chmod 755 $i3/command
-touch $i3/execute
-chmod 755 $i3/execute
+touch "$i3/command"
+chmod 755 "$i3/command"
+touch "$i3/execute"
+chmod 755 "$i3/execute"
 
 # Use single quotes such that the command file contents are evaluted
-# when the dispatcher runs. ("echo" joins its string arguments.) 
-echo 'eval /bin/false' > $i3/command
+# when the dispatcher runs. ("echo" joins its string arguments.)
+#
+# shellcheck disable=SC2016
+echo 'eval /bin/false' > "${i3}/command"
+# shellcheck disable=SC2016
 echo 'eval $HOME/local/bin/i3-dispatcher forward' \
-     '$(cat /dev/shm/$USER/i3/command)' > $i3/execute
+     '$(cat /dev/shm/$USER/i3/command)' > "${i3/execute}"
 
 i3-msg "workspace --no-auto-back-and-forth \"wm\""
 sleep 0.2

@@ -1,0 +1,12 @@
+# .gitignore
+# dot-gtignore
+
+nohup.out
+
+# shellcheck errors
+
+i3scripts/*log
+myscripts/*log
+
+
+# Done.
