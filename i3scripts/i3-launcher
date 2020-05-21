@@ -1,28 +1,49 @@
-rese#!/bin/bash
+#!/bin/bash
 #
 # i3-launcher
 #
-# - This provides barebones start-stop functionality over a
-# - unidirectional connection.
-#
+
+
 
 #
-# Launch a program.
+# Launch a program and register it.
 #
 start ()
 {
     i3-msg "exec --no-startup-id ${*:2}"
-    sleep 0.5
-    i3-msg "mark --add --replace  _$1_"
+    sleep 0.99s  # Enough time for app to start?
+    pids=$(pgrep  --newest  -f   "${*:2}" )  # Is the newest sufficient?
+
+    # 10 digits separator 4 digits separator 6 digits
+    echo "$(date +%s)=$1=${pids} " >> /dev/shm/shevek/i3/launcher
 }
 
 #
-# Kill a program.
+# Kill a program and deregister it. Do this for stale entries too.
 #
 stop ()
 {
-    # shellcheck disable=SC2102
-    i3-msg [con_mark=\"_$1_\"] kill
+    tnow=$(date +%s)
+    while IFS=  read -r line
+    do
+        time=${line:0:10}
+        fake=${line:11:4}
+        real=${line:17:6}
+
+        # Anything matching the fake pid is killed & purged.
+        # Anything else under a day old is kept in the list.
+        # Anything else over a day old is killed & purged.
+        touch /dev/shm/shevek/i3/update
+        diff=$((tnow- time))
+        if [ "${fake}" = "$1" ] ; then
+            kill "${real}"
+        elif [ ${diff} -lt  86400 ]; then
+            echo "$(date +%s) $1 ${real}" >> /dev/shm/shevek/i3/update
+        else
+            kill "${real}"
+        fi
+    done < /dev/shm/shevek/i3/launcher
+    mv /dev/shm/shevek/i3/update /dev/shm/shevek/i3/launcher
 }
 
 #
