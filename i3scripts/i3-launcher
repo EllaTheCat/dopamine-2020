@@ -1,4 +1,4 @@
-#!/bin/bash
+rese#!/bin/bash
 #
 # i3-launcher
 #
@@ -31,7 +31,8 @@ stop ()
 
 if [ $# -ne 1 ]
 then
-    eval start "$1" "${@:2}"
+    # shellcheck disable=SC2068
+    eval start "$1" ${@:2}
 else
     eval stop "$1"
 fi

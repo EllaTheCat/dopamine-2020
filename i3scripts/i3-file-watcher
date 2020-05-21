@@ -8,27 +8,31 @@
 # Start here.
 #
 
+# Create the directory and files. set permissions.
 i3=/dev/shm/$USER/i3
 mkdir -p "${i3}"
-
 touch "$i3/command"
 chmod 755 "$i3/command"
 touch "$i3/execute"
 chmod 755 "$i3/execute"
 
-# Use single quotes such that the command file contents are evaluted
-# when the dispatcher runs. ("echo" joins its string arguments.)
+# Set the file contents. The command is iinitialised with a nop.  The
+# execute command has to be expanded at dispatch time.  Single quotes
+# ensure that the string is not expanded when copied into the execute
+# file. Shellcheck doesn't think this is what we want so the warning
+# is disabled,. Note: "echo" joins its string arguments with a space.
 #
 # shellcheck disable=SC2016
 echo 'eval /bin/false' > "${i3}/command"
 # shellcheck disable=SC2016
 echo 'eval $HOME/local/bin/i3-dispatcher forward' \
-     '$(cat /dev/shm/$USER/i3/command)' > "${i3/execute}"
-
+     '$(cat /dev/shm/$USER/i3/command)' > "${i3}/execute"
+# Focus the workspace, created if non-existent, allow enough  time.
 i3-msg "workspace --no-auto-back-and-forth \"wm\""
 sleep 0.2
+# This matches all windows in the currently focused workspace.
 i3-msg '[workspace="__focused__"] kill'
-
+# Killl the running inotify-hookable and start another.
 pkill -f "inotify-hookable --watch-files $i3/command"
 xfce4-terminal \
     -T "Command Interface" \
