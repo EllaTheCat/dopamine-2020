@@ -13,8 +13,12 @@
 # - A corollary is that essentials be defined as early as possible.
 #
 
-# Define the terminal binding.
-bindsym Mod4+Return exec  --no-startup-id xfce4-terminal
+# 1st choice. Survives  i3 restart.
+bindsym Mod4+Return \
+        exec  --no-startup-id  urxvt -xrm ~/urxvt.Xdefaults
+
+# 2nd choice. Does not survive i3 restart.
+bindsym Mod4+Shift+Return exec  --no-startup-id xfce4-terminal
 
 # Reload the configuration file.
 bindsym Mod4+Shift+c reload
@@ -85,8 +89,7 @@ bindsym Print $primary
 # Command prompt in one keypress.  Faciltates 3 digit commands.
 bindsym KP_Insert $i3cmdprompt menu 4
 
-
-    ###INSERT_CFG01_HERE###
+###INSERT_CFG01_HERE###
 
 ###INSERT_CFG02_HERE###
 
@@ -116,9 +119,9 @@ mode "Primary" {
             -P '(rename this workspace to): ' \
             -F 'rename workspace to "%s"'
 
-    # Launch a terminal.
-    bindsym t $default, split h, exec  --no-startup-id xfce4-terminal -T "xfce4-terminal"
-    bindsym y $default, split v, exec --no-startup-id xfce4-terminal -T "xfce4-terminal"
+    # Launch a terminal.  1st choice.
+    bindsym t $default, split h,   exec  --no-startup-id  urxvt -xrm ~/urxvt.Xdefaults
+    bindsym y $default, split v,   exec  --no-startup-id  urxvt -xrm ~/urxvt.Xdefaults
 
     # Focus the workspace with the latest [u]rgency hint.
     bindsym u $default, [urgent=latest] focus

@@ -16,8 +16,10 @@ mode "Secondary" {
     bindsym w nop
 
     bindsym r nop
-    bindsym t nop
-    bindsym y nop
+
+    # Launch a terminal.  2nd choice.
+    bindsym t $default, split h, exec  --no-startup-id xfce4-terminal -T "xfce4-terminal"
+    bindsym y $default, split v, exec --no-startup-id xfce4-terminal -T "xfce4-terminal"
 
     bindsym i nop
     bindsym o nop
