@@ -9,9 +9,15 @@ tvhpath=/home/shevek/Zebra/packages/tvheadend/tvheadend/build.linux
 
 case "$1" in
     (start)
+	(eval urxvt -title 'tvheadend' -e ${tvhpath}/tvheadend --noacl) &
+	;;
+    (start2)
 	(eval xfce4-terminal -T 'tvheadend' -x ${tvhpath}/tvheadend --noacl) &
 	;;
     (stop)
+	pkill -f "urxvt -title 'tvheadend' -e  ${tvhpath}tvheadend --no-acl"
+	;;
+    (stop2)
 	pkill -f "xfce4-terminal -T 'tvheadend' -x  ${tvhpath}tvheadend --no-acl"
 	;;
 esac
