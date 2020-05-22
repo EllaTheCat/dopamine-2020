@@ -14,8 +14,7 @@
 #
 
 # 1st choice. Survives  i3 restart.
-bindsym Mod4+Return \
-        exec  --no-startup-id  urxvt -xrm ~/urxvt.Xdefaults
+bindsym Mod4+Return exec  --no-startup-id  urxvt
 
 # 2nd choice. Does not survive i3 restart.
 bindsym Mod4+Shift+Return exec  --no-startup-id xfce4-terminal
@@ -24,6 +23,10 @@ bindsym Mod4+Shift+Return exec  --no-startup-id xfce4-terminal
 bindsym Mod4+Shift+c reload
 # Restart i3 in place.
 bindsym Mod4+Shift+r restart
+
+# Be careful.
+bindsym Mod4+Shift+x exec --no-startup-id \
+        xrdb ${HOME}/urxvt.Xdefaults
 
 #
 # CONSTANTS.
@@ -120,8 +123,8 @@ mode "Primary" {
             -F 'rename workspace to "%s"'
 
     # Launch a terminal.  1st choice.
-    bindsym t $default, split h,   exec  --no-startup-id  urxvt -xrm ~/urxvt.Xdefaults
-    bindsym y $default, split v,   exec  --no-startup-id  urxvt -xrm ~/urxvt.Xdefaults
+    bindsym t $default, split h,   exec  --no-startup-id  urxvt
+    bindsym y $default, split v,   exec  --no-startup-id  urxvt
 
     # Focus the workspace with the latest [u]rgency hint.
     bindsym u $default, [urgent=latest] focus
