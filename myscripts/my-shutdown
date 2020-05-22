@@ -14,11 +14,15 @@ shutdown ()
     i3-msg [instance="Navigator"] klil
     i3-msg [instance="emacs"] klil
     i3-msg [instance="xfce4-terminal"] kill
-    sleep 5
-   my-usb-disks  dismount
-    sleep 5
+    sleep 2
+    my-usb-disks  configure
+    sleep 2
     my-usb-disks  spindown
-    sleep 5
+    sleep 2
+   my-usb-disks  dismount
+    sleep 2
+    my-usb-disks  spindown
+    sleep 2
     # Shutdown without saving the session.
     xfce4-session-logout --fast
 }
