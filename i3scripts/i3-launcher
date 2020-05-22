@@ -2,8 +2,17 @@
 #
 # i3-launcher
 #
-
-
+# - The filewatcher invokes scripts whose lifetiime is comparable to
+# - the lifetime of the command they process.
+#
+# - Launching can't return a PID without a return channel, but the
+# - real PID can be attached to a fake PID sent with the command.  The
+# - fake PID can be sent again to stop the running command by the
+# - launcher looking up the real PID. The use case is changing TV
+# - channel.
+#
+# - The PID lookup table is a file in shared memory.
+#
 
 #
 # Launch a program and register it.
@@ -23,24 +32,28 @@ start ()
 #
 stop ()
 {
+    rm -f /dev/shm/shevek/i3/update
+    touch /dev/shm/shevek/i3/update
     tnow=$(date +%s)
     while IFS=  read -r line
     do
         time=${line:0:10}
         fake=${line:11:4}
-        real=${line:17:6}
+        real=${line:16:6}
 
         # Anything matching the fake pid is killed & purged.
         # Anything else under a day old is kept in the list.
         # Anything else over a day old is killed & purged.
-        touch /dev/shm/shevek/i3/update
         diff=$((tnow- time))
+        echo "diff=$diff"
         if [ "${fake}" = "$1" ] ; then
-            kill "${real}"
+            echo "match=${real}"
+            /bin/kill  -9 "${real}"
         elif [ ${diff} -lt  86400 ]; then
             echo "$(date +%s) $1 ${real}" >> /dev/shm/shevek/i3/update
         else
-            kill "${real}"
+            echo "stale=${real}"
+            /bin/kill  -9 "${real}"
         fi
     done < /dev/shm/shevek/i3/launcher
     mv /dev/shm/shevek/i3/update /dev/shm/shevek/i3/launcher
