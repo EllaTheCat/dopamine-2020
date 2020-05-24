@@ -34,9 +34,8 @@ sleep 0.2
 i3-msg '[workspace="__focused__"] kill'
 # Killl the running inotify-hookable and start another.
 pkill -f "inotify-hookable --watch-files $i3/command"
-xfce4-terminal \
-    -T "Command Interface" \
-    -e "inotify-hookable --watch-files $i3/command --on-modify-command $i3/execute" &
+# Be careful! Use no terminal here! Use no ampersand here!
+inotify-hookable --watch-files "${i3}"/command --on-modify-command "${i3}"/execute
 
 #
 # Done.
