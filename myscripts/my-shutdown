@@ -4,34 +4,31 @@
 #
 
 #
-# Perform orderly shutdown.
+# Gently close apps prior to shutdown.
 #
-shutdown ()
+apps ()
 {
-    # I prefer to start the session with a minimal set of programs,
-    # and to finish the session with an orderly dismissal of running
-    # programs. This list isn't exhaustive.
-    i3-msg [instance="Navigator"] klil
-    i3-msg [instance="emacs"] klil
+    i3-msg [instance="Navigator"] kill
+    i3-msg [instance="emacs"] kill
+    i3-msg [instance="urxvt"] kill
     i3-msg [instance="xfce4-terminal"] kill
+}
+
+#
+# Ensure spindown survives shutdown.
+#
+disks ()
+{
+    my-usb-disks dismount
     sleep 2
-    my-usb-disks  configure
-    sleep 2
-    my-usb-disks  spindown
-    sleep 2
-   my-usb-disks  dismount
-    sleep 2
-    my-usb-disks  spindown
-    sleep 2
-    # Shutdown without saving the session.
-    xfce4-session-logout --fast
+    my-usb-disks spindown
 }
 
 #
 # Start here.
 #
 
-eval shutdown  # There are no options by design.
+eval "$1"
 
 #
 # Done.
