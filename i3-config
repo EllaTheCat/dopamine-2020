@@ -7,26 +7,25 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 #
+# IMPORTANT.
+#
+# You *must* run 'make' successfully before attempting reload or
+# refresh.  Config changes trigger reload. Status changes trigger
+# restart.  There are no bindings, using i3-msg in the terminal where
+# yuo did 'make' is recommended.
+#
+
+#
 # NON NEGOTIABLE.
 #
 # - Bindings and settings are defined such that  "first one wins".
 # - A corollary is that essentials be defined as early as possible.
 #
 
-# 1st choice. Survives  i3 restart.
-bindsym Mod4+Return exec  --no-startup-id  urxvt
+# Choose a terminal you can use to repair a broken configuration.
+bindsym Mod4+Return exec xfce4-terminal
 
-# 2nd choice. Does not survive i3 restart.
-bindsym Mod4+Shift+Return exec  --no-startup-id xfce4-terminal
-
-# Reload the configuration file.
-bindsym Mod4+Shift+c reload
-# Restart i3 in place.
-bindsym Mod4+Shift+r restart
-
-# Be careful.
-bindsym Mod4+Shift+x exec --no-startup-id \
-        xrdb ${HOME}/urxvt.Xdefaults
+#
 
 #
 # CONSTANTS.
@@ -47,7 +46,6 @@ set $secondary exec --no-startup-id ~/local/bin/i3-mode Secondary
 # Helpers. Embedding the path explicitly is belt and braces.
 set $i3cmdprompt exec --no-startup-id ~/local/bin/i3-command-prompt
 set $i3filewatcher exec_always --no-startup-id ~/local/bin/i3-file-watcher
-set $i3focusapps exec --no-startup-id ~/local/bin/i3-focus-app-by-alias
 set $i3mode exec --no-startup-id ~/local/bin/i3-mode
 set $i3scratchpad exec --no-startup-id ~/local/bin/i3-scratchpad
 set $i3listwindows exec --no-startup-id ~/local/bin/i3-list-windows
@@ -122,14 +120,15 @@ mode "Primary" {
             -P '(rename this workspace to): ' \
             -F 'rename workspace to "%s"'
 
-    # Launch a terminal.  1st choice.
-    bindsym t $default, split h,   exec  --no-startup-id  urxvt
-    bindsym y $default, split v,   exec  --no-startup-id  urxvt
+    # Launch a terminal. Including the preceding splits feels natural
+    # to me. I urge you to try it.
+    bindsym t $default, split h, exec xfce4-terminal
+    bindsym y $default, split v, exec xfce4-terminal
 
     # Focus the workspace with the latest [u]rgency hint.
     bindsym u $default, [urgent=latest] focus
 
-    # [I]nfo on keyboard bindings.
+    # [I]nfo on keyboard bindings. Reserved.
     bindsym i nop
 
     # P for Parent. O for Offspring.
@@ -173,12 +172,13 @@ mode "Primary" {
     bindsym semicolon floating toggle
     bindsym apostrophe focus mode_toggle
 
-    # When the phone rings, related images overlay all monitors, this
-    # dismisses them with one keypress.
-    bindsym Return $default, [workspace="phonecall1"] kill, \
+    # When the phone rings, related images overlay both my monitors,
+    # this dismisses them with one keypress.
+    bindsym Return $default,\
+            [workspace="phonecall1"] kill, \
             [workspace="phonecall2"] kill, \
-            focus output HDMI1, workspace prev_on_output, \
-            focus output HDMI2, workspace prev_on_output;
+            focus output $lmon, workspace prev_on_output, \
+            focus output $cmon, workspace prev_on_output;
 
     # Move workspace to another output.
     bindsym z $default, move workspace to output $lmon
@@ -192,7 +192,7 @@ mode "Primary" {
     # Place a unique two digit mark on the focused window's title bar.
     # [u] and [m] are already in use. The mark is a two digit [n]umber.
     # The prompt doesn't work because it forgets where the focus was.
-    bindsym n $default, $i3wrapper --unique-mark
+    bindsym n $default, nop
 
     # (M)ove container to named workspace.
     bindsym m \
@@ -226,15 +226,18 @@ mode "restart" {
 
 ###INSERT_CFG08_HERE###
 
+# A dark and translucent appearance for urxvt should it be used in
+# config files or in scripts.
+exec --no-startup-id /usr/bin/xrdb ${HOME}/urxvt.Xdefaults
 
 # Additional Menu and Escape keys.
 # It's OK to restart a small utllity like this when i3 is restarted.
-exec_always --no-startup-id  ~/local/bin/i3-keyboard xmodmapkeys
-exec_always --no-startup-id  ~/local/bin/i3-keyboard xcapekeys
+exec  ~/local/bin/i3-keyboard xmodmapkeys
+exec  ~/local/bin/i3-keyboard xcapekeys
 
 # Command Interface.
-# It's OK to restart this script lwhen i3 is restarted.
-exec_always --no-startup-id  ~/local/bin/i3-file-watcher
+# It's OK to restart this script when i3 is restarted.
+exec --no-startup-id ~/local/bin/i3-file-watcher
 
 #
 # Done.
