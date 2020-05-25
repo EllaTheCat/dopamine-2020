@@ -8,13 +8,13 @@
 # Start here.
 #
 
-# Create the directory and files. set permissions.
+# Create the directory and files. Set the strictest permissions.
 i3=/dev/shm/$USER/i3
 mkdir -p "${i3}"
 touch "$i3/command"
-chmod 755 "$i3/command"
+chmod 600 "$i3/command"
 touch "$i3/execute"
-chmod 755 "$i3/execute"
+chmod 700 "$i3/execute"
 
 # Set the file contents. The command is iinitialised with a nop.  The
 # execute command has to be expanded at dispatch time.  Single quotes
