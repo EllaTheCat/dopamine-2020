@@ -5,6 +5,7 @@
 
 #
 # Gently close apps prior to shutdown.
+# - Doing so mitigates the risk of accessing the USB HDDs.
 #
 apps ()
 {
@@ -16,6 +17,8 @@ apps ()
 
 #
 # Ensure spindown survives shutdown.
+# - This encapsulates the order and timing required.
+# - Close the session immediately afterwards.
 #
 disks ()
 {
