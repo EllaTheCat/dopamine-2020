@@ -2,29 +2,45 @@
 #
 # i3-launcher
 #
-# - The filewatcher invokes scripts whose lifetiime is comparable to
-# - the lifetime of the command they process.
-#
-# - Launching can't return a PID without a return channel, but the
-# - real PID can be attached to a fake PID sent with the command.  The
-# - fake PID can be sent again to stop the running command by the
-# - launcher looking up the real PID. The use case is changing TV
-# - channel.
-#
-# - The PID lookup table is a file in shared memory.
-#
-
+# - The canonical use case is changing TV channel.
+# - Sending a fake PID and a command starts streaming.
+# - The fake PID is bound to the real PID at the start.
+# - The PID lookup table is a text file in shared memory.
+# - Each line holds a timestamp, a fake PID and the real PID.
+# - Sending the same fake PID with no command stops streaming.
+# - The timestamp of every line is checked to purge stale entries.
+# - Prefer letting the launcher set the app.
+# - Prefer the whitelisted apps in commands that specify the app.
+# - The fallback
 #
 # Launch a program and register it.
 #
 start ()
 {
-    i3-msg "exec --no-startup-id ${*:2}"
-    sleep 0.99s  # Enough time for app to start?
-    pids=$(pgrep  --newest  -f   "${*:2}" )  # Is the newest sufficient?
-
-    # 10 digits separator 4 digits separator 6 digits
-    echo "$(date +%s)=$1=${pids} " >> /dev/shm/shevek/i3/launcher
+    if [ "${2:0:1}" = "/" ]; then
+        # Absolute paths can be detected reliably.
+        # Allowing arbitrary programs is insecure.
+        app="mpv"
+        i3-msg "exec --no-startup-id ${app} ${*:2}"
+        sleep 2.0
+        real=$(pgrep --newest -f "${app} ${*:2}")
+    else
+        app=$2
+        i3-msg "exec --no-startup-id ${*:2}"
+        sleep 2.0
+        real=$(pgrep --newest -f "${*:2}")
+    fi
+    case "$(basename "${app}")" in
+        (mpv|vlc)
+            echo "$(date +%s)" "$1" "${real}" >> /dev/shm/shevek/i3/launcher
+            ;;
+        (*)
+            echo "WARNING:" "$(basename "${app}")" "not whitelisted!"
+            echo "$(date +%s)" "$1" "${real}" >> /dev/shm/shevek/i3/launcher
+            real=$((real + 1))  # This is a hack. Test case: urxvt
+            echo "$(date +%s)" "$1" "${real}" >> /dev/shm/shevek/i3/launcher
+            ;;
+    esac
 }
 
 #
@@ -37,23 +53,22 @@ stop ()
     tnow=$(date +%s)
     while IFS=  read -r line
     do
-        time=${line:0:10}
-        fake=${line:11:4}
-        real=${line:16:6}
-
+        time=$(echo "${line}" | awk '{print $1}')
+        fake=$(echo "${line}" | awk '{print $2}')
+        real=$(echo "${line}" | awk '{print $3}')
         # Anything matching the fake pid is killed & purged.
+        # Anything over a day old is killed & purged.
         # Anything else under a day old is kept in the list.
-        # Anything else over a day old is killed & purged.
-        diff=$((tnow- time))
-        echo "diff=$diff"
+        diff=$((tnow - time))
+        echo "diff=$diff real=${real}"
         if [ "${fake}" = "$1" ] ; then
             echo "match=${real}"
-            /bin/kill  -9 "${real}"
-        elif [ ${diff} -lt  86400 ]; then
-            echo "$(date +%s) $1 ${real}" >> /dev/shm/shevek/i3/update
-        else
+            /bin/kill -9 "${real}"
+        elif [ ${diff} -gt  86400 ]; then
             echo "stale=${real}"
-            /bin/kill  -9 "${real}"
+            /bin/kill -9 "${real}"
+        else
+            echo "${line}" >> /dev/shm/shevek/i3/update
         fi
     done < /dev/shm/shevek/i3/launcher
     mv /dev/shm/shevek/i3/update /dev/shm/shevek/i3/launcher
