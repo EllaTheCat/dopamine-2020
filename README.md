@@ -84,10 +84,22 @@ Looking at i3-config you'll see several "magic comments":
 The Makefile first deploys "i3-config"  as "$HOME/.i3/config" and
 then runs sed scripts that perform in-place replacement of any
 magic comments with the contents of the files they reference.
-These "cfg" files live in "i3-config.d'.
+These "cfg" files live in "i3-config.d':
+
+- cfg00 - Classic bindings
+- cfg01 - Numpad bindings
+- cfg02 - Cluster bindings
+- cfg03 - Reserved
+- cfg04 - Primary bindings
+- cfg05 - Secondary bindings
+- cfg06 - Reserved
+- cfg07 - Settings (non-executable)
+- cfg08 - Settings (executable, including bar settings)
+- cfg09 - Reserved
 
 There's nothing to stop competent users editing "cfg" files, and this
-is to be encouraged. Use ".git/info/exclude" to prevent overwriting.
+is to be encouraged. Use ".git/info/exclude" to prevent overwriting by
+'git pull', don't use .gitignore.
 
 I concede that the decisions about the contents of each "cfg" file
 will need reviewing, so "i3-config" won't become stable in git
@@ -96,15 +108,11 @@ overnight. Eggs, omelettes.
 ## Multiple machines, one config
 Posts on /r/i3wm show there's quite a demand for this. It is going to
 happen, but not at first release in June, because things need to shake
-down and stabilise first. Here's how and why it works:
+down and stabilise first.
 
-Before i3 starts, "make" runs. It only updates the config to tailor it
-to the machine once, so most of the time "make" exits immediately and
-has no inpact on startup time.
-
-If you are nervous about running "make" at startup, I would be, the
-safer way to proceed is to log out, drop to the Linux console, run
-"make" and then either log in again or restart/shutdown.
+For this to work, "make" must be run before i3. One way is to log out,
+drop to the Linux console, run "make" and then either log in again or
+restart/shutdown.
 
 ## Three modes, one key to bind them
 
@@ -137,16 +145,37 @@ When not in default mode  the word  Primary or Secondary is shown on a
 tab next to the workspace tabs. The same word  appears on the title bar
 of the currently focused window.  You can change focus and the name
 follows.  If that's not enough, the screen dims slightly in Primary
-mode and a lttle bit more for Secondary mode.
+mode and a little bit more for Secondary mode.
 
 ## Command prompt
 The command prompt is a dmenu. It is invoked with the key sequence
-Menu, Tab, it then reads two characters, and forwards them. It can also
-be invoked by KP_Insert, which configures the numpad to read in two
- or three digits.
+Menu, Tab, it then reads two characters, and forwards them to the
+"i3-filewatcher" script (q.v.). It can also be invoked by KP_Insert, which
+configures the numpad to read in two or three digits.
 
 Both methods timeout after four seconds and send a key event
 equivalent to pressing Enter (Return). My PD makes the delay
 acceptable and the automatic Enter key appreciated.
-The delay is  implemented wth sleep() and configurable.
+The delay is implemented wth sleep() and configurable.
 The Enter key automation can be disabled.
+
+## Tasker, AutoVoice, AutoTools
+Tasker is a popular android application that lets users write programs
+to run on their phone or tablet. AutoVoice is a Tasker plugin for
+speech recognition. AutoTools is a Tasker plugin that provides "ssh"
+to access the "i3-filewatcher".
+
+A Tasker program uses exactly the same "i3-filewatcher" interface as
+the command prompt. Commands need not be limited to two or three
+characters.
+
+## File Watcher
+The file watcher watches the file "/dev/shm/$USER/i3/command".
+Whenever the command prompt or Tasker writes a command to that file,
+the command is forwarded for processing. There is no acknowlegement.
+
+## Dispatcher
+
+## Focus App By Alias.
+
+## Launcher
