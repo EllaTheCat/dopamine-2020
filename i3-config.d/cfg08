@@ -26,14 +26,14 @@ bar {
     status_command ~/local/bin/i3-status
     font pango:DejaVu Sans 11
     #
-    bindsym button2 $stub
-    bindsym button3 $stub
-    # Scroll up to increase transparency (decrease opacity).  This is
-    # the better choice when the mouse wanders into the bar while
-    # scrolling down in the window.
-    ### bindsym button4 exec --no-startup-id compton-trans -c -o -5
-    ### bindsym button5 exec --no-startup-id compton-trans -c -o +5
+    bindsym button2 nop
+    bindsym button3 nop
+    bindsym button4 nop
+    bindsym button5 nop
 }
+
+# Spindown at startup by default.
+exec my-usb-disks spindown
 
 #
 # EXECUTABLE SETTINGS END HERE.
