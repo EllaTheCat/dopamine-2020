@@ -53,9 +53,7 @@ CFGMODE=644
 
   .installextras:  \
 	$(I3BIN)/my-tvheadend \
-	$(I3BIN)/my-usb-disks \
-	$(I3BIN)/my-shutdown
-
+	$(I3BIN)/my-usb-disks
 
 all :  .installdirs .installconfigs .installscripts .installextras
 
@@ -215,14 +213,6 @@ $(MYSCRIPTS)/my-tvheadend.log: $(MYSCRIPTS)/my-tvheadend
 
 $(MYSCRIPTS)/my-usb-disks.log: $(MYSCRIPTS)/my-usb-disks
 	@shellcheck $(MYSCRIPTS)/my-usb-disks > $@
-
-$(I3BIN)/my-shutdown: \
-	$(MYSCRIPTS)/my-shutdown \
-	$(MYSCRIPTS)/my-shutdown.log
-	@install -m $(EXEMODE) $(MYSCRIPTS)/my-shutdown $(I3BIN)
-
-$(MYSCRIPTS)/my-shutdown.log: $(MYSCRIPTS)/my-shutdown
-	@shellcheck $(MYSCRIPTS)/my-shutdown > $@
 
 # Debug use only.
 vars:
