@@ -54,7 +54,7 @@ nomatchfound ()
 # Start here.
 #
 
-eval "$@"
+eval "$1" "${@:2}"
 
 #
 # Done.

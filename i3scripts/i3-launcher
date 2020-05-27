@@ -2,16 +2,12 @@
 #
 # i3-launcher
 #
-# - The canonical use case is changing TV channel.
-# - Sending a fake PID and a command starts streaming.
-# - The fake PID is bound to the real PID at the start.
-# - The PID lookup table is a text file in shared memory.
-# - Each line holds a timestamp, a fake PID and the real PID.
-# - Sending the same fake PID with no command stops streaming.
-# - The timestamp of every line is checked to purge stale entries.
-# - Prefer letting the launcher set the app.
-# - Prefer the whitelisted apps in commands that specify the app.
-# - The fallback
+
+#
+# 2020-05-27 : The fake/real PID idea became baroque. Apply KISS for
+# release.
+#
+
 #
 # Launch a program and register it.
 #
@@ -22,56 +18,19 @@ start ()
         # Allowing arbitrary programs is insecure.
         app="mpv"
         i3-msg "exec --no-startup-id ${app} ${*:2}"
-        sleep 2.0
-        real=$(pgrep --newest -f "${app} ${*:2}")
     else
         app=$2
         i3-msg "exec --no-startup-id ${*:2}"
-        sleep 2.0
-        real=$(pgrep --newest -f "${*:2}")
     fi
-    case "$(basename "${app}")" in
-        (mpv|vlc)
-            echo "$(date +%s)" "$1" "${real}" >> /dev/shm/shevek/i3/launcher
-            ;;
-        (*)
-            echo "WARNING:" "$(basename "${app}")" "not whitelisted!"
-            echo "$(date +%s)" "$1" "${real}" >> /dev/shm/shevek/i3/launcher
-            real=$((real + 1))  # This is a hack. Test case: urxvt
-            echo "$(date +%s)" "$1" "${real}" >> /dev/shm/shevek/i3/launcher
-            ;;
-    esac
 }
 
 #
-# Kill a program and deregister it. Do this for stale entries too.
+# Kill a program and deregister it.
 #
 stop ()
 {
-    rm -f /dev/shm/shevek/i3/update
-    touch /dev/shm/shevek/i3/update
-    tnow=$(date +%s)
-    while IFS=  read -r line
-    do
-        time=$(echo "${line}" | awk '{print $1}')
-        fake=$(echo "${line}" | awk '{print $2}')
-        real=$(echo "${line}" | awk '{print $3}')
-        # Anything matching the fake pid is killed & purged.
-        # Anything over a day old is killed & purged.
-        # Anything else under a day old is kept in the list.
-        diff=$((tnow - time))
-        echo "diff=$diff real=${real}"
-        if [ "${fake}" = "$1" ] ; then
-            echo "match=${real}"
-            /bin/kill -9 "${real}"
-        elif [ ${diff} -gt  86400 ]; then
-            echo "stale=${real}"
-            /bin/kill -9 "${real}"
-        else
-            echo "${line}" >> /dev/shm/shevek/i3/update
-        fi
-    done < /dev/shm/shevek/i3/launcher
-    mv /dev/shm/shevek/i3/update /dev/shm/shevek/i3/launcher
+    echo "STOP"
+    pkill --oldest -f mpv
 }
 
 #
