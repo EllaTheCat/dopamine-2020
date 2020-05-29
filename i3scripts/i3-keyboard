@@ -39,7 +39,7 @@ xmodmapkeys()
 #
 resetkeys()
 {
-    # In the past "stuck" modifier keys have been an issue,. This
+    # In the past "stuck" modifier keys have been an issue. This
     # should let the user type again.
     i3-msg mode default
     xdotool key --clearmodifiers Return
@@ -51,7 +51,7 @@ resetkeys()
 # - This is the fix for "setxkbmap" settings that revert spontaneously.
 # - Using the file "/etc/default/keyboard" to store settings is persistent.
 # - These are EllaTheCat's settings:
-# 
+#
 # KBMODEL="pc105"'
 # XKBLAYOUT="us"'
 # 'XKBVARIANT="altgr-intl"'
@@ -62,9 +62,8 @@ resetkeys()
 # Start here.
 #
 
-eval "$@"
+eval "$1" "${@:2}"
 
 #
 # Done.
 #
-
