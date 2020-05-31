@@ -11,6 +11,10 @@
 #
 # Launch a program and register it.
 #
+# (1) four digit handle (reserved, unused).
+# (2) mpv, vlc, ...
+# (.) stream
+#
 start ()
 {
     if [ "${2:0:1}" = "/" ]; then
@@ -27,25 +31,37 @@ start ()
 #
 # Kill a program and deregister it.
 #
+# (1) four digit handle (reserved, unused).
+# (2) mpv, vlc, ...
+# (.) streaam
+#
 stop ()
 {
-    echo "STOP"
-    pkill --oldest -f mpv
+    if [ "${2:0:1}" = "/" ]; then
+        pid="$(pgrep --oldest -f "mpv")"
+    else
+        pid="$(pgrep --oldest -f "$2")"
+    fi
+    kill $((pid + 1)) "${pid}"
 }
 
 #
 # Start here.
 #
 
-if [ $# -ne 1 ]
-then
-    # shellcheck disable=SC2068
-    eval start "$1" ${@:2}
-else
-    eval stop "$1"
-fi
+# (1) start|stop
+# (2) four digit handle
+# (3) mpv, vlc, ...
+# (.) streaam
 
-
+case "$1" in
+    (start)
+        eval start "$2" "$3" "${@:4}"
+        ;;
+    (stop)
+        eval stop "$2" "$3" "${@:4}"
+        ;;
+esac
 
 #
 # Done.
