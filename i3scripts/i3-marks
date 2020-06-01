@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+
+#
+# Assign a unique mark.
+#
+unique()
+{
+    # Generate a random 2 digit mark.  Reject and retry if it matches
+    # an assigned mark. The retry loop takes more time as the number
+    # of marked containers approaches 100.
+    while : ; do
+        id=$((10#$(date +%N) % 100))
+        id=$(printf "%02d" "${id}")
+        count=$(for m in $(i3-msg -t get_marks | grep '[0-9][0-9]' | sed 's/,/\ /g');
+                do echo "${m}"; done | grep -c "${id}")
+        if [ "${count}" -eq 0 ]; then break; fi
+    done
+    sleep 1 # No need for caller to wait for the window.
+    windowid=$(printf "0x%x" "$(xdotool getwindowfocus)")
+    i3-msg "[id=\"${windowid}\"] mark --toggle \"${id}\""
+    i3-msg "[con_mark=\"${id}\"] focus"
+}
+
+#
+# Start here.
+#
+
+case "$1" in
+    (unique)
+        eval "$1"
+        ;;
+esac
+
+
+#
+# Done.
+#

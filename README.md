@@ -6,20 +6,20 @@ This repository consists of the config and scripts i'm using with i3
  4.18.1 on Xubuntu 20.04 LTS.
 
 ## Disclaimers
-At the moment (May 2020) the repo is just an offsite backup for code
-  refactoring that started back in ISO week 18 when 20.04 LTS appeared.
-  I expect to release by  ISO week 23 (1st June 2020).
+I expect to release by ISO week 24 (8th June 2020). Prior to that date
+the repo is merely an offsite backup. As of 1st June the release has
+slipped by a week.
 
 ## Ambitions
 
-The config file is almost 100% compatible with the standard i3
-keybindings. You can install it and be able to use i3 immediately.
+- The default configuration is close to being 100% compatible with the standard i3
+keybindings as shown in the i3 user's guide. You can use it immediately.
 
-The config file and scripts have "magic comments", postprocessing
-directives that can, for example, select different key bindings for
-one machine versus another. That's the ambition, anyway.
+- The config file and scripts have "magic comments". These are
+postprocessing directives that could, for example, select different
+key bindings for one machine versus another.
 
-I greatly admire the i3 mission statement about clean code.
+- I greatly admire the i3 mission statement about clean code.
 I'm not in their league, but I've tried to make the code modular and maintainable.
 If nothing else, it's commented and documented.
 

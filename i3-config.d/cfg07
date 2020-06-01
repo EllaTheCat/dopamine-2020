@@ -1,7 +1,7 @@
 # -*- Mode: Shell-script -*-
 
 #
-# NON EXECuTABLE  SETTINGS BEGIN HERE.
+# NON SETTINGS EXECUTABLE BEGIN HERE.
 #
 
 # Font for window titles. The font for the bar is set explicitly.
@@ -55,10 +55,11 @@ for_window [class="Display"] floating enable;
 for_window [class="Display-im6"] floating enable;
 
 # Application windows.
-for_window [instance="xfce4-terminal"] $stub
-for_window [instance="emacs"] $stub
-for_window [instance="google-chrome"] $stub
-for_window [instance="gl" class="mpv"] $stub
+for_window [instance="xfce4-terminal"] $i3marks unique
+for_window [instance="emacs"] $i3marks unique
+for_window [instance="Navigator"] $i3marks unique
+for_window [instance="google-chrome"] $i3marks unique
+for_window [instance="gl" class="mpv"] $i3marks unique
 
 # VirtualBox windows assume full screen dimensions.
 for_window [title="VirtualBox Manager"] layout tabbed;
@@ -90,5 +91,5 @@ focus_follows_mouse no
 focus_wrapping off
 
 #
-# NON EXECuTABLE SETTINGS END HERE.
+# NON EXECUTABLE SETTINGS END HERE.
 #

@@ -46,6 +46,7 @@ set $secondary exec --no-startup-id ~/local/bin/i3-mode Secondary
 # Helpers. Embedding the path explicitly is belt and braces.
 set $i3cmdprompt exec --no-startup-id ~/local/bin/i3-command-prompt
 set $i3filewatcher exec_always --no-startup-id ~/local/bin/i3-file-watcher
+set $i3marks exec --no-startup-id ~/local/bin/i3-marks
 set $i3mode exec --no-startup-id ~/local/bin/i3-mode
 set $i3scratchpad exec --no-startup-id ~/local/bin/i3-scratchpad
 set $i3listwindows exec --no-startup-id ~/local/bin/i3-list-windows
@@ -86,7 +87,7 @@ set $stub nop
 bindsym Menu $primary
 bindsym Print $primary
 
-# KP_Insert  is a design decision please do not change.
+# KP_Insert is a design decision please do not change.
 # Command prompt in one keypress.  Faciltates 3 digit commands.
 bindsym KP_Insert $i3cmdprompt menu 4
 
@@ -120,8 +121,8 @@ exec --no-startup-id /usr/bin/xrdb ${HOME}/urxvt.Xdefaults
 
 # Additional Menu and Escape keys.
 # It's OK to restart a small utllity like this when i3 is restarted.
-exec  ~/local/bin/i3-keyboard xmodmapkeys
-exec  ~/local/bin/i3-keyboard xcapekeys
+exec --no-startup-id ~/local/bin/i3-keyboard xmodmapkeys
+exec --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 
 # Command Interface.
 # It's OK to restart this script when i3 is restarted.

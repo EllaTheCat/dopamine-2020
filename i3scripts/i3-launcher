@@ -3,15 +3,11 @@
 # i3-launcher
 #
 
-#
-# 2020-05-27 : The fake/real PID idea became baroque. Apply KISS for
-# release.
-#
 
 #
 # Launch a program and register it.
 #
-# (1) four digit handle (reserved, unused).
+# (1) four digit handle
 # (2) mpv, vlc, ...
 # (.) stream
 #
@@ -29,20 +25,29 @@ start ()
 }
 
 #
-# Kill a program and deregister it.
+# Kill the oldest running instance of a media player.
+# - Assume 'mpv' if the command omits the media player.
+# - A simple TV channel zapper is the canonical use case.
 #
-# (1) four digit handle (reserved, unused).
+# (1) four digit handle
 # (2) mpv, vlc, ...
-# (.) streaam
+# (.) stream
 #
-stop ()
+stop_oldest ()
 {
+    # An mpv instance has 2 pids, often contiguous, (N,N+1), but I
+    # have seen (N,N+2), hence separate kills.
     if [ "${2:0:1}" = "/" ]; then
-        pid="$(pgrep --oldest -f "mpv")"
+        pid0="$(pgrep --oldest -f "mpv")"
+        kill "${pid0}"
+        pid1="$(pgrep --oldest -f "mpv")"
+        kill "${pid1}"
     else
-        pid="$(pgrep --oldest -f "$2")"
+        pid0="$(pgrep --oldest -f "$2")"
+        kill "${pid0}"
+        pid1="$(pgrep --oldest -f "$2")"
+        kill "${pid1}"
     fi
-    kill $((pid + 1)) "${pid}"
 }
 
 #
@@ -52,14 +57,17 @@ stop ()
 # (1) start|stop
 # (2) four digit handle
 # (3) mpv, vlc, ...
-# (.) streaam
+# (.) stream
 
 case "$1" in
     (start)
         eval start "$2" "$3" "${@:4}"
         ;;
-    (stop)
-        eval stop "$2" "$3" "${@:4}"
+    (stop_oldest)
+        stop_oldest "$2" "$3" "${@:4}"
+        ;;
+    (stop_handle)
+        eval stop_handle "$2" "$3" "${@:4}"
         ;;
 esac
 

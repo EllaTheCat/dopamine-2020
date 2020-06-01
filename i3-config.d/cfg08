@@ -33,7 +33,7 @@ bar {
 }
 
 # Spindown at startup by default.
-exec my-usb-disks spindown
+exec --no-startup-id my-usb-disks spindown
 
 #
 # EXECUTABLE SETTINGS END HERE.

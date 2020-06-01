@@ -45,6 +45,7 @@ CFGMODE=644
     $(I3BIN)/i3-focus-app-by-alias \
     $(I3BIN)/i3-launcher \
     $(I3BIN)/i3-keyboard \
+    $(I3BIN)/i3-marks \
     $(I3BIN)/i3-mode \
     $(I3BIN)/i3-mouse \
     $(I3BIN)/i3-scratchpad \
@@ -153,10 +154,21 @@ $(I3BIN)/i3-keyboard: \
 $(I3SCRIPTS)/i3-keyboard.log: $(I3SCRIPTS)/i3-keyboard
 	@shellcheck $(I3SCRIPTS)/i3-keyboard > $@
 
+$(I3BIN)/i3-marks: \
+	$(I3SCRIPTS)/i3-marks \
+	$(I3SCRIPTS)/i3-marks.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-marks $(I3BIN)
+
+$(I3SCRIPTS)/i3-marks.log: $(I3SCRIPTS)/i3-marks
+	@shellcheck $(I3SCRIPTS)/i3-marks > $@
+
 $(I3BIN)/i3-mode: \
 	$(I3SCRIPTS)/i3-mode \
 	$(I3SCRIPTS)/i3-mode.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-mode $(I3BIN)
+
+$(I3SCRIPTS)/i3-mode.log: $(I3SCRIPTS)/i3-mode
+	@shellcheck $(I3SCRIPTS)/i3-mode > $@
 
 $(I3BIN)/i3-mouse: \
 	$(I3SCRIPTS)/i3-mouse \

@@ -56,6 +56,9 @@ mode "Secondary" {
 
     # Focus is on output P, output Q shows workspace W, focus Q,
     # switch to Primary mode ready to move W to P using {z,x,c}.
+    # Examples, both starting from secondary mode:
+    # Press z then c == move workspace from left to right.
+    # Press c then z == move workspace from right to left.
     bindsym z focus output $lmon, $primary;
     bindsym x focus output $cmon, $primary;
     bindsym c focus output $rmon, $primary;
@@ -67,7 +70,7 @@ mode "Secondary" {
     # Desktop background.
     bindsym n $default, exec --no-startup-id nitrogen --restore
     # All monitors turn OFF.
-    bindsym m $default,  exec --no-startup-id xset dpms force off
+    bindsym --release m $default,  exec --no-startup-id xset dpms force off
 
     bindsym comma nop
     bindsym period nop

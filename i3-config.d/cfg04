@@ -94,7 +94,7 @@ mode "Primary" {
     # Place a unique two digit mark on the focused window's title bar.
     # [u] and [m] are already in use. The mark is a two digit [n]umber.
     # The prompt doesn't work because it forgets where the focus was.
-    bindsym n $default, nop
+    bindsym n $default, $i3marks unique
 
     # (M)ove container to named workspace.
     bindsym m \
