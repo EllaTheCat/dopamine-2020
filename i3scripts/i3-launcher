@@ -61,13 +61,13 @@ stop_oldest ()
 
 case "$1" in
     (start)
-        eval start "$2" "$3" "${@:4}"
+        start "$2" "$3" "${@:4}"
         ;;
     (stop_oldest)
         stop_oldest "$2" "$3" "${@:4}"
         ;;
     (stop_handle)
-        eval stop_handle "$2" "$3" "${@:4}"
+        stop_handle "$2" "$3" "${@:4}"
         ;;
 esac
 

@@ -32,7 +32,7 @@ spindown ()
 # Start here.
 #
 
-eval "$1"
+"$1"
 
 #
 # Done.

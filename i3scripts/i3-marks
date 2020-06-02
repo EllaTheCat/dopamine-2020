@@ -28,7 +28,7 @@ unique()
 
 case "$1" in
     (unique)
-        eval "$1"
+        "$1"
         ;;
 esac
 

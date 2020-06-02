@@ -52,7 +52,8 @@ CFGMODE=644
     $(I3BIN)/i3-list-windows \
     $(I3BIN)/i3-status
 
-  .installextras:  \
+  .installextras: \
+	$(I3BIN)/my-phonecall \
 	$(I3BIN)/my-tvheadend \
 	$(I3BIN)/my-usb-disks
 
@@ -210,21 +211,22 @@ $(I3SCRIPTS)/i3-status.log: $(I3SCRIPTS)/i3-status
 
 # .installextras
 
-$(I3BIN)/my-tvheadend: \
-	$(MYSCRIPTS)/my-tvheadend \
-	$(MYSCRIPTS)/my-tvheadend.log
-	@install -m $(EXEMODE) $(MYSCRIPTS)/my-tvheadend $(I3BIN)
+# Using a pattern rule for the extras avoids the need for editing the
+# Makefile when thee user adds r removes a script.. Unfortunately I
+# can't redirect the shellcheck output to a file, but any shellcheck
+# errors are displayed. Shellcheck errors will prevent installation.
 
-$(MYSCRIPTS)/my-tvheadend.log: $(MYSCRIPTS)/my-tvheadend
-	@shellcheck $(MYSCRIPTS)/my-tvheadend > $@
+$(I3BIN)/%: $(MYSCRIPTS)/%
+	@shellcheck $<
+	@install -m $(EXEMODE) $< $(I3BIN)
 
-(I3BIN)/my-usb-disks: \
-	$(MYSCRIPTS)/my-usb-disks \
-	$(MYSCRIPTS)/my-usb-disks.log
-	@install -m $(EXEMODE) $(MYSCRIPTS)/my-usb-disks $(I3BIN)
-
-$(MYSCRIPTS)/my-usb-disks.log: $(MYSCRIPTS)/my-usb-disks
-	@shellcheck $(MYSCRIPTS)/my-usb-disks > $@
+### $(I3BIN)/my-tvheadend: \
+### 	$(MYSCRIPTS)/my-tvheadend \
+### 	$(MYSCRIPTS)/my-tvheadend.log
+### 	@install -m $(EXEMODE) $(MYSCRIPTS)/my-tvheadend $(I3BIN)
+###
+### $(MYSCRIPTS)/my-tvheadend.log: $(MYSCRIPTS)/my-tvheadend
+### 	@shellcheck $(MYSCRIPTS)/my-tvheadend > $@
 
 # Debug use only.
 vars:
