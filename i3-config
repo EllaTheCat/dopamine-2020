@@ -25,7 +25,6 @@
 # Choose a terminal you can use to repair a broken configuration.
 bindsym Mod4+Return exec xfce4-terminal
 
-#
 
 #
 # CONSTANTS.
@@ -48,6 +47,7 @@ set $i3cmdprompt exec --no-startup-id ~/local/bin/i3-command-prompt
 set $i3filewatcher exec_always --no-startup-id ~/local/bin/i3-file-watcher
 set $i3marks exec --no-startup-id ~/local/bin/i3-marks
 set $i3mode exec --no-startup-id ~/local/bin/i3-mode
+set $i3mouse exec --no-startup-id ~/local/bin/i3-mouse
 set $i3scratchpad exec --no-startup-id ~/local/bin/i3-scratchpad
 set $i3listwindows exec --no-startup-id ~/local/bin/i3-list-windows
 
