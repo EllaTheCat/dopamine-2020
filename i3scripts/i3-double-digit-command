@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# i3-double-digit-command
+#
+
+i3_double_digit()
+{
+    case "$1" in
+        ([0-9][0-9])
+            # Visit a two-digit mark using numpad or voice.
+            arg="${1:0:2}"
+            i3-msg "[con_mark=\"${arg}\"] focus"
+            ### say "focus mark ${arg}"
+            ;;
+    esac
+}
+
+#
+# Start here.
+#
+
+i3_double_digit "$1"
+
+#
+# Done.
+#

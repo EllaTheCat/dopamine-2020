@@ -39,23 +39,24 @@ CFGMODE=644
 .installconfigs:  $(I3CFG) $(I3STATUSCFG)
 
 .installscripts: \
-    $(I3BIN)/i3-command-prompt \
-    $(I3BIN)/i3-file-watcher \
-    $(I3BIN)/i3-dispatcher \
-    $(I3BIN)/i3-focus-app-by-alias \
-    $(I3BIN)/i3-launcher \
-    $(I3BIN)/i3-keyboard \
-    $(I3BIN)/i3-marks \
-    $(I3BIN)/i3-mode \
-    $(I3BIN)/i3-mouse \
-    $(I3BIN)/i3-scratchpad \
-    $(I3BIN)/i3-list-windows \
-    $(I3BIN)/i3-status
+$(I3BIN)/i3-command-prompt \
+$(I3BIN)/i3-file-watcher \
+$(I3BIN)/i3-dispatcher \
+$(I3BIN)/i3-focus-app-by-alias \
+$(I3BIN)/i3-launcher \
+$(I3BIN)/i3-keyboard \
+$(I3BIN)/i3-marks \
+$(I3BIN)/i3-mode \
+$(I3BIN)/i3-mouse \
+$(I3BIN)/i3-scratchpad \
+$(I3BIN)/i3-triple-digit-command \
+$(I3BIN)/i3-double-digit-command \
+$(I3BIN)/i3-status
 
-  .installextras: \
-	$(I3BIN)/my-phonecall \
-	$(I3BIN)/my-tvheadend \
-	$(I3BIN)/my-usb-disks
+.installextras: \
+$(I3BIN)/my-phonecall \
+$(I3BIN)/my-tvheadend \
+$(I3BIN)/my-usb-disks
 
 all :  .installdirs .installconfigs .installscripts .installextras
 
@@ -187,13 +188,21 @@ $(I3BIN)/i3-scratchpad: \
 $(I3SCRIPTS)/i3-scratchpad.log: $(I3SCRIPTS)/i3-scratchpad
 	@shellcheck $(I3SCRIPTS)/i3-scratchpad > $@
 
-$(I3BIN)/i3-list-windows: \
-	$(I3SCRIPTS)/i3-list-windows \
-	$(I3SCRIPTS)/i3-list-windows.log
-	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-list-windows $(I3BIN)
+$(I3BIN)/i3-triple-digit-command: \
+	$(I3SCRIPTS)/i3-triple-digit-command \
+	$(I3SCRIPTS)/i3-triple-digit-command.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-triple-digit-command $(I3BIN)
 
-$(I3SCRIPTS)/i3-list-windows.log: $(I3SCRIPTS)/i3-list-windows
-	@shellcheck $(I3SCRIPTS)/i3-list-windows > $@
+$(I3SCRIPTS)/i3-triple-digit-command.log: $(I3SCRIPTS)/i3-triple-digit-command
+	@shellcheck $(I3SCRIPTS)/i3-triple-digit-command > $@
+
+$(I3BIN)/i3-double-digit-command: \
+	$(I3SCRIPTS)/i3-double-digit-command \
+	$(I3SCRIPTS)/i3-double-digit-command.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-double-digit-command $(I3BIN)
+
+$(I3SCRIPTS)/i3-double-digit-command.log: $(I3SCRIPTS)/i3-double-digit-command
+	@shellcheck $(I3SCRIPTS)/i3-double-digit-command > $@
 
 $(I3BIN)/i3-status: \
 	$(I3SCRIPTS)/i3-status \
