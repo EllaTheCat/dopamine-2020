@@ -5,7 +5,7 @@
 
 #
 # Please personalise the "my-apps" table in the myscripts folder.
-# This comment requires sshellcheck  c2154
+#
 
 ###INSERT_APPS00_HERE###
 
@@ -15,11 +15,6 @@
 #
 focus ()
 {
-    case "$1" in
-	(e0)
-	   emacsserver restart
-	   ;;
-    esac
     case "$1" in
 	([a-z][0-9]|[a-z][a-z])
 	    status=$(i3-msg "[workspace=\"$1\" con_mark=\"_$1\"] focus")
@@ -55,26 +50,6 @@ focus ()
 		    i3-msg "[workspace=\"$1\"]  mark --add  --replace _$1"
 		    ;;
 	    esac
-	    ;;
-    esac
-}
-
-#
-# start|stop|restart the server for emacs clients.
-#
-emacsserver ()
-{
-    case "$1" in
-	(start|restart)
-	    delay=${2:-3}
-	    if [ "$(pgrep  -c -f 'emacs -rv --daemon')" -eq 0 ]; then
-		(emacs -rv --daemon) &
-		# Ensure enogh time for the server to have started.
-		sleep "${delay}"
-	    fi
-	    ;;
-	(stop)
-	    pkill -f 'emacs -rv --daemon'
 	    ;;
     esac
 }
