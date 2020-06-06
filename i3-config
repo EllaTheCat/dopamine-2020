@@ -115,6 +115,8 @@ mode "restart" {
 
 ###INSERT_CFG08_HERE###
 
+###INSERT_CFG09_HERE###
+
 # A dark and translucent appearance for urxvt should it be used in
 # config files or in scripts.
 exec --no-startup-id /usr/bin/xrdb ${HOME}/urxvt.Xdefaults

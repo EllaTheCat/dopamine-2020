@@ -16,6 +16,14 @@
 focus ()
 {
     case "$1" in
+        ([e][0-9])
+            if [ "$(pgrep -c -f "emacs --daemon -rv")" -eq 0 ]; then
+                (emacs --daemon -rv) &
+                sleep 3
+            fi
+        ;;
+    esac
+    case "$1" in
 	([a-z][0-9]|[a-z][a-z])
 	    status=$(i3-msg "[workspace=\"$1\" con_mark=\"_$1\"] focus")
 	    case "${status}" in

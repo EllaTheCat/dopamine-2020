@@ -2,63 +2,66 @@
 
 ## What's in the repository?
 
-This repository consists of the config and scripts i'm using with i3
+This repository consists of the config and scripts I'm using with i3
  4.18.1 on Xubuntu 20.04 LTS.
 
-## Disclaimers
-I expect to release by ISO week 24 (8th June 2020). Prior to that date
-the repo is merely an offsite backup. As of 1st June the release has
-slipped by a week.
+## Disclaimer
+
+I took the opportunity to refactor my i3 config and scripts into this
+new repository after installing the latest versions of distro and i3.
+Everything is in a state of flux, everything is on master, there are
+stupid mistakes. Things should settle down during June.
 
 ## Ambitions
 
-- The default configuration is close to being 100% compatible with the standard i3
-keybindings as shown in the i3 user's guide. You can use it immediately.
+- The default configuration is close to being 100% compatible with the
+standard i3 keybindings as shown in the i3 user's guide. You can use
+it immediately.
 
 - The config file and scripts have "magic comments". These are
-postprocessing directives that could, for example, select different
-key bindings for one machine versus another.
+postprocessing directives that could, for example, customise a single
+base configuration for different users or different machines.
 
-- I greatly admire the i3 mission statement about clean code.
-I'm not in their league, but I've tried to make the code modular and maintainable.
-If nothing else, it's commented and documented.
+- I greatly admire the i3 mission statement about clean code.  I'm not
+in their league, but I've tried to make the code modular and
+maintainable.  If nothing else, it's commented and documented.
 
 ## Why dopamine?
 
-Dopamine is a chemical that functions as a neurotransmitter. I have
-Parkinson's Disease ("PD") because my brain cells that make dopamine
-are dying prematurely.  Lack of dopamine causes the hand and arm
-tremors and the overall slowness of movement typical of Parkinson's Disease.
-I've been told "dopamine" is an evocative name, so I'm re-using it.
+Dopamine is a chemical that functions as a neurotransmitter in human
+brains. I have Parkinson's Disease ("PD") because the cells that make
+dopamine in my brain are dying prematurely.  Lack of dopamine causes
+the hand and arm tremors and the overall slowness of movement typical
+of Parkinson's Disease.
 
 The i3 window manager lets me address the ergonomics of a user
-interface for people with PD.  I want to share both the code and
+interface for people with PD.  I want to share both the code and the
+lessons learned, what works and what doesn't, because I'm no expert,
+just an enthusiast. Plus you lucky people without PD might like it!
 
-lthe lessons learned, what works and what doesn't.
-
-I also think people without PD will find it useful.
-This is the third such repository I've made.
-This time, I'm hoping to make it easy for people to download and run.
+This is the third such repository I've made. This time, I'm hoping to
+make it easy for people to download and run, either as a whole or in
+standalone pieces.
 
 ## Installation
 Dopamine wants to be installed anywhere beneath ${HOME}, in a
 directory accessible to git.  Decide in which directory the git clone
-will be done, change to that directory and  do:
+will be done, change to that directory and do:
 
-git clone git@github.com:EllaTheCat/dopamine-2020.git
+    git clone git@github.com:EllaTheCat/dopamine-2020.git
+    make
 
-## "make"
-- Install the GNU Make package provided by your Linux distro.
-- Run "make" from within the dopamine-2020 directory;
-this deploys the config and script files stored there.
+Running "make"
 
-In more detail, "make"
-copies files from  the dopamine-2020  directory to the standard places,
-modifies the copies with your customisations,
-sets the file permissions,
-runs the i3 config reload and
-i3 window manager restart commands,
-but each of these is done **only** when necessary.
+- copies config files from your local repository to where i3 expects
+  them at runtime.
+- copies script files from your local repository to a folder that
+  should be on your ${PATH}. I use ${HOME}/local/bin so users can
+  symlink it to their preferences.
+- modifies the copies with your customisations,
+- sets the file permissions,
+- runs the i3 reload command should the config have changed.
+- runs the i3 restart command when i3-status or i3bar has changed.
 
 ## "make -n"
 The "make -n" command causes the program to print out what it would do

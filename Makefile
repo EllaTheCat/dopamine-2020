@@ -9,7 +9,7 @@ SHELL=/bin/bash
 # If someone can confirm Regolith's placement and naming of the i3
 # config and i3status config, I'd like to support it.
 
-# The i3 config file to be installed..
+# The i3 config file to be installed.
 I3CFG=$(HOME)/.i3/config
 
 # The i3status config file to be installed.
@@ -58,7 +58,25 @@ $(I3BIN)/my-phonecall \
 $(I3BIN)/my-tvheadend \
 $(I3BIN)/my-usb-disks
 
-all :  .installdirs .installconfigs .installscripts .installextras
+.installflags: \
+reloaded \
+restarted
+
+
+all :  .installdirs .installconfigs .installscripts .installextras .installflags
+
+# .installflags
+#
+# Flags ensure that reload and restart are each performed no more than
+# once and tha all changes have been made beforehand.
+
+reloaded: reload
+	touch $@
+	i3-msg "reload"
+
+restarted: restart
+	touch $@
+	i3-msg "restart"
 
 
 # .installdirs
@@ -72,7 +90,8 @@ $(i3BIN):
 $(I3CFG):  i3-config \
 	i3-config.d/cfg00 i3-config.d/cfg01 i3-config.d/cfg02 \
 	i3-config.d/cfg04 i3-config.d/cfg05 \
-	i3-config.d/cfg07 i3-config.d/cfg08
+	i3-config.d/cfg07 i3-config.d/cfg08 \
+	i3-config.d/cfg09
 	@install -m $(CFGMODE)  i3-config $@
 	@sed -e '/###INSERT_CFG00_HERE###/ {' -e 'r i3-config.d/cfg00' -e 'd' -e '}' \
          -i   $(I3CFG)
@@ -88,19 +107,13 @@ $(I3CFG):  i3-config \
          -i   $(I3CFG)
 	@sed -e '/###INSERT_CFG08_HERE###/ {' -e 'r i3-config.d/cfg08' -e 'd' -e '}' \
          -i   $(I3CFG)
-	@i3-msg 'mode "reload"'
-	@sleep 2
-	@i3-msg 'mode "default"'
-	@i3-msg "reload"
+	@sed -e '/###INSERT_CFG09_HERE###/ {' -e 'r i3-config.d/cfg09' -e 'd' -e '}' \
+         -i   $(I3CFG)
+	@touch reloaded
 
 $(I3STATUSCFG):  i3-status-config
-	@install -m $(CFGMODE)  i3-status-config $@
-	@i3-msg 'mode "restart"'
-	@sleep 2
-	@i3-msg 'mode "default"'
-	@i3-msg "restart"
-	@sleep 2
-	@i3-msg "exec --no-startup-id xfce4-panel --restart"
+	@install -m $(CFGMODE) i3-status-config $@
+	@touch restarted
 
 # .installscripts
 
@@ -208,12 +221,7 @@ $(I3BIN)/i3-status: \
 	$(I3SCRIPTS)/i3-status \
 	$(I3SCRIPTS)/i3-status.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-status $(I3BIN)
-	@i3-msg 'mode "restart"'
-	@sleep 2
-	@i3-msg 'mode "default"'
-	@i3-msg "restart"
-	@sleep 2
-	@i3-msg "exec --no-startup-id xfce4-panel --restart"
+	@touch restarted
 
 $(I3SCRIPTS)/i3-status.log: $(I3SCRIPTS)/i3-status
 	@shellcheck $(I3SCRIPTS)/i3-status > $@
