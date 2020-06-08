@@ -45,6 +45,7 @@ $(I3BIN)/i3-dispatcher \
 $(I3BIN)/i3-focus-app-by-alias \
 $(I3BIN)/i3-launcher \
 $(I3BIN)/i3-keyboard \
+$(I3BIN)/i3-list-windows \
 $(I3BIN)/i3-marks \
 $(I3BIN)/i3-mode \
 $(I3BIN)/i3-mouse \
@@ -168,6 +169,14 @@ $(I3BIN)/i3-keyboard: \
 
 $(I3SCRIPTS)/i3-keyboard.log: $(I3SCRIPTS)/i3-keyboard
 	@shellcheck $(I3SCRIPTS)/i3-keyboard > $@
+
+$(I3BIN)/i3-list-windows: \
+	$(I3SCRIPTS)/i3-list-windows \
+	$(I3SCRIPTS)/i3-list-windows.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-list-windows $(I3BIN)
+
+$(I3SCRIPTS)/i3-list-windows.log: $(I3SCRIPTS)/i3-list-windows
+	@shellcheck $(I3SCRIPTS)/i3-list-windows > $@
 
 $(I3BIN)/i3-marks: \
 	$(I3SCRIPTS)/i3-marks \
