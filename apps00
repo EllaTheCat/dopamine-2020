@@ -17,6 +17,7 @@ declare -A apps=(
 		  ["ae"]="calc"
 		  ["ap"]="impress"
                   ["tb"]="thunderbird"
+                  ["md"]="meld"
 		  ["sk"]="skype"
 		  ["sp"]="spotify"
 		  ["sy"]="synaptic-pkexec"
