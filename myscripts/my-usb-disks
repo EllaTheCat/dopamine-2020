@@ -12,32 +12,50 @@ configure ()
 
 dismount ()
 {
-    sudo umount  /mnt/usb-Seagate_M3_Portable_NM14ATY5-0:0-part2
-    sudo umount  /mnt/usb-Seagate_M3_Portable_BFF77E010D000086-0:0-part1
+    case "$1" in
+        (sdc)
+            sudo umount  /mnt/usb-Seagate_M3_Portable_BFF77E010D000086-0:0-part1
+            ;;
+        (sdd)
+            sudo umount  /mnt/usb-Seagate_M3_Portable_NM14ATY5-0:0-part2
+            ;;
+        (all)
+            sudo umount  /mnt/usb-Seagate_M3_Portable_BFF77E010D000086-0:0-part1
+            sudo umount  /mnt/usb-Seagate_M3_Portable_NM14ATY5-0:0-part2
+            ;;
+    esac
 }
 
 spindown ()
 {
-    sudo /usr/sbin/hd-idle -t sdc
-    sudo /usr/sbin/hd-idle -t sdd
-}
-
-shutdown ()
-{
-    my-usb-disks spindown
-    sleep 3
-    my-usb-disks dismount
-    sleep 3
-    my-usb-disks spindown
-    sleep 3
-    xfce4-session-logout
+    case "$1" in
+        (sdc)
+            sudo /usr/sbin/hd-idle -t sdc
+            ;;
+        (sdd)
+            sudo /usr/sbin/hd-idle -t sdd
+            ;;
+        (all)
+            sudo /usr/sbin/hd-idle -t sdc
+            sudo /usr/sbin/hd-idle -t sdd
+            ;;
+    esac
 }
 
 #
 # Start here.
 #
 
-"$1"
+# Do a "belt and braces" check for "safe" script arguments because
+# "sudo" and "/etc/sudoers.d" are involved.
+case "$1" in
+    (configure)
+        "$1"
+        ;;
+    (dismount|spindown)
+        "$1" "$2"
+        ;;
+esac
 
 #
 # Done.
