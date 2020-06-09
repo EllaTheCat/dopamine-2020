@@ -16,7 +16,8 @@ exec --no-startup-id pactl set-source-mute $analogaudiosource 1
 exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
 
 # Spindown at startup by default.
-exec --no-startup-id my-usb-disks spindown
+exec --no-startup-id my-usb-disks configure
+exec --no-startup-id my-usb-disks spindown all
 
 #
 # EXECUTABLE SETTINGS END HERE.
