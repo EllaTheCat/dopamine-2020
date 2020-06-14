@@ -50,6 +50,7 @@ $(I3BIN)/i3-marks \
 $(I3BIN)/i3-mode \
 $(I3BIN)/i3-mouse \
 $(I3BIN)/i3-scratchpad \
+$(I3BIN)/i3-transcribe \
 $(I3BIN)/i3-triple-digit-command \
 $(I3BIN)/i3-double-digit-command \
 $(I3BIN)/i3-status
@@ -210,6 +211,14 @@ $(I3BIN)/i3-scratchpad: \
 $(I3SCRIPTS)/i3-scratchpad.log: $(I3SCRIPTS)/i3-scratchpad
 	@shellcheck $(I3SCRIPTS)/i3-scratchpad > $@
 
+$(I3BIN)/i3-transcribe: \
+	$(I3SCRIPTS)/i3-transcribe \
+	$(I3SCRIPTS)/i3-transcribe.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-transcribe $(I3BIN)
+
+$(I3SCRIPTS)/i3-transcribe.log: $(I3SCRIPTS)/i3-transcribe
+	@shellcheck $(I3SCRIPTS)/i3-transcribe > $@
+
 $(I3BIN)/i3-triple-digit-command: \
 	$(I3SCRIPTS)/i3-triple-digit-command \
 	$(I3SCRIPTS)/i3-triple-digit-command.log
@@ -226,7 +235,7 @@ $(I3BIN)/i3-double-digit-command: \
 $(I3SCRIPTS)/i3-double-digit-command.log: $(I3SCRIPTS)/i3-double-digit-command
 	@shellcheck $(I3SCRIPTS)/i3-double-digit-command > $@
 
-$(I3BIN)/i3-status: \
+i$(I3BIN)/i3-status: \
 	$(I3SCRIPTS)/i3-status \
 	$(I3SCRIPTS)/i3-status.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-status $(I3BIN)

@@ -1,0 +1,113 @@
+#!/bin/bash
+#
+
+export lmon=HDMI2
+export cmon=HDMI1
+
+
+#
+# Enhance the 'all lower case' text sent from AutoVoice and put the
+# result into the Emacs buffer "Clipboard".
+#
+clipboard ()
+{
+    # Restore the quotes substituted in Tasker to avoid misbehaviour.
+    # shellcheck disable=SC2002
+    contents=$(echo "$*" | sed 's/DQUOTE/\"/g' | sed "s/SQUOTE/\'/g")
+    # Make the string more "sentence-like".
+    contents=$(mksentence "${contents}")
+    # Insert into both clipboards and then paste into Emacs.
+    echo "${contents}" | xclip -selection primary     # mouse button 2
+    echo "${contents}" | xclip -selection clipboard   # emacs control y
+    emacsclient -e "(with-current-buffer \"Clipboard\" (yank))"
+}
+
+mksentence ()
+{
+    s=$(mkeye "$1")
+    s=$(mkfirst "$s")
+    s=$(mklast "$s")
+    echo "$s"
+}
+
+#
+# Capitalise the 1st person singular pronoun 'I'.
+#
+mkeye ()
+{
+    # This is adequate for most sentences.
+    # "I know I am i'm sure I am i'm h a p p y"
+    # >I know I am i'm sure I am I'm h a p p y<
+
+    s="${1/^i\ /I\ }"    # Capital 'I' at beginning.
+    s="${s/i\ /I\ }"     # Capital 'I' then space
+    s="${s/i\ /I\ }"
+    s="${s/i\ /I\ }"
+    s="${s/i\ /I\ }"
+    s="${s/i\'/I\'}"     # Capital 'I' then apostrophe.
+    s="${s/i\'/I\'}"
+    echo "$s"
+}
+
+#
+# Capitalise the 1st letter of the 1st word of a sentence.
+#
+mkfirst ()
+{
+    echo  "${1^}"  # bash 4.0
+}
+
+#
+# Close sentence with '.' or '?' or '!'.
+# - Unfortunately the format is specified before the text of the sentence.
+#
+mklast ()
+{
+    case "$1" in
+        # Use this to override the question heuristic.
+        # Say "full stop" or "stop" to be reliably recognised.
+        # Google actually punctuates in response to the former.
+        (\.*|Stop*)
+        s=${1/\.\ /}
+        s=${s/Stop\ /}
+        s=$(mkfirst "$s")
+        printf "%s." "${s}"
+        ;;
+        # Say "question" to be reliably recognised.
+        (Question*)
+        s=${1/Question\ /}
+        s=$(mkfirst "$s")
+        printf "%s?" "${s}"
+        ;;
+        # Say "shout" to be reliably recognised.
+        (Shout*)
+        s=${1/Shout\ /}
+        s=$(mkfirst "$s")
+        printf "%s!" "${s}"
+        ;;
+        # Use a simple heuristic with "question words" as a fallback
+        # should you either forget to prefix or should AutoVoice miss
+        # the first word as sometimes happens.
+        (What*|When*|Which*|Who*|How*|Do*)
+        printf "%s?" "$1"
+        ;;
+        # This default is frequently correct.
+        (*)
+        printf "%s." "$1"
+        ;;
+    esac
+}
+
+#
+# Start here.
+#
+
+case "$1" in
+    (clipboard)
+    clipboard "${@:2}"
+    ;;
+esac
+
+#
+# Done.
+#

@@ -16,6 +16,9 @@ forward ()
 	([a-z][a-z])
 	    nohup i3-focus-app-by-alias focus "$1"
             ;;
+        (0000)
+            nohup i3-transcribe clipboard "${@:2}"
+            ;;
         ([1][0-9][0-9][0-9])
             nohup i3-launcher start "$1" "$2" "${@:3}"
 	    ;;
