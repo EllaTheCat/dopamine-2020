@@ -19,6 +19,7 @@ clipboard ()
     # Insert into both clipboards and then paste into Emacs.
     echo "${contents}" | xclip -selection primary     # mouse button 2
     echo "${contents}" | xclip -selection clipboard   # emacs control y
+    emacsclient -e "(switch-to-buffer    \"Clipboard\" )"
     emacsclient -e "(with-current-buffer \"Clipboard\" (yank))"
 }
 
