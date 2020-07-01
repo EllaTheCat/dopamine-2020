@@ -4,7 +4,9 @@
 #
 
 #
-# Please personalise the "my-apps" table in the myscripts folder.
+# The dictionary "wsapps" should only contain entries for apps that
+# have dedicated workspaces, whereas "not_wsapps" is for adding an
+# emacs frame or web/file browser tab/window to "wsapps" windows.
 #
 
 ###INSERT_APPS00_HERE###
@@ -25,11 +27,37 @@ focus ()
     esac
     case "$1" in
 	([a-z][0-9]|[a-z][a-z])
+            # shellcheck disable=SC2154
+            app=${wsapps[$1]}
+            if [ "_${app}" = "_" ]; then
+                # $1 is NOT a recognised key in wsapps.
+                ws="$(i3-msg -t get_workspaces | jq '.[] | .name'| grep "$1")"
+                if [ "_${ws}" != "_" ]; then
+                    # Workspace $1 exists, focus it. Programs running
+                    # there have no other association with it.
+                    i3-msg "workspace --no-auto-back-and-forth \"$1\""
+                else
+                    # shellcheck disable=SC2154
+                    app=${not_wsapps[$1]}
+                    # Workspace $1 does not exist. $1 MAY specify a
+                    # program to launch in the current workspace. The
+                    # program has no other association with any other
+                    # workspace.
+                    if [ "_${app}" != "_" ]; then
+                        # Similar lines to these are commented below.
+                        arg0=${app%% *}
+                        path=$(command -v  "${arg0}")    # "which"
+                        path=${path/${arg0}/}
+                        i3-msg "exec --no-startup-id ${path}${app}"
+                    fi
+                fi
+                return 1
+            fi
 	    status=$(i3-msg "[workspace=\"$1\" con_mark=\"_$1\"] focus")
 	    case "${status}" in
 		(*true*)
 		    i3-msg "workspace --no-auto-back-and-forth \"$1\""
-		    ;;
+                    ;;
 		(*false*)
                     # "No window matches given criteria" is not an
                     # error here, it's one of two desired outcomes.
@@ -39,9 +67,6 @@ focus ()
 		    # The enhanced PATH is exported by the dispatcher.
                     # The i3-msg recipient can't see the enhanced PATH.
                     # Extract and prepend the path directory components.
-
-                    # shellcheck disable=SC2154
-                    app=${apps[$1]}
 
                     # The executable name remains after removing the
                     # "longest matching suffix", defined by space star.
@@ -60,6 +85,7 @@ focus ()
 	    esac
 	    ;;
     esac
+    return 0  # $1 is an existing key in wsapps.
 }
 
 #

@@ -8,7 +8,7 @@
 # https://commons.wikimedia.org/wiki/
 # File:London_360%C2%B0_Panorama_from_the_London_Eye.jpg,
 # Photo by Gregg M. Erickson, cropped into overlapping 5760x1080 images.
-exec --no-startup-id nitrogen --restore
+exec_always --no-startup-id nitrogen --restore
 
 # Microphones' defaults (see key bindings). 1 = mute here.
 exec --no-startup-id pactl set-source-mute $usbaudiosource 1
@@ -17,7 +17,7 @@ exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
 
 # Spindown at startup by default.
 exec --no-startup-id my-usb-disks configure
-exec --no-startup-id my-usb-disks spindown all
+exec --no-startup-id my-usb-disks spindown
 
 #
 # EXECUTABLE SETTINGS END HERE.
