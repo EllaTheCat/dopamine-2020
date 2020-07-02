@@ -10,7 +10,7 @@ This repository consists of the config and scripts I'm using with i3
 I took the opportunity to refactor my i3 config and scripts into this
 new repository after installing the latest versions of distro and i3.
 Everything is in a state of flux, everything is on master, there are
-stupid mistakes. Things should settle down during June.
+stupid mistakes, but it's getting better.
 
 ## Ambitions
 
@@ -51,22 +51,23 @@ will be done, change to that directory and do:
     git clone git@github.com:EllaTheCat/dopamine-2020.git
     make
 
-Running "make"
+## Running "make"
 
-- copies config files from your local repository to where i3 expects
+- Copies config files from your local repository to where i3 expects
   them at runtime.
-- copies script files from your local repository to a folder that
+- Copies script files from your local repository to a folder that
   should be on your ${PATH}. I use ${HOME}/local/bin so users can
   symlink it to their preferences.
-- modifies the copies with your customisations,
-- sets the file permissions,
-- runs the i3 reload command should the config have changed.
-- runs the i3 restart command when i3-status or i3bar has changed.
+- Modifies the copies with your customisations.
+- Sets the runtime file and folder permissions.
+- Runs the i3 reload command should the i3 config have changed.
+- Runs the i3 restart command when i3-status or i3bar has changed.
 
-## "make -n"
-The "make -n" command causes the program to print out what it would do
-when invoked simply as "make".  This is worth knowing because you can
-see beforehand what "make" will do.
+## Running "make -n"
+
+- Performs a dry-run, printing to the console whatever commands
+would have been executed without the "-n" argument.
+
 
 ## Classic default mode bindings
 By default, the i3 config file includes a set of $mod+keysym bindings
@@ -81,8 +82,8 @@ operate them accidentally, so I'd prefer to remove them.
 
 Looking at i3-config you'll see several "magic comments":
 
-    ###INSERT_GFG00_HERE###
-    ###INSERT_GFG01_HERE###
+    ###INSERT_CFG00_HERE###
+    ###INSERT_CFG01_HERE###
 
 The Makefile first deploys "i3-config"  as "$HOME/.i3/config" and
 then runs sed scripts that perform in-place replacement of any
@@ -97,8 +98,8 @@ These "cfg" files live in "i3-config.d':
 - cfg05 - Secondary bindings
 - cfg06 - Reserved
 - cfg07 - Settings (non-executable)
-- cfg08 - Settings (executable, including bar settings)
-- cfg09 - Reserved
+- cfg08 - Settings (executable)
+- cfg09 - Settings (i3bar)
 
 There's nothing to stop competent users editing "cfg" files, and this
 is to be encouraged. Use ".git/info/exclude" to prevent overwriting by
@@ -109,9 +110,8 @@ will need reviewing, so "i3-config" won't become stable in git
 overnight. Eggs, omelettes.
 
 ## Multiple machines, one config
-Posts on /r/i3wm show there's quite a demand for this. It is going to
-happen, but not at first release in June, because things need to shake
-down and stabilise first.
+It is going to happen, but things need to shake down and stabilise
+first.
 
 For this to work, "make" must be run before i3. One way is to log out,
 drop to the Linux console, run "make" and then either log in again or
@@ -165,20 +165,50 @@ The Enter key automation can be disabled.
 ## Tasker, AutoVoice, AutoTools
 Tasker is a popular android application that lets users write programs
 to run on their phone or tablet. AutoVoice is a Tasker plugin for
-speech recognition. AutoTools is a Tasker plugin that provides "ssh"
-to access the "i3-filewatcher".
+speech recognition. AutoTools is a Tasker plugin that provides "ssh".
 
-A Tasker program uses exactly the same "i3-filewatcher" interface as
+A Tasker program uses exactly the same "File Watcher" interface as
 the command prompt. Commands need not be limited to two or three
 characters.
 
 ## File Watcher
 The file watcher watches the file "/dev/shm/$USER/i3/command".
 Whenever the command prompt or Tasker writes a command to that file,
-the command is forwarded for processing. There is no acknowlegement.
+the command is forwarded for processing.
+
+There is no acknowledgement for commands. This wasn't a deliberate
+decision.
 
 ## Dispatcher
+The dispatcher receives a command sent by the file watcher, and
+forwards it to a script that executes it. Commands have 4 digit
+headers that determine which script that is.
+
 
 ## Focus App By Alias.
+A command alias typically consists of two characters, that refer to a
+command and its parameters. Typing the command alias switches to the
+running application, launching it if not already running.
+A workspace can be associated with a command alias, in which case
+the workspace name is the command alias.
+
+Workspaces can be created and focused without being associated with
+programs.  Programs can be launched without being associated with
+workspaces.
 
 ## Launcher
+The launcher executes any command for which you have permissions.
+Security is as good as your ssh key and privacy is absent unless
+you are the sole user.
+
+The protocol requires that the text of each command is preceded
+by a 4 digit number which acts as a handle.
+
+## Transcribe
+This is a niche feature, that just happens to be important for
+EllaTheCat. If the user can't type quickly, speech to text is viable.
+
+On the phone, saying "OK Google" triggers speech to text. The
+resulting lowercase text is sent to a Linux PC using ssh.  The
+lowercase text is written to the File Watcher just like commands
+are. Eventually punctuated text appears in an Emacs buffer.
