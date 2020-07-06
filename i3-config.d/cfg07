@@ -60,6 +60,7 @@ for_window [instance="emacs"] $i3marks unique
 for_window [instance="Navigator"] $i3marks unique
 for_window [instance="google-chrome"] $i3marks unique
 for_window [instance="gl" class="mpv"] $i3marks unique
+for_window [title="SM G930F"] $i3marks unique
 
 # VirtualBox windows assume full screen dimensions.
 for_window [title="VirtualBox Manager"] layout tabbed;

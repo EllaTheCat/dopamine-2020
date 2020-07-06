@@ -19,6 +19,9 @@ exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
 exec --no-startup-id my-usb-disks configure
 exec --no-startup-id my-usb-disks spindown
 
+# TV/PVR.
+exec --no-startup-id "sleep 10s && ~/local/bin/my-tvheadend start"
+
 #
 # EXECUTABLE SETTINGS END HERE.
 #

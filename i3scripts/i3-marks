@@ -26,12 +26,7 @@ unique()
 # Start here.
 #
 
-case "$1" in
-    (unique)
-        "$1"
-        ;;
-esac
-
+unique
 
 #
 # Done.

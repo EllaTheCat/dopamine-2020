@@ -25,6 +25,7 @@ declare -A wsapps=(
     ["ap"]="impress"
     ["tb"]="thunderbird"
     ["md"]="meld"
+    ["s7"]="xfce4-terminal -e scrcpy"
     ["sk"]="skype"
     ["sp"]="spotify"
     ["sy"]="synaptic-pkexec"

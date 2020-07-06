@@ -48,7 +48,7 @@ nomatchfound ()
 	    # Setting $2 to anything outside this range of integer
 	    # values in seconds disables the error message. The
 	    # message delivery is non-blocking.
-	    (echo "No match found for 4 digit code \"$1\"" |
+	    (echo "i3-dispatcher: No match found! \"$*\"" |
 		 dmenu -b -fn "pango:DejaVu Sans 11") &
 	    sleep "$2"
 	    # This key event effects a timeout, but only if the user
