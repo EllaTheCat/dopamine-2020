@@ -244,10 +244,18 @@ i$(I3BIN)/i3-status: \
 $(I3SCRIPTS)/i3-status.log: $(I3SCRIPTS)/i3-status
 	@shellcheck $(I3SCRIPTS)/i3-status > $@
 
+$(I3BIN)/i3-reserved: \
+	$(I3SCRIPTS)/i3-reserved \
+	$(I3SCRIPTS)/i3-reserved.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-reserved $(I3BIN)
+
+$(I3SCRIPTS)/i3-reserved.log: $(I3SCRIPTS)/i3-reserved
+	@shellcheck $(I3SCRIPTS)/i3-reserved > $@
+
 # .installextras
 
 # Using a pattern rule for the extras avoids the need for editing the
-# Makefile when thee user adds r removes a script.. Unfortunately I
+# Makefile when the user adds or removes a script. Unfortunately I
 # can't redirect the shellcheck output to a file, but any shellcheck
 # errors are displayed. Shellcheck errors will prevent installation.
 
