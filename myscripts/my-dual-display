@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Arrange the dual displays for my raspberry pi 4.
+#
+
+case "$(hostname)" in
+    (cheesecake)
+        case "${1:-same}" in
+            (left*)
+                xrandr --output HDMI-2 --left-of HDMI-1
+                ;;
+            (right*)
+                xrandr --output HDMI-2 --right-of HDMI-1
+                ;;
+            (same*)
+                xrandr --output HDMI-2 --same-as HDMI-1
+                ;;
+        esac
+    ;;
+esac
+
+#
+# Done.
+#
