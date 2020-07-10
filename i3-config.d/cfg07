@@ -29,13 +29,15 @@ workspace "f0" output $cmon
 # Assign applications to workspaces.
 # Use this method when launching applications indirectly.
 # For example tvheadend calls mpv automatically.
-assign [instance="xfce4-terminal" title="tvheadend"] tv
 assign [class="mpv"]  mp
-assign [title="VLC media player$"] vp
-assign [title="Meld$"] md
 assign [instance="wireshark"]  ws
+assign [class="URxvt" title="tvheadend"] tv
+assign [class="Xfce4-terminal" title="tvheadend"] tv
 assign [title="DVB Inspector"] di
+assign [title="Meld$"] md
 assign [title="SM-G930F"] s7
+assign [title="VLC media player$"] vp
+assign [title="tvheadend"] tv
 
 # Windows that look'n'feel better when floating.
 for_window [instance="dtvkit"] floating enable;
