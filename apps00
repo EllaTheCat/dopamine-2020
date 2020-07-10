@@ -29,7 +29,6 @@ declare -A wsapps=(
     ["sk"]="skype"
     ["sp"]="spotify"
     ["sy"]="synaptic-pkexec"
-    ["tv"]="my-tvheadend start"
     ["vb"]="virtualbox"
 )    #  ---------------------------------------------------------------- #
 
