@@ -5,14 +5,18 @@
 #
 # This file is a standalone version of the i3-file-watcher file
 # for use with a Raspberry Pi 4B.
+#
+# Copy    "/etc/xdg/lxsession/LXDE-pi/autostart" to
+# "/home/pi/.config/lxsession/LXDE-pi/autostart" and
+# append /home/pi/.../my-file-watcher" to autostart.
+#.
 
 #
 # Start here.
 #
-
-case "$(hostname)" in
-    (cheesecake)
-
+.
+case "$(arch)" in
+    (arm*)
         # Create the directory and files. Set the strictest permissions.
         # Use the i3 directory structure regardless of window manager.
         i3=/dev/shm/pi/i3
