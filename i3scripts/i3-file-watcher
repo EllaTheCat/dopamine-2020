@@ -16,23 +16,18 @@ chmod 600 "$i3/command"
 touch "$i3/execute"
 chmod 700 "$i3/execute"
 
-# Set the file contents. The command is iinitialised with a nop.  The
+# Set the file contents. The command is initialised with a nop.  The
 # execute command has to be expanded at dispatch time.  Single quotes
 # ensure that the string is not expanded when copied into the execute
 # file. Shellcheck doesn't think this is what we want so the warning
-# is disabled,. Note: "echo" joins its string arguments with a space.
-#
+# is disabled. Note: "echo" joins its string arguments with a space.
+
 # shellcheck disable=SC2016
 echo 'eval /bin/false' > "${i3}/command"
 # shellcheck disable=SC2016
 echo 'eval $HOME/local/bin/i3-dispatcher forward' \
      '$(cat /dev/shm/$USER/i3/command)' > "${i3}/execute"
-# Focus the workspace, created if non-existent, allow enough  time.
-i3-msg "workspace --no-auto-back-and-forth \"wm\""
-sleep 0.2
-# This matches all windows in the currently focused workspace.
-i3-msg '[workspace="__focused__"] kill'
-# Killl the running inotify-hookable and start another.
+# Kill the running inotify-hookable and start another.
 pkill -f "inotify-hookable --watch-files $i3/command"
 # Be careful! Use no terminal here! Use no ampersand here!
 inotify-hookable --watch-files "${i3}"/command --on-modify-command "${i3}"/execute
