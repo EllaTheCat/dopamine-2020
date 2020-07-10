@@ -2,6 +2,10 @@
 #
 # Arrange the dual displays for my raspberry pi 4.
 #
+# - The utility that comes with Raspbian shows two rectangles. The
+# - "same-as" layout can be achieved by dragging one on top of the
+# - other, the order is important.
+#
 
 case "$(hostname)" in
     (cheesecake)
