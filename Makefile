@@ -56,9 +56,7 @@ $(I3BIN)/i3-double-digit-command \
 $(I3BIN)/i3-status
 
 .installextras: \
-$(I3BIN)/my-phonecall \
-$(I3BIN)/my-tvheadend \
-$(I3BIN)/my-usb-disks
+$(I3BIN)/my-phonecall $(I3BIN)/my-tvheadend $(I3BIN)/my-usb-disks
 
 .installflags: \
 reloaded \
@@ -70,7 +68,7 @@ all :  .installdirs .installconfigs .installscripts .installextras .installflags
 # .installflags
 #
 # Flags ensure that reload and restart are each performed no more than
-# once and tha all changes have been made beforehand.
+# once and that all changes have been made beforehand.
 
 reloaded: reload
 	touch $@
@@ -263,13 +261,6 @@ $(I3BIN)/%: $(MYSCRIPTS)/%
 	@shellcheck $<
 	@install -m $(EXEMODE) $< $(I3BIN)
 
-### $(I3BIN)/my-tvheadend: \
-### 	$(MYSCRIPTS)/my-tvheadend \
-### 	$(MYSCRIPTS)/my-tvheadend.log
-### 	@install -m $(EXEMODE) $(MYSCRIPTS)/my-tvheadend $(I3BIN)
-###
-### $(MYSCRIPTS)/my-tvheadend.log: $(MYSCRIPTS)/my-tvheadend
-### 	@shellcheck $(MYSCRIPTS)/my-tvheadend > $@
 
 # Debug use only.
 vars:
