@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# my-minidlna
+
+#
+
+case "$1" in
+
+    (start|restart|stop|status)
+        sudo service minidlna "$1"
+        ;;
+    (retry)
+        sudo service minidlna stop
+        sleep 3s
+        sudo service minidlna start
+        ;;
+
+esac
+
+#
+# Done.
+#
