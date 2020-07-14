@@ -145,9 +145,9 @@ $(I3SCRIPTS)/i3-dispatcher.log: $(I3SCRIPTS)/i3-dispatcher
 $(I3BIN)/i3-focus-app-by-alias: \
 	$(I3SCRIPTS)/i3-focus-app-by-alias \
 	$(I3SCRIPTS)/i3-focus-app-by-alias.log  \
-	apps00
+	i3-config.d/apps00
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-focus-app-by-alias $(I3BIN)
-	@sed -e '/###INSERT_APPS00_HERE###/ {' -e 'r apps00' -e 'd' -e '}' \
+	@sed -e '/###INSERT_APPS00_HERE###/ {' -e 'r i3-config.d/apps00' -e 'd' -e '}' \
          -i   $(I3BIN)/i3-focus-app-by-alias
 
 $(I3SCRIPTS)/i3-focus-app-by-alias.log: $(I3SCRIPTS)/i3-focus-app-by-alias
