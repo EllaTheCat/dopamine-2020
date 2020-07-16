@@ -18,10 +18,6 @@ exec --no-startup-id pactl set-default-sink combined
 exec --no-startup-id my-usb-disks configure
 exec --no-startup-id my-usb-disks spindown
 
-
-exec --no-startup-id "dropbox start"
-exec --no-startup-id "sleep 10s && ~/local/bin/my-tvheadend start"
-
 #
 # EXECUTABLE SETTINGS END HERE.
 #
