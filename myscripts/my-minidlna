@@ -1,20 +1,24 @@
 #!/bin/bash
 #
 # my-minidlna
+# - On raspberry pi..
+# - The "retry" option is invoked by crontab @reboot as a workaround.
 
-#
+case "$(arch)" in
+    (arm*)
+        case "$1" in
 
-case "$1" in
-
-    (start|restart|stop|status)
-        sudo service minidlna "$1"
+            (start|restart|stop|status)
+                sudo service minidlna "$1"
+                ;;
+            (retry)
+                sleep 5m  # sic
+                sudo service minidlna stop
+                sleep 3s
+                sudo service minidlna start
+                ;;
+        esac
         ;;
-    (retry)
-        sudo service minidlna stop
-        sleep 3s
-        sudo service minidlna start
-        ;;
-
 esac
 
 #
