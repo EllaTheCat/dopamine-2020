@@ -30,6 +30,7 @@ declare -A wsapps=(
     ["sp"]="spotify"
     ["sy"]="synaptic-pkexec"
     ["vb"]="virtualbox"
+    ["tv"]="my-tvheadend start"
 )    #  ---------------------------------------------------------------- #
 
 declare -A not_wsapps=(
