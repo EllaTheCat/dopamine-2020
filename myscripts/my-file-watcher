@@ -14,7 +14,7 @@
 #
 # Start here.
 #
-.
+
 case "$(arch)" in
     (arm*)
         # Create the directory and files. Set the strictest permissions.
