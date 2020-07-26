@@ -1,21 +1,23 @@
 #!/bin/bash
 #
 # my-minidlna
-# - On raspberry pi..
-# - The "retry" option is invoked by crontab @reboot as a workaround.
+#
 
-case "$(arch)" in
-    (arm*)
-        case "$1" in
-
-            (start|restart|stop|status)
-                sudo service minidlna "$1"
+case "$(hostname)" in
+    (cheesecake)
+        # Always use grep after minidlna status in scripts to ensure
+        # that it doesn't block. Use 'grep xyzzy' with text output.
+        ok=$(sudo service minidlna status | grep -c 'not accessible')
+        case "${ok}" in
+            (0)
+                sudo service minidlna status | grep -v xyzzy
                 ;;
-            (retry)
-                sleep 5m  # sic
+            (1)
                 sudo service minidlna stop
-                sleep 3s
+                sleep 5s
                 sudo service minidlna start
+                sleep 2s
+                sudo service minidlna status | grep -v xyzzy
                 ;;
         esac
         ;;
