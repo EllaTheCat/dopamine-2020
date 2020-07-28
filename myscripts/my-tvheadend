@@ -3,17 +3,16 @@
 # my-tvheadend
 #
 # -  tvheadend built from source, running from build directory.
+# -  I've had to hardcode the build directory and the hostname.
 #
 
-tvhpath=/home/shevek/Zebra/packages/tvheadend/tvheadend/build.linux
-
-case "$1" in
-    (start)
-	(urxvt -title 'tvheadend' -e ${tvhpath}/tvheadend --noacl) &
-	;;
-    (stop)
-	pkill -f "urxvt -title 'tvheadend' -e  ${tvhpath}tvheadend --no-acl"
-	;;
+case "$(hostname)" in
+  (quietpc)
+  tvhpath=/home/${USER}/Zebra/packages/tvheadend/tvheadend
+  cd "${tvhpath}" || exit
+  # shellcheck disable=SC2154
+  urxvt -title "tvh-server-${hostname}" -e ./build.linux/tvheadend --noacl
+  ;;
 esac
 
 #
