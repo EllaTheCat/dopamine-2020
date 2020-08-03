@@ -22,6 +22,10 @@ focus ()
             if [ "$(pgrep -c -f "emacs --daemon -rv")" -eq 0 ]; then
                 (emacs --daemon -rv) &
                 sleep 3
+                # The first instance fails to use the specified font,
+                # this is a workaround.
+                emacsclient -c &
+                sleep 2 && pkill -f 'emacsclient'
             fi
         ;;
     esac
