@@ -264,7 +264,6 @@ $(I3BIN)/%: $(MYSCRIPTS)/%
 # Keep the raspberry pi that I use for video playback up to date.
 cheesecake:
 	@rsync -av $(MYSCRIPTS)/my-file-watcher pi@$@:///home/pi/local/bin/
-	@rsync -av $(MYSCRIPTS)/my-dual-display pi@$@:///home/pi/local/bin/
 	@rsync -av $(MYSCRIPTS)/my-minidlna     pi@$@:///home/pi/local/bin/
 
 # Debug use only.
