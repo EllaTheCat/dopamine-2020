@@ -68,7 +68,12 @@ mode "Secondary" {
             sleep 0.3 && xdotool getwindowfocus windowfocus type "hello world"
 
     # Desktop background.
+    #  Here is the attribution for the images I use:
+    #  https://commons.wikimedia.org/wiki/
+    #  File:London_360%C2%B0_Panorama_from_the_London_Eye.jpg,
+    #  Photo by Gregg M. Erickson, cropped into overlapping 5760x1080 images.
     bindsym n $default, exec --no-startup-id nitrogen --restore
+
     # All monitors turn OFF.
     bindsym --release m $default,  exec --no-startup-id xset dpms force off
 

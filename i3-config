@@ -126,13 +126,6 @@ exec --no-startup-id /usr/bin/xrdb ${HOME}/urxvt.Xdefaults
 exec --no-startup-id ~/local/bin/i3-keyboard xmodmapkeys
 exec --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 
-# Wallpaper for those empty workspaces.
-# https://commons.wikimedia.org/wiki/
-# File:London_360%C2%B0_Panorama_from_the_London_Eye.jpg,
-# Photo by Gregg M. Erickson, cropped into overlapping 5760x1080 images.
-# Occasionally fails to set wallpaper.
-exec_always --no-startup-id nitrogen --restore
-
 # Command Interface.
 # It's OK to restart this script when i3 is restarted.
 exec_always --no-startup-id ~/local/bin/i3-file-watcher
