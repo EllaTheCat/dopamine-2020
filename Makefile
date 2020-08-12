@@ -109,11 +109,11 @@ $(I3CFG):  i3-config \
          -i   $(I3CFG)
 	@sed -e '/###INSERT_CFG09_HERE###/ {' -e 'r i3-config.d/cfg09' -e 'd' -e '}' \
          -i   $(I3CFG)
-	@touch reloaded
+	@touch reload
 
 $(I3STATUSCFG):  i3-status-config
 	@install -m $(CFGMODE) i3-status-config $@
-	@touch restarted
+	@touch restart
 
 # .installscripts
 
