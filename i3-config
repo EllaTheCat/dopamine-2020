@@ -126,6 +126,9 @@ exec --no-startup-id /usr/bin/xrdb ${HOME}/urxvt.Xdefaults
 exec --no-startup-id ~/local/bin/i3-keyboard xmodmapkeys
 exec --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 
+# Wallpaper. See secondary mode keybinding should this misbehave.
+exec --no-startup-id nitrogen --restore
+
 # Command Interface.
 # It's OK to restart this script when i3 is restarted.
 exec_always --no-startup-id ~/local/bin/i3-file-watcher
