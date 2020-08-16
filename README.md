@@ -46,7 +46,7 @@ standalone pieces.
 ## Installation
 Dopamine wants to be installed anywhere beneath ${HOME}, in a
 directory accessible to git.  Decide in which directory the git clone
-will be done, change to that directory and do:
+ will be done, change to that directory and do:
 
     git clone git@github.com:EllaTheCat/dopamine-2020.git
     make
@@ -56,8 +56,9 @@ will be done, change to that directory and do:
 - Copies config files from your local repository to where i3 expects
   them at runtime.
 - Copies script files from your local repository to a folder that
-  should be on your ${PATH}. I use ${HOME}/local/bin so users can
-  symlink it to their preferences.
+  should be on your ${PATH}. I chose ${HOME}/local/bin precisely
+  because no-one else does, in order to avoid conflicts. Feel free to
+  make it a symlink to ${HOME}/bin or whatever.
 - Modifies the copies with your customisations.
 - Sets the runtime file and folder permissions.
 - Runs the i3 reload command should the i3 config have changed.
@@ -165,7 +166,7 @@ The Enter key automation can be disabled.
 ## Tasker, AutoVoice, AutoTools
 Tasker is a popular android application that lets users write programs
 to run on their phone or tablet. AutoVoice is a Tasker plugin for
-speech recognition. AutoTools is a Tasker plugin that provides "ssh".
+speech-to-text.. AutoTools is a Tasker plugin that provides "ssh".
 
 A Tasker program uses exactly the same "File Watcher" interface as
 the command prompt. Commands need not be limited to two or three
@@ -177,13 +178,17 @@ Whenever the command prompt or Tasker writes a command to that file,
 the command is forwarded for processing.
 
 There is no acknowledgement for commands. This wasn't a deliberate
-decision.
+decision. This omission has been on my mind and I think there is a
+way.The following example works when invoked from a ssh login to a
+raspberry pi running a simplified file watcher:
+
+    echo 'wmctrl -l > /dev/shm/pi/i3/response' > /dev/shm/pi/i3/command
+    cat /dev/shm/pi/i3/response
 
 ## Dispatcher
 The dispatcher receives a command sent by the file watcher, and
 forwards it to a script that executes it. Commands have 4 digit
 headers that determine which script that is.
-
 
 ## Focus App By Alias.
 A command alias typically consists of two characters, that refer to a
