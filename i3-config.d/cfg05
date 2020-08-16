@@ -21,8 +21,9 @@ mode "Secondary" {
     bindsym t $default, split h, exec urxvt
     bindsym y $default, split v, exec urxvt
 
-    bindsym i nop
-    bindsym o nop
+    bindsym i $default, exec --no-startup-id pactl load-module module-loopback \
+            latency_msec=1
+    bindsym o $default, exec --no-startup-id pactl unload-module module-loopback
     bindsym p nop
 
     bindsym bracketleft nop
