@@ -16,7 +16,12 @@ exec --no-startup-id pactl set-default-sink combined
 
 # Spindown at startup by default.
 exec --no-startup-id my-usb-disks configure
-exec --no-startup-id my-usb-disks spindown
+exec --no-startup-id my-usb-disks spindown sdc
+exec --no-startup-id my-usb-disks spindown sdd
+
+# Spindown after shutdown.
+bindsym Control+Mod4+Pause\
+    exec --no-startup-id my-usb-disks tidyexit
 
 #
 # EXECUTABLE SETTINGS END HERE.
