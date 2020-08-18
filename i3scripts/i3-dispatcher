@@ -19,6 +19,9 @@ forward ()
         (0000)
             nohup i3-transcribe clipboard "${@:2}"
             ;;
+        (0001)
+            nohup i3-transcribe editor "${@:2}"
+            ;;
         ([1][0-9][0-9][0-9])
             nohup i3-launcher start "$1" "$2" "${@:3}"
 	    ;;
@@ -35,7 +38,7 @@ forward ()
 	    nohup i3-double-digit-command "$1"
 	    ;;
 	(*)
-	nomatchfound "$1" 3
+	nomatchfound "$*"
 	    ;;
     esac
 }
@@ -43,21 +46,15 @@ forward ()
 # Error message handler.
 nomatchfound ()
 {
-    case "$2" in
-	([1-5])
-	    # Setting $2 to anything outside this range of integer
-	    # values in seconds disables the error message. The
-	    # message delivery is non-blocking.
-	    (echo "i3-dispatcher: No match found! \"$*\"" |
-		 dmenu -b -fn "pango:DejaVu Sans 11") &
-	    sleep "$2"
-	    # This key event effects a timeout, but only if the user
-	    # hasn't dismissed the dmenu first. It isn't watertight.
-	    if [ "$(pgrep -c -af 'dmenu -b -fn pango:DejaVu Sans 11')" -eq 1 ]; then
-	       xdotool key --clearmodifiers  Escape
-	    fi
-	    ;;
-    esac
+    # This message delivery is non-blocking.
+    (echo "i3-dispatcher: No match found! \"$*\"" |
+	 dmenu -b -fn "pango:DejaVu Sans 11") &
+    sleep "$2"
+    # This key event effects a timeout, but only if the user
+    # hasn't dismissed the dmenu first. It isn't watertight.
+    if [ "$(pgrep -c -af 'dmenu -b -fn pango:DejaVu Sans 11')" -eq 1 ]; then
+	xdotool key --clearmodifiers  Escape
+    fi
 }
 
 #

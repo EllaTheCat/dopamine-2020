@@ -100,13 +100,50 @@ mklast ()
 }
 
 #
+#
+#
+editor ()
+{
+    i3-msg 'mark xyzzy'
+    i3-msg '[title="Emacs : Clipboard"] focus'
+    case "$1" in
+        (goto)
+            emacsclient -e "(set-buffer \"Clipboard\")"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (goto-line $2))"
+            ;;
+        (mark)
+            emacsclient -e "(set-buffer \"Clipboard\")"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (set-mark-command))"
+            ;;
+        (kill)
+            emacsclient -e "(set-buffer \"Clipboard\")"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (kill-line 2))"
+            ;;
+        (yank)
+            emacsclient -e "(set-buffer \"Clipboard\")"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (yank))"
+            ;;
+    esac
+    i3-msg '[con_mark="xyzzy"] focus'
+    i3-msg 'unmark xyzzy'
+
+}
+
+#
 # Start here.
 #
 
 case "$1" in
     (clipboard)
-    clipboard "${@:2}"
-    ;;
+        clipboard "${@:2}"
+        ;;
+    (editor)
+        editor "${@:2}"
+        ;;
 esac
 
 #
