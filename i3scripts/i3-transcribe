@@ -100,37 +100,64 @@ mklast ()
 }
 
 #
-#
+# A simple line oriented text editor.
+# The interface uses the intermediate syntax {verb, line-number|repeat-count}
 #
 editor ()
 {
-    i3-msg 'mark xyzzy'
+    # Apply a special mark to the active window so we can go back to
+    # said window, without disturbing any existing marks there.
+    i3-msg 'mark --add --toggle xyzzy'
+    # Focus the clipboard window. This may not be necessary but play
+    # safe until the code is stable.
     i3-msg '[title="Emacs : Clipboard"] focus'
+    # To test (silently;) from the command line on the same machine:
+    # echo "0001 $1 $2" > /dev/shm/shevek/i3/command
+    # Test $1 in order of cases listed here.
     case "$1" in
         (goto)
+            # Confirm line number.
             emacsclient -e "(set-buffer \"Clipboard\")"
             emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
             emacsclient -e "(with-current-buffer \"Clipboard\" (goto-line $2))"
             ;;
         (mark)
+            # Confirm line number. See 'Mark set' in minibuffer.
             emacsclient -e "(set-buffer \"Clipboard\")"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (goto-line $2))"
             emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
             emacsclient -e "(with-current-buffer \"Clipboard\" (set-mark-command))"
             ;;
-        (kill)
+        (wipe)
+            # Confirm block of lines removed.
             emacsclient -e "(set-buffer \"Clipboard\")"
             emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (kill-line 2))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (goto-line $2))"
+            emacsclient -e \
+                        "(with-current-buffer \"Clipboard\" (kill-region (point) (mark)))"
+            ;;
+        (kill)
+            # Confirm number of lines killed.
+            emacsclient -e "(set-buffer \"Clipboard\")"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (kill-line $2))"
             ;;
         (yank)
+            # Confirm yank $2'th most recently killed.
             emacsclient -e "(set-buffer \"Clipboard\")"
             emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (yank))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (yank $2))"
+            ;;
+        (undo)
+            # Placeholder. pending evaluation.
+            emacsclient -e "(set-buffer \"Clipboard\")"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (undo $2))"
             ;;
     esac
+    # Return to the formerly active window labelled with the special
+    # mark then remove said mark.
     i3-msg '[con_mark="xyzzy"] focus'
     i3-msg 'unmark xyzzy'
-
 }
 
 #
