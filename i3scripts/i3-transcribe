@@ -118,44 +118,34 @@ editor ()
         (goto)
             # Confirm line number.
             emacsclient -e "(set-buffer \"Clipboard\")"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line 1))"
             emacsclient -e "(with-current-buffer \"Clipboard\" (goto-line $2))"
             ;;
         (mark)
             # Confirm line number. See 'Mark set' in minibuffer.
             emacsclient -e "(set-buffer \"Clipboard\")"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line 1))"
             emacsclient -e "(with-current-buffer \"Clipboard\" (goto-line $2))"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (set-mark-command))"
-            ;;
-        (wipe)
-            # Confirm block of lines removed.
-            emacsclient -e "(set-buffer \"Clipboard\")"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (goto-line $2))"
-            emacsclient -e \
-                        "(with-current-buffer \"Clipboard\" (kill-region (point) (mark)))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (set-mark-command 1))"
             ;;
         (kill)
             # Confirm number of lines killed.
             emacsclient -e "(set-buffer \"Clipboard\")"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (kill-line $2))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line 1))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (goto-line $2))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (kill-line ${3:-1}))"
             ;;
         (yank)
             # Confirm yank $2'th most recently killed.
             emacsclient -e "(set-buffer \"Clipboard\")"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line))"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (yank $2))"
-            ;;
-        (undo)
-            # Placeholder. pending evaluation.
-            emacsclient -e "(set-buffer \"Clipboard\")"
-            emacsclient -e "(with-current-buffer \"Clipboard\" (undo $2))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line 1))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (goto-line $2))"
+            emacsclient -e "(with-current-buffer \"Clipboard\" (yank ${3:-1}))"
             ;;
     esac
     # Return to the formerly active window labelled with the special
-    # mark then remove said mark.
+    # mark then remove said mark. The delay is cosmetic above 500ms.
+    sleep 0.8
     i3-msg '[con_mark="xyzzy"] focus'
     i3-msg 'unmark xyzzy'
 }
