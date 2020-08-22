@@ -1,5 +1,9 @@
 # dopamine-2020 - Customising the i3 tiling window manager.
 
+## About Me
+I'm suffering cognitve decline. This project was too ambitious, The
+architecture is broken. I'm not a quittter, but I am realistic.
+
 ## What's in the repository?
 
 This repository consists of the config and scripts I'm using with i3
