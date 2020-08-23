@@ -27,3 +27,31 @@ bar {
 #
 # I3BAR SETTINGS END HERE.
 #
+
+#
+# DEBUG MODE KEY BINDINGS BEGIN HERE.
+#
+
+#
+#
+#
+mode "Debug" {
+    # Update a 2 digit window [m]ark.
+    # Users have Primary-N to do this.
+    bindsym m $i3marks unique
+    # Update a 2 character [w]orkspace mark.
+    # Maintainers only.
+    bindsym w $i3marks refresh
+    # Delete all marks from a workspace.
+    # Maintainers only.
+    bindsym r $i3marks reset
+
+    # Back to the default.
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym space mode "default"
+}
+
+#
+# DEBUG MODE KEY BINDINGS END HERE.
+#

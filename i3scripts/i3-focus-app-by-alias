@@ -34,8 +34,7 @@ focus ()
             # shellcheck disable=SC2154
             app=${wsapps[$1]}
             if [ "_${app}" = "_" ]; then
-                # $1 is NOT a recognised key in wsapps.
-                ws="$(i3-msg -t get_workspaces | jq '.[] | .name'| grep "$1")"
+                ws="$(ni3-msg -t get_workspaces | jq '.[] | .name'| grep "$1")"
                 if [ "_${ws}" != "_" ]; then
                     # Workspace $1 exists, focus it. Programs running
                     # there have no other association with it.
@@ -55,42 +54,39 @@ focus ()
                         i3-msg "exec --no-startup-id ${path}${app}"
                     fi
                 fi
-                return 1
-            fi
-	    status=$(i3-msg "[workspace=\"$1\" con_mark=\"_$1\"] focus")
-	    case "${status}" in
-		(*true*)
-		    i3-msg "workspace --no-auto-back-and-forth \"$1\""
-                    ;;
-		(*false*)
-                    # "No window matches given criteria" is not an
-                    # error here, it's one of two desired outcomes.
-		    i3-msg "workspace --no-auto-back-and-forth \"$1\""
-                    # Getting this to work was fun!
-                    # We want the script to terminate hence using i3-msg.
-		    # The enhanced PATH is exported by the dispatcher.
-                    # The i3-msg recipient can't see the enhanced PATH.
-                    # Extract and prepend the path directory components.
+                return 1  # $1 is NOT a recognised key in wsapps.
+            else
+	        status=$(i3-msg "[workspace=\"$1\" con_mark=\"${1:0:2}\"] focus")
+	        case "${status}" in
+		    (*true*)
+		        i3-msg "workspace --no-auto-back-and-forth \"$1\""
+                        ;;
+		    (*false*)
+                        # "No window matches given criteria" is not an
+                        # error here, it's one of two desired outcomes.
+		        i3-msg "workspace --no-auto-back-and-forth \"$1\""
+                        # Getting this to work was fun!
+                        # We want the script to terminate hence using i3-msg.
+		        # The enhanced PATH is exported by the dispatcher.
+                        # The i3-msg recipient can't see the enhanced PATH.
+                        # Extract and prepend the path directory components.
 
-                    # The executable name remains after removing the
-                    # "longest matching suffix", defined by space star.
-                    arg0=${app%% *}
-                    # Get the full path to the executable, remove the
-                    # name part, prepend the rest to the command.
-                    path=$(command -v  "${arg0}")    # "which"
-                    path=${path/${arg0}/}
-                    i3-msg "exec --no-startup-id ${path}${app}"
-		    # Allow the app enough time to initialise before applying
-		    # the mark. The underscore makes the mark invisible; to
-		    # confirm the mark. Use "i3-msg -t get_marks".
-		    sleep 3
-		    i3-msg "[workspace=\"$1\"]  mark --add  --replace _$1"
-		    ;;
-	    esac
-	    ;;
-    esac
-    return 0  # $1 is an existing key in wsapps.
+                        # The executable name remains after removing the
+                        # "longest matching suffix", defined by space star.
+                        arg0=${app%% *}
+                        # Get the full path to the executable, remove the
+                        # name part, prepend the rest to the command.
+                        path=$(command -v  "${arg0}")    # "which"
+                        path=${path/${arg0}/}
+                        i3-msg "exec --no-startup-id ${path}${app}"
+		        ;;
+	        esac
+                return 0  # $1 is an existing key in wsapps.
+            fi
+            ;;
+    esac  # $1 is a command alias.
 }
+
 
 #
 # Start here.

@@ -44,6 +44,7 @@ set $secondary exec --no-startup-id ~/local/bin/i3-mode Secondary
 
 # Helpers. Embedding the path explicitly is belt and braces.
 set $i3cmdprompt exec --no-startup-id ~/local/bin/i3-command-prompt
+set $i3debug exec --no-startup-id ~/local/bin/i3-marks
 set $i3filewatcher exec_always --no-startup-id ~/local/bin/i3-file-watcher
 set $i3marks exec --no-startup-id ~/local/bin/i3-marks
 set $i3mode exec --no-startup-id ~/local/bin/i3-mode
@@ -90,6 +91,10 @@ bindsym Print $primary
 # KP_Insert is a design decision please do not change.
 # Command prompt in one keypress.  Faciltates 3 digit commands.
 bindsym KP_Insert $i3cmdprompt menu 4
+
+# Debug mode is defined in the same config as the i3bar to avoid
+# proliferation of config files.
+bindsym Control+Menu mode "Debug"
 
 ###INSERT_CFG01_HERE###
 

@@ -136,7 +136,7 @@ editor ()
             emacsclient -e "(with-current-buffer \"Clipboard\" (kill-line ${3:-1}))"
             ;;
         (yank)
-            # Confirm yank $2'th most recently killed.
+            # Confirm yank N'th most recently killed.
             emacsclient -e "(set-buffer \"Clipboard\")"
             emacsclient -e "(with-current-buffer \"Clipboard\" (move-beginning-of-line 1))"
             emacsclient -e "(with-current-buffer \"Clipboard\" (goto-line $2))"

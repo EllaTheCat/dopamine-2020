@@ -2,7 +2,7 @@
 #
 
 #
-# Assign a unique mark.
+# Assign a unique 2 digit mark.
 #
 unique()
 {
@@ -23,10 +23,55 @@ unique()
 }
 
 #
+# Mark the window with focus with the command alias. Remove the same
+# mark from other windows on the same workspace.. All double digit
+# unique marsk unchanged.
+#
+# Unfortunately moving a window across workspaces is not addressed
+refresh()
+{
+    cws=$(i3-msg -t get_workspaces | jq '.[] | .name,.focused' | \
+              grep true -B1 | grep -v true)
+    windowid=$(printf "0x%x" "$(xdotool getwindowfocus)")
+    i3-msg "[id=\"${windowid}\"] mark --add --replace ${cws}"
+}
+
+restart()
+{
+    count="$(pgrep -c -f "i3-msg -t subscribe -m")"
+    case "${count}" in
+        (0)
+            true
+            ;;
+        (1)
+            pkill -f "i3-msg -t subscribe -m"
+            ;;
+        (*)
+            echo "Too many i3-msg subscriptions!"
+            return
+            ;;
+    esac
+    # shellcheck disable=SC2034
+    i3-msg -t subscribe -m '[ "window" ]' | \
+        while read -r line ; do i3-marks refresh; read -r line; read -r line; done
+}
+
+#
 # Start here.
 #
 
-unique
+case "$1" in
+    (unique)
+        unique
+        ;;
+    (refresh)
+        refresh
+        ;;
+    (restart)
+        (restart) &
+        disown
+        ;;
+esac
 
 #
 # Done.
