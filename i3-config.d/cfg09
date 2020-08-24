@@ -36,10 +36,6 @@ bar {
 # Debug use only.
 #
 mode "Debug" {
-    bindsym f $i3filewatcher
-    bindsym n $i3marks numeric
-    bindsym c $i3marks commandalias
-    bindsym a $i3marks commandalias
 
     # Back to the default.
     bindsym Return mode "default"
