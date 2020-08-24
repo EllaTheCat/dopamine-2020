@@ -58,6 +58,21 @@ update()
 }
 
 #
+# Run the window changed monitor in a terminal of its own.
+#
+terminal()
+{
+    # Ensure a single running instance of the terminal.
+    pkill -f 'urxvt -T Window Change Monitor'
+    i3-msg 'exec urxvt -T "Window Change Monitor"'
+    sleep 2
+    # Run the updater inside the aforementioned terminal.
+    # Use brute force and ignorance to get the job done.
+    xdotool type --clearmodifiers 'i3-marks update'
+    xdotool key --clearmodifiers Return
+}
+
+#
 # Start here.
 #
 
@@ -69,8 +84,10 @@ case "$1" in
         commandalias
         ;;
     (update)
-        (update) &
-        disown
+        update
+        ;;
+    (terminal)
+        (terminal) &
         ;;
 esac
 
