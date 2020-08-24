@@ -57,12 +57,12 @@ for_window [class="Display"] floating enable;
 for_window [class="Display-im6"] floating enable;
 
 # Application windows.
-for_window [instance="xfce4-terminal"] $i3marks unique
-for_window [instance="emacs"] $i3marks unique
-for_window [instance="Navigator"] $i3marks unique
-for_window [instance="google-chrome"] $i3marks unique
-for_window [instance="gl" class="mpv"] $i3marks unique
-for_window [title="SM G930F"] $i3marks unique
+for_window [instance="xfce4-terminal"] $i3marks numeric
+for_window [instance="emacs"] $i3marks numeric
+for_window [instance="Navigator"] $i3marks numeric
+for_window [instance="google-chrome"] $i3marks numeric
+for_window [instance="gl" class="mpv"] $i3marks numeric
+for_window [title="SM G930F"] $i3marks numeric
 
 # VirtualBox windows assume full screen dimensions.
 for_window [title="VirtualBox Manager"] layout tabbed;

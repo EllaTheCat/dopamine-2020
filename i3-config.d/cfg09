@@ -33,18 +33,13 @@ bar {
 #
 
 #
-#
+# Debug use only.
 #
 mode "Debug" {
-    # Update a 2 digit window [m]ark.
-    # Users have Primary-N to do this.
-    bindsym m $i3marks unique
-    # Update a 2 character [w]orkspace mark.
-    # Maintainers only.
-    bindsym w $i3marks refresh
-    # Delete all marks from a workspace.
-    # Maintainers only.
-    bindsym r $i3marks reset
+    bindsym f $i3filewatcher
+    bindsym n $i3marks numeric
+    bindsym c $i3marks commandalias
+    bindsym a $i3marks commandalias
 
     # Back to the default.
     bindsym Return mode "default"

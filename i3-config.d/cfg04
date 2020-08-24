@@ -91,10 +91,10 @@ mode "Primary" {
     bindsym v split v
     bindsym b split h
 
-    # Place a unique two digit mark on the focused window's title bar.
-    # [u] and [m] are already in use. The mark is a two digit [n]umber.
-    # The prompt doesn't work because it forgets where the focus was.
-    bindsym n $default, $i3marks unique
+    # Place a numeric mark on the focused window's title bar.
+    # The mark is a two digit [n]umber.
+    # Note: A command prompt version loses track of focus?
+    bindsym n $default, $i3marks numeric
 
     # (M)ove container to named workspace.
     bindsym m \

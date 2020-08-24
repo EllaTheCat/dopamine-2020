@@ -2,9 +2,9 @@
 #
 
 #
-# Assign a unique 2 digit mark.
+# Assign a 2 digit mark to a window.
 #
-unique()
+numeric()
 {
     # Generate a random 2 digit mark.  Reject and retry if it matches
     # an assigned mark. The retry loop takes more time as the number
@@ -23,12 +23,10 @@ unique()
 }
 
 #
-# Mark the window with focus with the command alias. Remove the same
-# mark from other windows on the same workspace.. All double digit
-# unique marsk unchanged.
+# Mark the focused window with the command alias. Remove the same
+# mark from other windows on the same workspace.
 #
-# Unfortunately moving a window across workspaces is not addressed
-refresh()
+commandalias()
 {
     cws=$(i3-msg -t get_workspaces | jq '.[] | .name,.focused' | \
               grep true -B1 | grep -v true)
@@ -36,7 +34,10 @@ refresh()
     i3-msg "[id=\"${windowid}\"] mark --add --replace ${cws}"
 }
 
-restart()
+#
+# When the monitor indicates a window change, update the marks.
+#
+update()
 {
     count="$(pgrep -c -f "i3-msg -t subscribe -m")"
     case "${count}" in
@@ -53,7 +54,7 @@ restart()
     esac
     # shellcheck disable=SC2034
     i3-msg -t subscribe -m '[ "window" ]' | \
-        while read -r line ; do i3-marks refresh; read -r line; read -r line; done
+        while read -r line ; do i3-marks commandalias; read -r line; read -r line; done
 }
 
 #
@@ -61,14 +62,14 @@ restart()
 #
 
 case "$1" in
-    (unique)
-        unique
+    (numeric)
+        numeric
         ;;
-    (refresh)
-        refresh
+    (commandalias)
+        commandalias
         ;;
-    (restart)
-        (restart) &
+    (update)
+        (update) &
         disown
         ;;
 esac
