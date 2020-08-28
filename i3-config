@@ -1,30 +1,26 @@
 # -*- Mode: Shell-script -*-
 #
-# i3 config file (v4).17.1.1 Xubuntu 20.04 LTS 01 May 2020
+# i3 version 4.18 (2020-02-17) Xubuntu 20.04 LTS 01 May 2020
+
 # Combines EllaTheCat dopamine with the de facto standard i3 bindings.
 # "HJKL" replaces "JKL:" because "vi", "b" replaces "h" because similar.
-#
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-#
 # IMPORTANT.
 #
 # You *must* run 'make' successfully before attempting reload or
 # refresh.  Config changes trigger reload. Status changes trigger
-# restart.  There are no bindings, using i3-msg in the terminal where
-# yuo did 'make' is recommended.
-#
+# restart.
+
 
 #
-# NON NEGOTIABLE.
+# ESSENTIALS
 #
-# - Bindings and settings are defined such that  "first one wins".
+# - i3 defines bindings and settings such that  "first one wins".
 # - A corollary is that essentials be defined as early as possible.
 #
 
 # Choose a terminal you can use to repair a broken configuration.
 bindsym Mod4+Return exec xfce4-terminal
-
 
 #
 # CONSTANTS.
@@ -44,7 +40,6 @@ set $secondary exec --no-startup-id ~/local/bin/i3-mode Secondary
 
 # Helpers. Embedding the path explicitly is belt and braces.
 set $i3cmdprompt exec --no-startup-id ~/local/bin/i3-command-prompt
-set $i3debug exec --no-startup-id ~/local/bin/i3-marks
 set $i3filewatcher exec_always --no-startup-id ~/local/bin/i3-file-watcher
 set $i3marks exec --no-startup-id ~/local/bin/i3-marks
 set $i3mode exec --no-startup-id ~/local/bin/i3-mode
@@ -89,13 +84,10 @@ bindsym Menu $primary
 bindsym Print $primary
 
 # KP_Insert is a design decision please do not change.
-# Command prompt in one keypress.  Faciltates 3 digit commands.
+# Command prompt in one keypress. Faciltates 3 digit commands.
 bindsym KP_Insert $i3cmdprompt menu 4
 
-# Debug mode is defined in the same config as the i3bar to avoid
-# proliferation of config files.
-bindsym Control+Menu mode "Debug"
-
+#
 ###INSERT_CFG01_HERE###
 
 ###INSERT_CFG02_HERE###
@@ -111,10 +103,19 @@ bindsym Control+Menu mode "Debug"
 # The reload and refresh modes are for the sole use of the Makefile.
 mode "reload" {
     bindsym space $default
- }
+}
 mode "restart" {
     bindsym space $default
- }
+}
+
+#
+# SETTINGS
+#
+
+# Desktop wallpaper is applied and a compositor is launched before any
+# windows.
+exec_always --no-startup-id nitrogen --restore
+exec_always --no-startup-id compton -b --config ~/.config/compton.conf
 
 ###INSERT_CFG07_HERE###
 
@@ -127,17 +128,25 @@ mode "restart" {
 exec --no-startup-id /usr/bin/xrdb ${HOME}/urxvt.Xdefaults
 
 # Additional Menu and Escape keys.
-# It's OK to restart a small utllity like this when i3 is restarted.
-exec --no-startup-id ~/local/bin/i3-keyboard xmodmapkeys
-exec --no-startup-id ~/local/bin/i3-keyboard xcapekeys
+exec_always --no-startup-id ~/local/bin/i3-keyboard xmodmapkeys
+exec_always --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 
-# Wallpaper. See secondary mode keybinding should this misbehave.
-exec --no-startup-id nitrogen --restore
+# Add a mark to the titlebar of the window currently in focus and
+# remove the previous mark of this type, on a per-screen basis.
+#
+# This underlies "i3-focus-app-by-alias" deciding what to do with a
+# command alias. Once started it should run continuously, reacting to
+# window changes. It needs a few changes to "warm up".
+exec --no-startup-id sleep 7s && xfce4-terminal \
+     -T "Window Change Monitor" \
+     -x $HOME/local/bin/i3-marks update &
+
+# Desktop wallpaper.
+exec_always --no-startup-id nitrogen --restore
 
 # Command Interface.
-# It's OK to restart this script when i3 is restarted.
 exec_always --no-startup-id ~/local/bin/i3-file-watcher
 
 #
-# Done.
+#  Done.
 #

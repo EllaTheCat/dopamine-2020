@@ -45,49 +45,31 @@ update()
             true
             ;;
         (1)
-            pkill -f "i3-msg -t subscribe -m"
+            pkill -f "i3-msg -t subscribe"
             ;;
         (*)
-            echo "Too many i3-msg subscriptions!"
             return
             ;;
     esac
     # shellcheck disable=SC2034
     i3-msg -t subscribe -m '[ "window" ]' | \
-        while read -r line ; do i3-marks commandalias; read -r line; read -r line; done
+        while read -r line ; do commandalias; read -r line; read -r line; done
 }
 
-#
-# Run the window changed monitor in a terminal of its own.
-#
-terminal()
-{
-    # Ensure a single running instance of the terminal.
-    pkill -f 'urxvt -T Window Change Monitor'
-    i3-msg 'exec urxvt -T "Window Change Monitor"'
-    sleep 2
-    # Run the updater inside the aforementioned terminal.
-    # Use brute force and ignorance to get the job done.
-    xdotool type --clearmodifiers 'i3-marks update'
-    xdotool key --clearmodifiers Return
-}
 
 #
 # Start here.
 #
 
-case "$1" in
-    (numeric)
+case "_$1" in
+    (_numeric)
         numeric
         ;;
-    (commandalias)
+    (_commandalias)
         commandalias
         ;;
-    (update)
+    (_update)
         update
-        ;;
-    (terminal)
-        (terminal) &
         ;;
 esac
 

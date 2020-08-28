@@ -19,13 +19,17 @@ focus ()
 {
     case "$1" in
         ([e][0-9])
+            # The first emacsclient instance fails to use the
+            # requested font, hence this workaround.
             if [ "$(pgrep -c -f "emacs --daemon -rv")" -eq 0 ]; then
                 (emacs --daemon -rv) &
-                sleep 3
-                # The first instance fails to use the specified font,
-                # this is a workaround.
+                sleep 2
                 emacsclient -c &
-                sleep 2 && pkill -f 'emacsclient'
+                sleep 2
+                pkill -f emacsclient
+                sleep 2
+                emacsclient -c &
+                return
             fi
         ;;
     esac
@@ -34,18 +38,16 @@ focus ()
             # shellcheck disable=SC2154
             app=${wsapps[$1]}
             if [ "_${app}" = "_" ]; then
+                # [1] Program $1 is not assigned to a workspace in
+                # wwsapps[]. Cross-check any i3 assign directves!
                 ws="$(i3-msg -t get_workspaces | jq '.[] | .name'| grep "$1")"
-                if [ "_${ws}" != "_" ]; then
-                    # Workspace $1 exists, focus it. Programs running
-                    # there have no other association with it.
-                    i3-msg "workspace --no-auto-back-and-forth \"$1\""
-                else
+                if [ "_${ws}" = "_" ]; then
+                    # [1A] Workspace $1 does not exist. $1 is allowed
+                    # to specify a program to launch in the current
+                    # workspace, see not_wsapps[].
+                    #
                     # shellcheck disable=SC2154
                     app=${not_wsapps[$1]}
-                    # Workspace $1 does not exist. $1 must specify a
-                    # program to launch in the current workspace. The
-                    # program has no other association with any other
-                    # workspace.        m
                     if [ "_${app}" != "_" ]; then
                         # Similar lines to these are commented below.
                         arg0=${app%% *}
@@ -53,8 +55,11 @@ focus ()
                         path=${path/${arg0}/}
                         i3-msg "exec --no-startup-id ${path}${app}"
                     fi
+                else
+                    # [1B] Workspace $1 exists, focus it. Programs
+                    # running there have no other association with it.
+                    i3-msg "workspace --no-auto-back-and-forth \"$1\""
                 fi
-                return 1  # $1 is NOT a recognised key in wsapps.
             else
 	        status=$(i3-msg "[workspace=\"$1\" con_mark=\"${1:0:2}\"] focus")
 	        case "${status}" in
@@ -81,10 +86,9 @@ focus ()
                         i3-msg "exec --no-startup-id ${path}${app}"
 		        ;;
 	        esac
-                return 0  # $1 is an existing key in wsapps.
             fi
             ;;
-    esac  # $1 is a command alias.
+    esac
 }
 
 
