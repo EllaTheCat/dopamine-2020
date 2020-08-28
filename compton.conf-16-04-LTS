@@ -1,0 +1,22 @@
+#
+# http://askubuntu.com/questions/751149/screen-tearing-when-using-i3-none-when-using-unity
+#
+# compton --config ~/Programs/dotfiles/compton.conf -b
+#
+
+backend = "glx";
+vsync = "opengl-swc";
+
+glx-copy-from-front = true;
+glx-swap-method = 2;
+xrender-sync = true;
+xrender-sync-fence = true;
+
+# Transparency settings for i3.
+opacity-rule = [
+    "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
+];
+
+#
+# Done.
+#

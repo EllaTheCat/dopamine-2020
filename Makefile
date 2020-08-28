@@ -5,12 +5,11 @@
 #
 SHELL=/bin/bash
 
-# Installing each config in these two places is defensive programming.
-# If someone can confirm Regolith's placement and naming of the i3
-# config and i3status config, I'd like to support it.
-
 # The i3 config file to be installed.
 I3CFG=$(HOME)/.i3/config
+
+# The compton/picom config file to be installed.
+COMPOSITORCFG=$(HOME)/.config/compton.conf
 
 # The i3status config file to be installed.
 I3STATUSCFG=$(HOME)/.i3status.conf
@@ -36,7 +35,7 @@ CFGMODE=644
 
 .installdirs:  $(I3BIN)
 
-.installconfigs:  $(I3CFG) $(I3STATUSCFG)
+.installconfigs:  $(I3CFG) $(I3STATUSCFG) $(COMPOSITORCFG)
 
 .installscripts: \
 $(I3BIN)/i3-command-prompt \
@@ -111,6 +110,9 @@ $(I3CFG):  i3-config \
          -i   $(I3CFG)
 	@touch reload
 
+$(COMPOSITORCFG): compton.conf
+	@install -m $(CFGMODE) compton.conf $@
+	@touch restart
 $(I3STATUSCFG):  i3-status-config
 	@install -m $(CFGMODE) i3-status-config $@
 	@touch restart
