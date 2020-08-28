@@ -35,13 +35,12 @@ bar {
 #
 # Debug use only.
 #
-mode "Debug" {
+mode "debug" {
 
     # Back to the default.
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym space mode "default"
+    bindsym Control+Menu mode "default"
 }
+bindsym Control+Menu mode "debug"
 
 #
 # DEBUG MODE KEY BINDINGS END HERE.
