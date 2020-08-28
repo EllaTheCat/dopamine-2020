@@ -16,10 +16,8 @@ mode "Secondary" {
     bindsym w nop
 
     bindsym r nop
-
-    # Launch an alternative terminal as in Primary mode.
-    bindsym t $default, split h, exec urxvt
-    bindsym y $default, split v, exec urxvt
+    bindsym t nop
+    bindsym y nop
 
     bindsym i $default, exec --no-startup-id pactl load-module module-loopback \
             latency_msec=1

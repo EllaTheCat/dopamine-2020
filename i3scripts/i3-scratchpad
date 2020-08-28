@@ -17,12 +17,13 @@ toggle ()
     # Only one key binding is required, the first keypress performs
     # initialisation and hides the terminal again.
     if [ "_$(xdotool search --classname "Scratchpad" | head -1)"  = "_" ]; then
-        urxvt -T Scratchpad &
+        xfce4-terminal --title=Scratchpad &
 	# Allow the terminal enough time to initialise.
 	# This value needs to be "just right", ymmv.
         sleep 0.3
         # Set the instance to identify the scratchpad.
         xdotool getwindowfocus set_window --classname "Scratchpad"
+        compton-trans -c -o 88
         i3-msg "[instance=\"Scratchpad\"] resize set 80 ppt 80 ppt"
         i3-msg "[instance=\"Scratchpad\"] move position center"
         i3-msg "[instance=\"Scratchpad\"] move scratchpad"
