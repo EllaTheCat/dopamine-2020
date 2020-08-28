@@ -1,9 +1,5 @@
 # dopamine-2020 - Customising the i3 tiling window manager.
 
-## About Me
-I'm suffering cognitve decline. This project was too ambitious, The
-architecture is broken. I'm not a quittter, but I am realistic.
-
 ## What's in the repository?
 
 This repository consists of the config and scripts I'm using with i3
@@ -13,8 +9,8 @@ This repository consists of the config and scripts I'm using with i3
 
 I took the opportunity to refactor my i3 config and scripts into this
 new repository after installing the latest versions of distro and i3.
-Everything is in a state of flux, everything is on master, there are
-stupid mistakes, but it's getting better.
+Everything is in a state of flux. Everything is on git master not on
+topic branches. There are stupid mistakes, but it's getting better.
 
 ## Ambitions
 
@@ -97,30 +93,22 @@ These "cfg" files live in "i3-config.d':
 
 - cfg00 - Classic bindings
 - cfg01 - Numpad bindings
-- cfg02 - Cluster bindings
+- cfg02 - Cluster bindings.
 - cfg03 - Reserved
 - cfg04 - Primary bindings
 - cfg05 - Secondary bindings
 - cfg06 - Reserved
 - cfg07 - Settings (non-executable)
 - cfg08 - Settings (executable)
-- cfg09 - Settings (i3bar)
+- cfg09 - Settings (i3bar, debug mode)
 
 There's nothing to stop competent users editing "cfg" files, and this
 is to be encouraged. Use ".git/info/exclude" to prevent overwriting by
-'git pull', don't use .gitignore.
+'git pull', please don't use .gitignore.
 
 I concede that the decisions about the contents of each "cfg" file
 will need reviewing, so "i3-config" won't become stable in git
 overnight. Eggs, omelettes.
-
-## Multiple machines, one config
-It is going to happen, but things need to shake down and stabilise
-first.
-
-For this to work, "make" must be run before i3. One way is to log out,
-drop to the Linux console, run "make" and then either log in again or
-restart/shutdown.
 
 ## Three modes, one key to bind them
 
@@ -149,7 +137,7 @@ Alt keys are mapped to Escape when used solo; it follows that Win and
 Alt can be swapped as some users prefer.
 
 ## Mode indication
-When not in default mode  the word  Primary or Secondary is shown on a
+When not in default mode  the word Primary or Secondary is shown on a
 tab next to the workspace tabs. The same word  appears on the title bar
 of the currently focused window.  You can change focus and the name
 follows.  If that's not enough, the screen dims slightly in Primary
@@ -167,27 +155,18 @@ acceptable and the automatic Enter key appreciated.
 The delay is implemented wth sleep() and configurable.
 The Enter key automation can be disabled.
 
-## Tasker, AutoVoice, AutoTools
+## Tasker, AutoVoice, AutoTools, AutoShare
 Tasker is a popular android application that lets users write programs
 to run on their phone or tablet. AutoVoice is a Tasker plugin for
-speech-to-text.. AutoTools is a Tasker plugin that provides "ssh".
-
-A Tasker program uses exactly the same "File Watcher" interface as
-the command prompt. Commands need not be limited to two or three
-characters.
+speech-to-text. AutoTools is a Tasker plugin that provides "ssh".
+AutoShare lets you share (for example) a link from a movie later
+tonight provided by the TV EPG so you can play it on your PC.
 
 ## File Watcher
 The file watcher watches the file "/dev/shm/$USER/i3/command".
 Whenever the command prompt or Tasker writes a command to that file,
-the command is forwarded for processing.
-
-There is no acknowledgement for commands. This wasn't a deliberate
-decision. This omission has been on my mind and I think there is a
-way.The following example works when invoked from a ssh login to a
-raspberry pi running a simplified file watcher:
-
-    echo 'wmctrl -l > /dev/shm/pi/i3/response' > /dev/shm/pi/i3/command
-    cat /dev/shm/pi/i3/response
+the command is forwarded for processing.  There is no acknowledgement
+for commands.
 
 ## Dispatcher
 The dispatcher receives a command sent by the file watcher, and
@@ -195,29 +174,39 @@ forwards it to a script that executes it. Commands have 4 digit
 headers that determine which script that is.
 
 ## Focus App By Alias.
-A command alias typically consists of two characters, that refer to a
+A command alias typically consists of two characters that refer to a
 command and its parameters. Typing the command alias switches to the
 running application, launching it if not already running.
-A workspace can be associated with a command alias, in which case
-the workspace name is the command alias.
 
-Workspaces can be created and focused without being associated with
-programs.  Programs can be launched without being associated with
-workspaces.
+This looked easy but the implementation has required the "Window
+Change Monitor". This is an i3-msg subscription to window events and a
+monitor that marks the focused window with the workspace name. It's
+being tested as I write. I test with "mouse click to focus" and
+keyboard.
+
+There should be only one window per output marked with the name of the
+workspace. Two marks with the same name on the same workspace is a
+major bug. Zero marks is a minor bug because the system usually
+recovers.
 
 ## Launcher
 The launcher executes any command for which you have permissions.
 Security is as good as your ssh key and privacy is absent unless
 you are the sole user.
 
-The protocol requires that the text of each command is preceded
-by a 4 digit number which acts as a handle.
-
 ## Transcribe
-This is a niche feature, that just happens to be important for
-EllaTheCat. If the user can't type quickly, speech to text is viable.
+This is a niche feature, speech to text, that just happens to be
+important for EllaTheCat.
 
 On the phone, saying "OK Google" triggers speech to text. The
-resulting lowercase text is sent to a Linux PC using ssh.  The
-lowercase text is written to the File Watcher just like commands
-are. Eventually punctuated text appears in an Emacs buffer.
+resulting lowercase text is written to the File Watcher via the ssh
+conection just like commands are. Eventually punctuated text appears
+in an Emacs buffer "Clipboard".
+
+
+
+
+
+
+
+.
