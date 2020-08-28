@@ -53,7 +53,9 @@ mode "Secondary" {
     # mimic US layout on UK keyboard.
     bindsym k $default, $i3keyboard
 
-    bindsym Return nop
+    # All monitors turn ON after being turned OFF.
+    # The mode is set to default, we are done...
+    bindsym Return --release $default, exec --no-startup-id xset -dpms
 
     # Focus is on output P, output Q shows workspace W, focus Q,
     # switch to Primary mode ready to move W to P using {z,x,c}.
@@ -64,9 +66,7 @@ mode "Secondary" {
     bindsym x focus output $cmon, $primary;
     bindsym c focus output $rmon, $primary;
 
-    # Reddit asked how to inject text, this is a proof-of-concept demo.
-    bindsym v $default, exec  --no-startup-id \
-            sleep 0.3 && xdotool getwindowfocus windowfocus type "hello world"
+    bindsym v nop
 
     # Desktop background.
     #  Here is the attribution for the images I use:
@@ -75,8 +75,8 @@ mode "Secondary" {
     #  Photo by Gregg M. Erickson, cropped into overlapping 5760x1080 images.
     bindsym n $default, exec --no-startup-id nitrogen --restore
 
-    # All monitors turn OFF.
-    bindsym --release m $default,  exec --no-startup-id xset dpms force off
+    # All [m]onitors turn OFF. The mode does NOT change here.
+    bindsym --release m exec --no-startup-id xset dpms force off
 
     bindsym comma nop
     bindsym period nop

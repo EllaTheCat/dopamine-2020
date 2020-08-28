@@ -11,9 +11,6 @@ bindsym Control+Delete $i3scratchpad toggle
 bindsym Control+Mod1+Delete kill
 bindsym Control+Mod4+Delete [workspace="__focused__"] kill
 
-# Disable DPMS.
-bindsym Pause exec --no-startup-id xset -dpms;
-
 #
 # CLUSTER BINDINGS END HERE
 #
