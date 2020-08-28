@@ -55,6 +55,7 @@ for_window [title="Volume Control"] \
            resize set 50 ppt 80 ppt;
 for_window [class="Display"] floating enable;
 for_window [class="Display-im6"] floating enable;
+for_window [title="Software Updater"] floating enable;
 
 # Application windows.
 for_window [instance="xfce4-terminal"] $i3marks numeric
@@ -66,7 +67,6 @@ for_window [title="SM G930F"] $i3marks numeric
 
 # VirtualBox windows assume full screen dimensions.
 for_window [title="VirtualBox Manager"] layout tabbed;
-for_window [title="Software Updater"] layout tabbed;
 for_window [title="Meld$"] layout tabbed;
 for_window [title="Spotify"] layout tabbed;
 for_window [title="Clementine"] layout tabbed;
@@ -91,7 +91,7 @@ client.placeholder      #000000 #444444 #ffffff #000000   #0c0c0c
 
 # Mouse behaviour wrt windows. Prefer click-to-focus, default is no.
 focus_follows_mouse no
-# Focus wrapping isn't as simple as I was lead to believe.
+# Focus wrapping isn't as simple as I once believed.
 focus_wrapping off
 
 #
