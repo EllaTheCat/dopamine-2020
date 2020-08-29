@@ -19,17 +19,9 @@ focus ()
 {
     case "$1" in
         ([e][0-9])
-            # The first emacsclient instance fails to use the
-            # requested font, hence this workaround.
             if [ "$(pgrep -c -f "emacs --daemon -rv")" -eq 0 ]; then
                 (emacs --daemon -rv) &
-                sleep 2
-                emacsclient -c &
-                sleep 2
-                pkill -f emacsclient
-                sleep 2
-                emacsclient -c &
-                return
+                sleep 3
             fi
         ;;
     esac
