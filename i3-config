@@ -1,15 +1,14 @@
 # -*- Mode: Shell-script -*-
 #
 # i3 version 4.18 (2020-02-17) Xubuntu 20.04 LTS 01 May 2020
-
-# Combines EllaTheCat dopamine with the de facto standard i3 bindings.
-# "HJKL" replaces "JKL:" because "vi", "b" replaces "h" because similar.
+#
+# Combines EllaTheCat's advocacy of marks and modes with the de facto
+# standard i3 bindings..
 
 # IMPORTANT.
 #
-# You *must* run 'make' successfully before attempting reload or
-# refresh.  Config changes trigger reload. Status changes trigger
-# restart.
+# You *must* run 'make' successfully from the "dopamine-2020"
+# directory to complete installation!
 
 
 #
@@ -87,7 +86,10 @@ bindsym Print $primary
 # Command prompt in one keypress. Faciltates 3 digit commands.
 bindsym KP_Insert $i3cmdprompt menu 4
 
-#
+# "HJKL" replaces "JKL:" because I'm used to "vi","b" can replace "h"
+# (for horizontal) because they look similar and it's adjacent to v
+# (vertical).
+
 ###INSERT_CFG01_HERE###
 
 ###INSERT_CFG02_HERE###
@@ -112,20 +114,17 @@ mode "restart" {
 # SETTINGS
 #
 
-# Desktop wallpaper is applied and a compositor is launched before any
-# windows.
-exec_always --no-startup-id nitrogen --restore
+# Compositor first.
 exec_always --no-startup-id compton -b --config ~/.config/compton.conf
+
+# Desktop wallpaper.
+exec_always --no-startup-id nitrogen --restore
 
 ###INSERT_CFG07_HERE###
 
 ###INSERT_CFG08_HERE###
 
 ###INSERT_CFG09_HERE###
-
-# A dark and translucent appearance for urxvt should it be used in
-# config files or in scripts.
-exec --no-startup-id /usr/bin/xrdb ${HOME}/urxvt.Xdefaults
 
 # Additional Menu and Escape keys.
 exec_always --no-startup-id ~/local/bin/i3-keyboard xmodmapkeys
@@ -134,18 +133,19 @@ exec_always --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 # Add a mark to the titlebar of the window currently in focus and
 # remove the previous mark of this type, on a per-screen basis.
 #
-# This underlies "i3-focus-app-by-alias" deciding what to do with a
-# command alias. Once started it should run continuously, reacting to
-# window changes. It needs a few changes to "warm up".
-exec --no-startup-id sleep 7s && xfce4-terminal \
-     -T "Window Change Monitor" \
-     -x $HOME/local/bin/i3-marks update &
+# This "script" assists "i3-focus-app-by-alias" in deciding what to do
+# with a command alias. Once started it runs continuously, reacting to
+# window changes. It needs to "warm up" with a click or two.
 
-# Desktop wallpaper.
-exec_always --no-startup-id nitrogen --restore
+exec --no-startup-id sleep 7s && \
+    xfce4-terminal -T "Window Change Monitor" \
+                   -x $HOME/local/bin/i3-marks update &
 
 # Command Interface.
 exec_always --no-startup-id ~/local/bin/i3-file-watcher
+
+# i3 has now processed the config file, but launching some fussy
+# programs has been delayed until afterwards.
 
 #
 #  Done.

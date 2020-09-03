@@ -9,10 +9,8 @@ exec --no-startup-id pactl set-source-mute $usbaudiosource 1
 exec --no-startup-id pactl set-source-mute $analogaudiosource 1
 exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
 
-# On my machine USB dongle audio feeds headphones with 240ms latency
-# offset, while 3.5mm jack rear panel audio drives active speakers
-# with zero latency offset.
-exec --no-startup-id pactl set-default-sink combined
+exec --no-startup-id pactl set-default-sink \
+     combine
 
 # Spindown at startup by default.
 exec --no-startup-id my-usb-disks configure

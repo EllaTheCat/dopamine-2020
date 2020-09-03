@@ -20,21 +20,24 @@ bindsym KP_End focus left
 bindsym KP_Down focus down
 bindsym KP_Next focus right
 
-# Rotated T unused.
+# Rotated T cursor keys.
 bindsym KP_Left workspace prev
 bindsym KP_Right workspace next_on_output
-bindsym KP_Multiply nop
-bindsym KP_Delete nop
-bindsym KP_Decimal nop
 
 # Microphone muting (for privacy and phone conferencing).
-# The i3bar displays the status of two  microphones:
+# The i3bar displays the status of two microphones:
 # 0 == muted; 1 == not muted == a "hot" microphone.
 # These are NOT bound in Primary or Secondary modes.
-bindsym KP_Subtract \
+bindsym KP_Multiply \
         exec --no-startup-id pactl set-source-mute $webcamaudiosource toggle
-bindsym KP_Add \
+bindsym KP_Delete \
         exec --no-startup-id pactl set-source-mute $usbaudiosource toggle
+
+# Volume controls.
+bindsym KP_Add \
+        exec --no-startup-id pactl set-sink-volume $analogaudiosink +6%
+bindsym KP_Subtract \
+        exec --no-startup-id pactl set-sink-volume $analogaudiosink -6%
 
 #
 # NUMPAD BINDINGS END HERE.
