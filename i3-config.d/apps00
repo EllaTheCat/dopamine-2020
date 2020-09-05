@@ -31,6 +31,7 @@ declare -A wsapps=(
     ["sy"]="synaptic-pkexec"
     ["vb"]="virtualbox"
     ["tv"]="my-tvheadend start"
+    ["wc"]="cheese"
 )    #  ---------------------------------------------------------------- #
 
 declare -A not_wsapps=(
@@ -38,4 +39,5 @@ declare -A not_wsapps=(
     ["ff"]="firefox"
     ["gc"]="google-chrome"
     ["th"]="exo-open --launch FileManager"
+    ["vc"]="pavucontrol"
 )    #  ---------------------------------------------------------------- #
