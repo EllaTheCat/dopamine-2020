@@ -235,7 +235,7 @@ $(I3BIN)/i3-double-digit-command: \
 $(I3SCRIPTS)/i3-double-digit-command.log: $(I3SCRIPTS)/i3-double-digit-command
 	@shellcheck $(I3SCRIPTS)/i3-double-digit-command > $@
 
-i$(I3BIN)/i3-status: \
+$(I3BIN)/i3-status: \
 	$(I3SCRIPTS)/i3-status \
 	$(I3SCRIPTS)/i3-status.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-status $(I3BIN)
