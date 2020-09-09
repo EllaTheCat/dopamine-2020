@@ -24,8 +24,9 @@ mode "Secondary" {
     bindsym o $default, exec --no-startup-id pactl unload-module module-loopback
     bindsym p nop
 
-    bindsym bracketleft nop
-    bindsym bracketright nop
+    # Intended use is debug only.
+    bindsym bracketleft   exec --no-startup-id pkill -f 'compton -b --config'
+    bindsym bracketright  exec --no-startup-id compton -b --config ~/.config/compton.conf
 
     # Select an audio output.
     bindsym a  $default, exec  --no-startup-id pactl move-sink-input \

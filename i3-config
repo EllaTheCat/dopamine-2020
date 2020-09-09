@@ -45,6 +45,8 @@ set $i3mode exec --no-startup-id ~/local/bin/i3-mode
 set $i3mouse exec --no-startup-id ~/local/bin/i3-mouse
 set $i3scratchpad exec --no-startup-id ~/local/bin/i3-scratchpad
 set $i3listwindows exec --no-startup-id ~/local/bin/i3-list-windows
+# No 'exec' prefix.
+set $i3compositor /usr/bin/compton -b --config ~/.config/compton.conf
 
 # Use 'xrandr' with no arguments to list monitor names and geometry.
 # Assign outputs to monitors from left to right, repeat last assignment,
@@ -115,7 +117,7 @@ mode "restart" {
 #
 
 # Compositor first.
-exec_always --no-startup-id compton -b --config ~/.config/compton.conf
+exec_always --no-startup-id $i3compositor
 
 # Desktop wallpaper.
 exec_always --no-startup-id nitrogen --restore
