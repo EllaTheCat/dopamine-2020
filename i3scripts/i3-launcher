@@ -5,22 +5,20 @@
 
 
 #
-# Launch a program and register it.
+# Launch a media player instance and register it.
+# - Assume 'mpv' if the command omits the media player.
 #
-# (1) four digit handle
-# (2) mpv, vlc, ...
+# (1) mpv, vlc, ...
 # (.) stream
 #
 start ()
 {
-    if [ "${2:0:1}" = "/" ]; then
+    if [ "${1:0:1}" = "/" ] || [ "${1:0:7}" = "http://" ]; then
         # Absolute paths can be detected reliably.
-        # Allowing arbitrary programs is insecure.
-        app="mpv"
-        i3-msg "exec --no-startup-id ${app} ${*:2}"
+        i3-msg "exec --no-startup-id mpv ${*}"
     else
-        app=$2
-        i3-msg "exec --no-startup-id ${*:2}"
+        # Allowing arbitrary programs is insecure.
+        i3-msg "exec --no-startup-id $1 ${*:2}"
     fi
 }
 
@@ -29,23 +27,22 @@ start ()
 # - Assume 'mpv' if the command omits the media player.
 # - A simple TV channel zapper is the canonical use case.
 #
-# (1) four digit handle
-# (2) mpv, vlc, ...
+# (1) mpv, vlc, ...
 # (.) stream
 #
-stop_oldest ()
+stop ()
 {
     # An mpv instance has 2 pids, often contiguous, (N,N+1), but I
     # have seen (N,N+2), hence separate kills.
-    if [ "${2:0:1}" = "/" ]; then
+    if [ "${1:0:1}" = "/" ] || [ "${1:0:7}" = "http://" ]; then
         pid0="$(pgrep --oldest -f "mpv")"
         kill "${pid0}"
         pid1="$(pgrep --oldest -f "mpv")"
         kill "${pid1}"
     else
-        pid0="$(pgrep --oldest -f "$2")"
+        pid0="$(pgrep --oldest -f "$1")"
         kill "${pid0}"
-        pid1="$(pgrep --oldest -f "$2")"
+        pid1="$(pgrep --oldest -f "$1")"
         kill "${pid1}"
     fi
 }
@@ -55,19 +52,15 @@ stop_oldest ()
 #
 
 # (1) start|stop
-# (2) four digit handle
-# (3) mpv, vlc, ...
-# (.) stream
+# (2) mpv, vlc, ...
+# (*) stream
 
 case "$1" in
     (start)
-        start "$2" "$3" "${@:4}"
+        start "${@:2}"
         ;;
-    (stop_oldest)
-        stop_oldest "$2" "$3" "${@:4}"
-        ;;
-    (stop_handle)
-        stop_handle "$2" "$3" "${@:4}"
+    (stop)
+        stop "${@:2}"
         ;;
 esac
 
