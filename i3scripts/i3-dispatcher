@@ -22,6 +22,9 @@ forward ()
         (start|stop)
             nohup i3-launcher "${@}"
             ;;
+        (interrupt)
+            eval "${*:2}"
+            ;;
 	(*)
 	nomatchfound "$*"
 	    ;;
@@ -45,10 +48,9 @@ nomatchfound ()
 #
 # Start here.
 #
-#
 
 "$1" "$2" "${@:3}"
 
 #
-## Done.
-#]
+# Done.
+#
