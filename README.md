@@ -9,8 +9,7 @@ This repository consists of the config and scripts I'm using with i3
 
 I took the opportunity to refactor my i3 config and scripts into this
 new repository after installing the latest versions of distro and i3.
-Everything is in a state of flux. Everything is on git master not on
-topic branches. There are stupid mistakes, but it's getting better.
+Everything is on git master not on topic branches.
 
 ## Ambitions
 
@@ -190,9 +189,8 @@ major bug. Zero marks is a minor bug because the system usually
 recovers.
 
 ## Launcher
-The launcher executes any command for which you have permissions.
-Security is as good as your ssh key and privacy is absent unless
-you are the sole user.
+The launcher starts and stops media playback from files or tvheadend
+streams.
 
 ## Transcribe
 This is a niche feature, speech to text, that just happens to be
@@ -202,6 +200,8 @@ On the phone, saying "OK Google" triggers speech to text. The
 resulting lowercase text is written to the File Watcher via the ssh
 conection just like commands are. Eventually punctuated text appears
 in an Emacs buffer "Clipboard".
+
+Work is in progress to provide a simple editor operated by voice.
 
 
 
