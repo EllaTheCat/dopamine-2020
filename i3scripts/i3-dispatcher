@@ -33,8 +33,9 @@ forward ()
             eval "${*:2}"
             ;;
 	(*)
-            # This message delivery is intended to be non-blocking.
-	    (nomatchfound "$*") &
+            # I think dmenu implies blocking so this will flash for a
+            # few seconds only.
+	    nomatchfound "$*"
 	    ;;
     esac
 }
@@ -44,7 +45,7 @@ nomatchfound ()
 {
     echo "i3-dispatcher: No match found! \"$*\"" |
 	 dmenu -b -fn "pango:DejaVu Sans 11"
-    sleep 10s
+    sleep 3s
     # This key event effects a timeout, but only if the user
     # hasn't dismissed the dmenu first. It isn't watertight.
     if [ "$(pgrep -c -af 'dmenu -b -fn pango:DejaVu Sans 11')" -eq 1 ]; then
