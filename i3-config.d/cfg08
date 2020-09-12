@@ -12,10 +12,10 @@ exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
 exec --no-startup-id pactl set-default-sink \
      combine
 
-# Spindown at startup by default.
-exec --no-startup-id my-usb-disks configure
-exec --no-startup-id my-usb-disks spindown sdc
-exec --no-startup-id my-usb-disks spindown sdd
+# Spindown at startup by default. Explicit PATH required here.
+exec --no-startup-id $HOME/local/bin/my-usb-disks configure
+exec --no-startup-id $HOME/local/bin/my-usb-disks spindown sdc
+exec --no-startup-id $HOME/local/bin/my-usb-disks spindown sdd
 
 #
 # EXECUTABLE SETTINGS END HERE.
