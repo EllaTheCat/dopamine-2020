@@ -143,6 +143,9 @@ editor ()
 # Start here.
 #
 
+# clip text
+# edit goto|mark|kill|yank line-or-count-item
+
 case "$1" in
     (clip)
         clipboard "${@:2}"

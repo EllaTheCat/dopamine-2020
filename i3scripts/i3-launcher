@@ -51,9 +51,8 @@ stop ()
 # Start here.
 #
 
-# (1) start|stop
-# (2) mpv, vlc, ...
-# (*) stream
+# start|stop  stream
+# start|stop  mpv|vlc|... stream
 
 case "$1" in
     (start)

@@ -57,7 +57,11 @@ nomatchfound ()
 # Start here.
 #
 
-"$1" "$2" "${@:3}"
+# Debug.
+notify-send -t 10000 "$(cat /dev/shm/"$USER"/i3/command)"
+
+# "forward" $2 $3 ...
+"${@}"
 
 #
 # Done.
