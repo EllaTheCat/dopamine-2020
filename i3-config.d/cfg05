@@ -65,7 +65,8 @@ mode "Secondary" {
     bindsym x focus output $cmon, $primary;
     bindsym c focus output $rmon, $primary;
 
-    bindsym v nop
+    # This Maxtor 4Tbyte drive is excessively prone to spinning up.
+    bindsym v exec --no-startup-id $HOME/local/bin/my-usb-disks spindown sdd
 
     # Desktop background.
     #  Here is the attribution for the images I use:
