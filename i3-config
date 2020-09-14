@@ -120,7 +120,7 @@ mode "restart" {
 # Compositor first.
 exec_always --no-startup-id $i3compositor
 
-# Desktop wallpaper.
+# Desktop wallpaper, sometimes it does nothing.
 exec_always --no-startup-id nitrogen --restore
 
 ###INSERT_CFG07_HERE###
@@ -149,6 +149,9 @@ exec_always --no-startup-id ~/local/bin/i3-file-watcher
 
 # i3 has now processed the config file, but launching some fussy
 # programs has been delayed until afterwards.
+
+# Desktop wallpaper again, belt and braces.
+exec_always --no-startup-id nitrogen --restore
 
 #
 #  Done.
