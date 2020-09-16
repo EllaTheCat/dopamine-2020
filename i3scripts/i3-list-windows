@@ -12,13 +12,14 @@ menu ()
 {
     # I must do better with 'jq', the following code was crufted up on
     # the command line to extract text blocks like this from the jq:
-    #
     # "reddit: the front page of the internet - Google Chrome"
     # [
     #   "36"
     # ]
+    #
     menu="$(i3-msg -t get_tree | jq '.. | objects | .name,.marks' | \
-                  grep -B1 -A1 '[[]' | tr -d \\n[  | sed 's/--/\n/g')"
+                  grep -B1 -A1 '[[]' | tr -d \\n[  | sed 's/--/\n/g' | \
+                               grep -v "$2")'             )"
     # Argument parsing is order dependent. $1 required $2 optional.
     # S1 How menu items are laid out. $2 Where to put the window.
     case "$1" in
@@ -41,7 +42,6 @@ menu ()
 #
 
 # e.g. i3-list-windows menu column monitor-output
-
 "$1" "${@:2}"
 
 #
