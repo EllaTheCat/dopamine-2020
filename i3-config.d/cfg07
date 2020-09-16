@@ -55,7 +55,11 @@ for_window [title="Volume Control"] \
            resize set 50 ppt 80 ppt;
 for_window [class="Display"] floating enable;
 for_window [class="Display-im6"] floating enable;
-for_window [title="Software Updater"] floating enable;
+
+# A workaround to prevent the software updater window going
+# transparent. I think this is an Ubuntu issue.
+for_window [title="Software Updater"] floating enable, \
+      exec --no-startup-id pkill -f 'compton -b --config' ;
 
 # Application windows.
 for_window [instance="xfce4-terminal"] $i3marks numeric
