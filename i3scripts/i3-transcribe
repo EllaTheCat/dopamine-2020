@@ -144,7 +144,7 @@ editor ()
 #
 
 # clip text
-# edit goto|mark|kill|yank line-or-count-item
+# edit goto|mark|kill|yank line|line|count|item
 
 case "$1" in
     (clip)
