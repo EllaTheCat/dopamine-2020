@@ -19,12 +19,12 @@ mode "Secondary" {
     bindsym t nop
     bindsym y nop
 
-    bindsym i $default, exec --no-startup-id pactl load-module module-loopback \
-            latency_msec=1
-    bindsym o $default, exec --no-startup-id pactl unload-module module-loopback
+    bindsym i nop
+    bindsym o nop
     bindsym p nop
 
-    # Intended use is debug only.
+    # Toggling the compositor off / on is a.o. a workaround for issues
+    # such as the Ubuntu Software Updater.
     bindsym bracketleft   exec --no-startup-id pkill -f 'compton -b --config'
     bindsym bracketright  exec --no-startup-id compton -b --config ~/.config/compton.conf
 
