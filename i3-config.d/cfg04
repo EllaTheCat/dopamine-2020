@@ -38,8 +38,8 @@ mode "Primary" {
     bindsym p $default, focus parent
 
     # Scratchpad for the pulseaudio sound settings.
-    bindsym bracketleft $default,  [title="Volume Control"]  move scratchpad
-    bindsym bracketright $default,  [title="Volume Control"]  scratchpad show
+    bindsym bracketleft   $default, [title="Volume Control"] move scratchpad
+    bindsym bracketright  $default, [title="Volume Control"] unmark, scratchpad show;
 
     # Command prompt. Thumb and middle finger of the left hand.
     bindsym Tab $default, $i3cmdprompt menu 4

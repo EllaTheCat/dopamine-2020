@@ -12,7 +12,7 @@ export cmon="HDMI-1"
 #
 # Toggle the scratchpad terminal between show and hide.
 #
-toggle ()
+toggle_terminal()
 {
     # Only one key binding is required, the first keypress performs
     # initialisation and hides the terminal again.
@@ -28,8 +28,9 @@ toggle ()
         i3-msg "[instance=\"Scratchpad\"] move position center"
         i3-msg "[instance=\"Scratchpad\"] move scratchpad"
     else
-        i3-msg "focus output ${cmon}"
-        i3-msg "[instance=\"Scratchpad\"] scratchpad show"
+        # Remove any accumulated workspace marks before showing the
+        # window. Numeric marks are removed as a side effect.
+        i3-msg "[instance=\"Scratchpad\"] unmark, scratchpad show;"
     fi
 }
 

@@ -5,7 +5,7 @@
 
 # A key chord to toggle the scratchpad terminal.
 # This key chord works for my right hand.
-bindsym Control+Delete $i3scratchpad toggle
+bindsym Control+Delete $i3scratchpad toggle_terminal
 
 # Kill a window, kill a workspace.
 bindsym Control+Mod1+Delete kill
