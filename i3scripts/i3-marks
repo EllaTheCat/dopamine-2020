@@ -23,14 +23,26 @@ numeric()
 }
 
 #
-# Mark the focused window with the command alias. Remove the same
-# mark from other windows on the same workspace.
+# Mark the focused window with the workspace name defined by the
+# command alias.
+#
+# - Note: These marks could and should be hidden by prefixing with an
+# - underscore. They are exposed for debug and test convenience only.
 #
 commandalias()
 {
     cws=$(i3-msg -t get_workspaces | jq '.[] | .name,.focused' | \
               grep true -B1 | grep -v true)
     windowid=$(printf "0x%x" "$(xdotool getwindowfocus)")
+    # Fetch all the workspace marks in a list and walk that list,
+    # removing any matching mark on the current window. This ugly
+    # "brute force and ignorance" method needs improvement.
+    for mark in $(i3-msg -t get_marks | \
+                      sed 's/"[0-9][0-9]"//g' | sed 's/,/ /g'| sed 's/[][]//g')
+    do
+        i3-msg "[id=\"${windowid}\"] unmark ${mark}"
+    done
+    # Apply the workspace mark without changing the numeric mark.
     i3-msg "[id=\"${windowid}\"] mark --add --replace ${cws}"
 }
 
@@ -39,18 +51,8 @@ commandalias()
 #
 update()
 {
-    count="$(pgrep -c -f "i3-msg -t subscribe -m")"
-    case "${count}" in
-        (0)
-            true
-            ;;
-        (1)
-            pkill -f "i3-msg -t subscribe"
-            ;;
-        (*)
-            return
-            ;;
-    esac
+    # This is simple and reliable but myopic.
+    pkill -f "i3-msg -t subscribe"
     # shellcheck disable=SC2034
     i3-msg -t subscribe -m '[ "window" ]' | \
         while read -r line ; do commandalias; read -r line; read -r line; done
