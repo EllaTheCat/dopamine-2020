@@ -59,14 +59,17 @@ for_window [class="Display-im6"] floating enable;
 # A workaround to prevent the software updater window going
 # transparent. I think this is an Ubuntu issue.
 for_window [title="Software Updater"] floating enable, \
-      exec --no-startup-id pkill -f 'compton -b --config' ;
+           exec --no-startup-id pkill -f 'compton -b --config', \
+           exec --no-startup-id notify-send \
+           "Compositor has been disabled to safeguard software update. Secondary [ = compositor off Secondary ] = compositor on" ;
 
 # Application windows.
 for_window [instance="xfce4-terminal"] $i3marks numeric
 for_window [instance="emacs"] $i3marks numeric
 for_window [instance="Navigator"] $i3marks numeric
 for_window [instance="google-chrome"] $i3marks numeric
-for_window [instance="gl" class="mpv"] $i3marks numeric
+for_window [class="mpv"] $i3marks numeric
+for_window [instance="gl"] $i3marks numeric
 for_window [title="SM G930F"] $i3marks numeric
 
 # VirtualBox windows assume full screen dimensions.
