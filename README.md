@@ -143,10 +143,14 @@ follows.  If that's not enough, the screen dims slightly in Primary
 mode and a little bit more for Secondary mode.
 
 ## Command prompt
-The command prompt is a dmenu. It is invoked with the key sequence
-Menu, Tab, it then reads two characters, and forwards them to the
-"i3-filewatcher" script (q.v.). It can also be invoked by KP_Insert, which
-configures the numpad to read in two or three digits.
+The command prompt is a dmenu. It is invoked with one of the key
+sequences {Menu, Tab}, or {Menu, backslash} when the layout makes it
+comfortable.  It then reads two characters, and forwards them to the
+"i3-filewatcher" script (q.v.).
+
+The command prompt can also be invoked by KP_Insert, which configures
+the numpad to read in two or three digits, and as before, forwards
+them to the "i3-filewatcher" script..
 
 Both methods timeout after four seconds and send a key event
 equivalent to pressing Enter (Return). My PD makes the delay
@@ -158,8 +162,8 @@ The Enter key automation can be disabled.
 Tasker is a popular android application that lets users write programs
 to run on their phone or tablet. AutoVoice is a Tasker plugin for
 speech-to-text. AutoTools is a Tasker plugin that provides "ssh".
-AutoShare lets you share (for example) a link from a movie later
-tonight provided by the TV EPG so you can play it on your PC.
+AutoShare lets you share (for example) a link from a TV EPG so you can
+play the show on your PC.
 
 ## File Watcher
 The file watcher watches the file "/dev/shm/$USER/i3/command".
@@ -179,14 +183,16 @@ running application, launching it if not already running.
 
 This looked easy but the implementation has required the "Window
 Change Monitor". This is an i3-msg subscription to window events and a
-monitor that marks the focused window with the workspace name. It's
-being tested as I write. I test with "mouse click to focus" and
-keyboard.
+monitor that marks the focused window with the workspace name.
 
 There should be only one window per output marked with the name of the
 workspace. Two marks with the same name on the same workspace is a
 major bug. Zero marks is a minor bug because the system usually
 recovers.
+
+Note: This wasn't easy to get working, and strictly speaking it still
+doesn't work immediately after startup, but two or three window events
+let it settle down.
 
 ## Launcher
 The launcher starts and stops media playback from files or tvheadend
