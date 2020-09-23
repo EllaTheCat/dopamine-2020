@@ -9,6 +9,9 @@ bluetoothaudiosink=bluez_sink.00_01_01_00_12_CB
 hdmiaudiosink=alsa_output.pci-0000_00_03.0.hdmi-stereo
 usbaudiosink=alsa_output.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.analog-stereo
 
+# Reverse engineered. >wave arms and mumble<
+usbaudiocard=alsa_card.usb-C-Media_Electronics_Inc._USB_Audio_Device-00
+usbaudioport=analog-output-speaker
 
 #
 # 1. Manage containers with marks.
@@ -18,30 +21,38 @@ usbaudiosink=alsa_output.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.analog
 i3_triple_digit()
 {
     case "$1" in
-        ([6789][0-9][0-9])
+        ([789][0-9][0-9])
         ;;
+        ([6][0-9][0-9])
+            # Audio latency offset. The two digits are interpreted as
+            # a percentage of one second.
+            arg="${1:1:2}"
+            arg=$((arg * 10000))
+            pactl set-port-latency-offset \
+                  ${usbaudiocard} ${usbaudioport} ${arg}
+            ;;
         ([5][0-9][0-9])
-        # Swap this container with the matching marked container.
-        arg="${1:1:2}"
-        i3-msg "swap container with mark ${arg}"
-        ### say "swap with mark ${arg}"
-        ;;
+            # Swap this container with the matching marked container.
+            arg="${1:1:2}"
+            i3-msg "swap container with mark ${arg}"
+            ### say "swap with mark ${arg}"
+            ;;
         ([4][0-9][0-9])
-        arg="${1:1:2}"  # Green jack volume as a percentage.
-        pactl set-sink-volume  ${analogaudiosink} "${arg}%"
-        ;;
+            arg="${1:1:2}"  # Green jack volume as a percentage.
+            pactl set-sink-volume  ${analogaudiosink} "${arg}%"
+            ;;
         ([3][0-9][0-9])
-        arg="${1:1:2}"  # HDMI volume as a percentage.
-        pactl set-sink-volume  ${hdmiaudiosink} "${arg}%"
-        ;;
+            arg="${1:1:2}"  # HDMI volume as a percentage.
+            pactl set-sink-volume  ${hdmiaudiosink} "${arg}%"
+            ;;
         ([2][0-9][0-9])
-        arg="${1:1:2}"  # Bluetooth volume as a percentage.
-        pactl set-sink-volume  ${bluetoothaudiosink} "${arg}%"
-        ;;
+            arg="${1:1:2}"  # Bluetooth volume as a percentage.
+            pactl set-sink-volume  ${bluetoothaudiosink} "${arg}%"
+            ;;
         ([1][0-9][0-9])
-        arg="${1:1:2}"  # USB volume as a percentage.
-        pactl set-sink-volume ${usbaudiosink} "${arg}%"
-        ;;
+            arg="${1:1:2}"  # USB volume as a percentage.
+            pactl set-sink-volume ${usbaudiosink} "${arg}%"
+            ;;
     esac
 }
 
