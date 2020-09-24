@@ -10,7 +10,6 @@ i3_double_digit()
             # Visit a two-digit mark using numpad or voice.
             arg="${1:0:2}"
             i3-msg "[con_mark=\"${arg}\"] focus"
-            ### say "focus mark ${arg}"
             ;;
     esac
 }

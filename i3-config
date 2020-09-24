@@ -138,13 +138,15 @@ exec_always --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 #
 # This "script" assists "i3-focus-app-by-alias" in deciding what to do
 # with a command alias. Once started it runs continuously, reacting to
-# window changes. It needs to "warm up" with a click or two.
+# window changes. It needs to "warm up" with a click or two. Starting
+# a new instance kills any previous instance.
 
-exec --no-startup-id sleep 7s && \
+exec_always --no-startup-id sleep 7s && \
     xfce4-terminal -T "Window Change Monitor" \
                    -x $HOME/local/bin/i3-marks update &
 
 # Command Interface.
+# Starting a new instance kills any previous instance.
 exec_always --no-startup-id ~/local/bin/i3-file-watcher
 
 # i3 has now processed the config file, but launching some fussy

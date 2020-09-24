@@ -4,9 +4,9 @@
 #
 
 # Copy from i3-config, paste and edit to be bash environment variables.
-analogaudiosink=alsa_output.pci-0000_00_1b.0.analog-stereo
-bluetoothaudiosink=bluez_sink.00_01_01_00_12_CB
-hdmiaudiosink=alsa_output.pci-0000_00_03.0.hdmi-stereo
+export analogaudiosink=alsa_output.pci-0000_00_1b.0.analog-stereo
+export bluetoothaudiosink=bluez_sink.00_01_01_00_12_CB
+export hdmiaudiosink=alsa_output.pci-0000_00_03.0.hdmi-stereo
 usbaudiosink=alsa_output.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.analog-stereo
 
 # Reverse engineered. >wave arms and mumble<
@@ -14,44 +14,33 @@ usbaudiocard=alsa_card.usb-C-Media_Electronics_Inc._USB_Audio_Device-00
 usbaudioport=analog-output-speaker
 
 #
-# 1. Manage containers with marks.
-# 2. Manage headphone volumes.
-# 3. Manage headphone latency.
+# - Manage containers with marks.
+# - Manage USB audio volumes.
+# - Manage USB audio latency.
 #
 i3_triple_digit()
 {
     case "$1" in
-        ([789][0-9][0-9])
+        ([346789][0-9][0-9])
         ;;
-        ([6][0-9][0-9])
-            # Audio latency offset. The two digits are interpreted as
-            # a percentage of one second.
-            arg="${1:1:2}"
-            arg=$((arg * 10000))
-            pactl set-port-latency-offset \
-                  ${usbaudiocard} ${usbaudioport} ${arg}
-            ;;
         ([5][0-9][0-9])
             # Swap this container with the matching marked container.
             arg="${1:1:2}"
             i3-msg "swap container with mark ${arg}"
-            ### say "swap with mark ${arg}"
-            ;;
-        ([4][0-9][0-9])
-            arg="${1:1:2}"  # Green jack volume as a percentage.
-            pactl set-sink-volume  ${analogaudiosink} "${arg}%"
-            ;;
-        ([3][0-9][0-9])
-            arg="${1:1:2}"  # HDMI volume as a percentage.
-            pactl set-sink-volume  ${hdmiaudiosink} "${arg}%"
-            ;;
-        ([2][0-9][0-9])
-            arg="${1:1:2}"  # Bluetooth volume as a percentage.
-            pactl set-sink-volume  ${bluetoothaudiosink} "${arg}%"
             ;;
         ([1][0-9][0-9])
+            # Audio latency offset. The two digits are interpreted as
+            # a percentage of one second.
+            arg="${1:1:2}"
+            arg=$((arg * 110000))
+            pactl set-port-latency-offset \
+                  ${usbaudiocard} ${usbaudioport} ${arg}
+            ;;
+        ([2][0-9][0-9])
+            # Volume settings 00 to 99. Although pavucontrol allows as
+            # high as 150% the API doesn't.
             arg="${1:1:2}"  # USB volume as a percentage.
-            pactl set-sink-volume ${usbaudiosink} "${arg}%"
+            pactl set-sink-volume ${usbaudiosink} "${arg}0000"
             ;;
     esac
 }
