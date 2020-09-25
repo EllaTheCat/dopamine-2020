@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# These programs should run continuously for a session.
+# Delegating to a bash script is easier than "scripting" in i3 config.
+# $1 start | stop | restart | status ...
+# $2 informal program name.
+#
+
+case "$1" in
+    (start)
+        case "$2" in
+            (compton)
+                compton -b --config ~/.config/compton.conf
+            ;;
+            (dunst)
+                (xfce4-terminal -T dunst -x dunst -config "${HOME}/.config") &
+            ;;
+        esac
+        ;;
+    (stop)
+        case "$2" in
+            (compton)
+                killall compton > /dev/null 2>&1
+                ;;
+            (dunst)
+                pkill -f 'dunst -config'
+            ;;
+        esac
+        ;;
+    (restart)
+        case "$2" in
+            (compton|dunst)
+                $0 stop "$2"
+                sleep 2
+                $0 start "$2"
+                sleep 1
+                $0 status "$2"
+                ;;
+        esac
+        ;;
+    (status)
+        pgrep -a -f "$2" | grep -v grep | grep -v "$(basename "$0")"
+        ;;
+esac
+
+#
+# Done,
+#

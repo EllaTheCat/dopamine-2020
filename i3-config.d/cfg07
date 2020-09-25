@@ -59,7 +59,7 @@ for_window [class="Display-im6"] floating enable;
 # A workaround to prevent the software updater window going
 # transparent. I think this is an Ubuntu issue.
 for_window [title="Software Updater"] floating enable, \
-           exec --no-startup-id pkill -f 'compton -b --config', \
+           $i3configscripts stop compton, \
            exec --no-startup-id notify-send \
            "Compositor has been disabled to safeguard software update. Secondary [ = compositor off Secondary ] = compositor on" ;
 

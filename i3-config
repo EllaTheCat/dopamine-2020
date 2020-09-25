@@ -39,6 +39,7 @@ set $secondary exec --no-startup-id ~/local/bin/i3-mode Secondary
 
 # Helpers. Embedding the path explicitly is belt and braces.
 set $i3cmdprompt exec --no-startup-id ~/local/bin/i3-command-prompt
+set $i3configscripts exec --no-startup-id ~/local/bin/i3-config-scripts
 set $i3dispatcher exec --no-startup-id ~/local/bin/i3-dispatcher
 set $i3filewatcher exec_always --no-startup-id ~/local/bin/i3-file-watcher
 set $i3marks exec --no-startup-id ~/local/bin/i3-marks
@@ -46,8 +47,6 @@ set $i3mode exec --no-startup-id ~/local/bin/i3-mode
 set $i3mouse exec --no-startup-id ~/local/bin/i3-mouse
 set $i3scratchpad exec --no-startup-id ~/local/bin/i3-scratchpad
 set $i3listwindows exec --no-startup-id ~/local/bin/i3-list-windows
-# No 'exec' prefix.
-set $i3compositor /usr/bin/compton -b --config ~/.config/compton.conf
 
 # Use 'xrandr' with no arguments to list monitor names and geometry.
 # Assign outputs to monitors from left to right, repeat last assignment,
@@ -117,9 +116,6 @@ mode "restart" {
 # SETTINGS
 #
 
-# Compositor first.
-exec_always --no-startup-id $i3compositor
-
 # Desktop wallpaper, sometimes it does nothing.
 exec_always --no-startup-id nitrogen --restore
 
@@ -133,6 +129,10 @@ exec_always --no-startup-id nitrogen --restore
 exec_always --no-startup-id ~/local/bin/i3-keyboard xmodmapkeys
 exec_always --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 
+# Use a bash script to avoid i3-config "script" limitations.
+$i3configscripts restart compton
+$i3configscripts restart dunst
+
 # Add a mark to the titlebar of the window currently in focus and
 # remove the previous mark of this type, on a per-screen basis.
 #
@@ -144,7 +144,7 @@ exec_always --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 exec_always --no-startup-id sleep 7s && \
     xfce4-terminal -T "Window Change Monitor" \
                    -x $HOME/local/bin/i3-marks update &
-
+v
 # Command Interface.
 # Starting a new instance kills any previous instance.
 exec_always --no-startup-id ~/local/bin/i3-file-watcher

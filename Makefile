@@ -39,6 +39,7 @@ CFGMODE=644
 
 .installscripts: \
 $(I3BIN)/i3-command-prompt \
+$(I3BIN)/i3-config-scripts \
 $(I3BIN)/i3-file-watcher \
 $(I3BIN)/i3-dispatcher \
 $(I3BIN)/i3-focus-app-by-alias \
@@ -126,6 +127,14 @@ $(I3BIN)/i3-command-prompt: \
 
 $(I3SCRIPTS)/i3-command-prompt.log: $(I3SCRIPTS)/i3-command-prompt
 	@shellcheck $(I3SCRIPTS)/i3-command-prompt > $@
+
+$(I3BIN)/i3-config-scripts: \
+	$(I3SCRIPTS)/i3-config-scripts \
+	$(I3SCRIPTS)/i3-config-scripts.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-config-scripts $(I3BIN)
+
+$(I3SCRIPTS)/i3-config-scripts.log: $(I3SCRIPTS)/i3-config-scripts
+	@shellcheck $(I3SCRIPTS)/i3-config-scripts > $@
 
 $(I3BIN)/i3-file-watcher:  \
 	$(I3SCRIPTS)/i3-file-watcher \

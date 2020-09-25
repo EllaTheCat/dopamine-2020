@@ -39,7 +39,7 @@ forward ()
             eval "${*:2}"
             ;;
 	(*)
-            notify-send "i-dispatcher: >$*< "ignored""
+            notify-send "i-dispatcher: >$*< ignored"
 	    ;;
     esac
 }
