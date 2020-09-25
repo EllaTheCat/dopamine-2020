@@ -51,8 +51,6 @@ commandalias()
 #
 update()
 {
-    # This is simple and reliable but myopic.
-    pkill -f "i3-msg -t subscribe"
     # shellcheck disable=SC2034
     i3-msg -t subscribe -m '[ "window" ]' | \
         while read -r line ; do commandalias; read -r line; read -r line; done

@@ -23,10 +23,8 @@ mode "Secondary" {
     bindsym o nop
     bindsym p nop
 
-    # Toggling the compositor off / on is a.o. a workaround for issues
-    # such as the Ubuntu Software Updater.
-    bindsym bracketleft   $i3configscripts stop compton
-    bindsym bracketright  $i3configscripts start compton
+    bindsym bracketleft nop
+    bindsym bracketright nop
 
     # Select an audio output.
     bindsym a  $default, exec  --no-startup-id pactl move-sink-input \
