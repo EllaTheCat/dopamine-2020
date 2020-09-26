@@ -10,26 +10,38 @@ case "$1" in
     (start)
         case "$2" in
             (compton)
-                compton -b --config ~/.config/compton.conf
-            ;;
+                compton -b --config "${HOME}/.config/compton.conf"
+                ;;
             (dunst)
-                (xfce4-terminal -T dunst -x dunst -config "${HOME}/.config") &
-            ;;
+                (xfce4-terminal -T "$(date +%T) dunst" \
+                                -x dunst -config "${HOME}/.config/dunst/dunstrc") &
+                ;;
+            (marks)
+                (xfce4-terminal -T "$(date +%T) marks" \
+                                -x "${HOME}/local/bin/i3-marks" update) &
+                ;;
         esac
         ;;
     (stop)
         case "$2" in
             (compton)
-                killall compton > /dev/null 2>&1
+                # start|stop strings must be identical.
+                pkill -f "compton -b --config ${HOME}/.config/compton.conf"
                 ;;
             (dunst)
-                pkill -f 'dunst -config'
-            ;;
+                # start|stop strings must be identical.
+                pkill -f "dunst -config ${HOME}/.config/dunst/dunstrc"
+                ;;
+            (marks)
+                # This kills everything shown in status.
+                [ "$(pgrep -c -f i3-marks)" -gt 0 ] && killall i3-marks
+                ;;
         esac
         ;;
     (restart)
         case "$2" in
-            (compton|dunst)
+            (compton|dunst|marks)
+                # Reusing stop|start and status cases facilitates testing.
                 $0 stop "$2"
                 sleep 2
                 $0 start "$2"
@@ -39,7 +51,17 @@ case "$1" in
         esac
         ;;
     (status)
-        pgrep -a -f "$2" | grep -v grep | grep -v "$(basename "$0")"
+        case "$2" in
+            (compton|dunst)
+                pgrep -a -f "$2" | grep -v grep | grep -v "$(basename "$0")"
+                ;;
+            (marks)
+                # Expect 3 pids, contiguously numbered, but not shown
+                # in order, when not stopped.
+                pgrep -a -f 'i3-msg -t subscribe -m' | grep window
+                pgrep -a -f 'i3-marks update'
+                ;;
+        esac
         ;;
 esac
 
