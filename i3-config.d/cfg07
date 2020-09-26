@@ -37,8 +37,6 @@ assign [title="DVB Inspector"] di
 assign [title="Meld$"] md
 assign [title="SM-G930F"] s7
 assign [title="VLC media player$"] vp
-assign [title="dunst$"] wm
-assign [title="marks$"] wm
 
 # Windows that look'n'feel better when floating.
 for_window [instance="dtvkit"] floating enable;

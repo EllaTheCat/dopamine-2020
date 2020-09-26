@@ -129,21 +129,18 @@ exec_always --no-startup-id nitrogen --restore
 exec_always --no-startup-id ~/local/bin/i3-keyboard xmodmapkeys
 exec_always --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 
-# Use a bash script to avoid i3-config "script" limitations.
+# Various diagnostic terminals for "services".
+assign [title="dunst$"] wm
+assign [title="marks$"] wm
+assign [title="commands$"] wm
+
+# This helper script provides "services" that run continuously.
+# Reloading i3 config does not run this script.
 $i3configscripts restart compton
 $i3configscripts restart dunst
 $i3configscripts restart marks
-
-# Command Interface.
-# Starting a new instance kills any previous instance.
-exec_always --no-startup-id ~/local/bin/i3-file-watcher
-
-# i3 has now processed the config file, but launching some fussy
-# programs has been delayed until afterwards.
-
-# Desktop wallpaper again, belt and braces.
-exec_always --no-startup-id nitrogen --restore
+$i3configscripts restart commands
 
 #
-#  Done.
+# Done.
 #

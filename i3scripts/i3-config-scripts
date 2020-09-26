@@ -20,6 +20,10 @@ case "$1" in
                 (xfce4-terminal -T "$(date +%T) marks" \
                                 -x "${HOME}/local/bin/i3-marks" update) &
                 ;;
+            (commands)
+                (xfce4-terminal -T "$(date +%T) commands" \
+                                -x "${HOME}/local/bin/i3-file-watcher" ) &
+                ;;
         esac
         ;;
     (stop)
@@ -36,11 +40,17 @@ case "$1" in
                 # This kills everything shown in status.
                 [ "$(pgrep -c -f i3-marks)" -gt 0 ] && killall i3-marks
                 ;;
+            (commands)
+                #
+                cmd="--watch-files /dev/shm/$USER/i3/command"
+                exe="--on-modify-command /dev/shm/$USER/i3/execute"
+                pkill -f "perl /usr/bin/inotify-hookable ${cmd} ${exe}"
+                ;;
         esac
         ;;
     (restart)
         case "$2" in
-            (compton|dunst|marks)
+            (compton|dunst|marks|commands)
                 # Reusing stop|start and status cases facilitates testing.
                 $0 stop "$2"
                 sleep 2
@@ -60,6 +70,17 @@ case "$1" in
                 # in order, when not stopped.
                 pgrep -a -f 'i3-msg -t subscribe -m' | grep window
                 pgrep -a -f 'i3-marks update'
+                ;;
+            (commands)
+                # Expect 2 pids.
+                pgrep -a -f '/usr/bin/inotify-hookable'
+                pgrep -a -f 'i3-file-watcher'
+                ;;
+            (all)
+                #
+                for option in compton dunst marks commands; do
+                    printf "%s:\n%s\n" ${option} "$($0 status $option)"
+                done
                 ;;
         esac
         ;;

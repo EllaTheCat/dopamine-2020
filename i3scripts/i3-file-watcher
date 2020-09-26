@@ -27,8 +27,6 @@ echo 'eval /bin/false' > "${i3}/command"
 # shellcheck disable=SC2016
 echo 'eval $HOME/local/bin/i3-dispatcher forward' \
      '$(cat /dev/shm/$USER/i3/command)' > "${i3}/execute"
-# Kill the running inotify-hookable and start another.
-pkill -f "inotify-hookable --watch-files $i3/command"
 # Be careful! Use no terminal here! Use no ampersand here!
 inotify-hookable --watch-files "${i3}"/command --on-modify-command "${i3}"/execute
 
