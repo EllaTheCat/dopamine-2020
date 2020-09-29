@@ -102,8 +102,8 @@ These "cfg" files live in "i3-config.d':
 - cfg09 - Settings (i3bar, debug mode)
 
 There's nothing to stop competent users editing "cfg" files, and this
-is to be encouraged. Use ".git/info/exclude" to prevent overwriting by
-'git pull', please don't use .gitignore.
+is to be encouraged, but don't forget measures to prevent overwriting
+by 'git pull'.
 
 I concede that the decisions about the contents of each "cfg" file
 will need reviewing, so "i3-config" won't become stable in git
@@ -168,13 +168,12 @@ play the show on your PC.
 ## File Watcher
 The file watcher watches the file "/dev/shm/$USER/i3/command".
 Whenever the command prompt or Tasker writes a command to that file,
-the command is forwarded for processing.  There is no acknowledgement
-for commands.
+the command is forwarded to the dispatcher for processing.  There is
+no acknowledgement for commands.
 
 ## Dispatcher
-The dispatcher receives a command sent by the file watcher, and
-forwards it to a script that executes it. Commands have 4 digit
-headers that determine which script that is.
+The dispatcher receives a command sent by the file watcher, and uses
+pattern matching to invoke command-specific scripts.
 
 ## Focus App By Alias.
 A command alias typically consists of two characters that refer to a
@@ -209,10 +208,13 @@ in an Emacs buffer "Clipboard".
 
 Work is in progress to provide a simple editor operated by voice.
 
+## Services
+The "i3-config-scripts" file tidies up the management of "services"
+that run in the background. It is introduced at the very end of the
+i3-coonfig file.
 
+    i3-config-scripts \
+        start|stop|restart|status compton|dunst|marks|commands
 
-
-
-
-
-.
+Crikey it's fast! The effort involved in creating a tidy script has
+paid off.
