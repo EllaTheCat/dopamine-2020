@@ -22,7 +22,7 @@ case "$1" in
                 ;;
             (commands)
                 (xfce4-terminal -T "$(date +%T) commands" \
-                                -x "${HOME}/local/bin/i3-file-watcher" ) &
+                                -x "${HOME}/local/bin/i3-file-watcher") &
                 ;;
         esac
         ;;

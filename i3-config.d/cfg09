@@ -20,13 +20,16 @@ bar {
     #
     bindsym button2 nop
     bindsym button3 nop
-    bindsym button4 nop
-    bindsym button5 nop
+    # Opacity is to be used with restraint. primarily on terminals.
+    # Mouse wheel rotate up/down applies opacity to focused window.
+    bindsym button4 exec compton-trans -c -o  80
+    bindsym button5 exec compton-trans -c -o 100
 }
 
 #
 # I3BAR SETTINGS END HERE.
 #
+
 
 #
 # DEBUG MODE KEY BINDINGS BEGIN HERE.
