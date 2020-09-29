@@ -18,6 +18,9 @@ I3STATUSCFG=$(HOME)/.i3status.conf
 # Including this directory on your ${PATH} is recommended.
 I3BIN=$(HOME)/local/bin
 
+# The dunst config file to be installed.
+NOTIFIERCFG=${HOME}/.config/dunst/dunstrc
+
 # Local git repo directory, where the Makefile lives, and from where
 # tt should be invoked.
 DOPAMINE=$(shell readlink -f $(shell pwd))
@@ -35,7 +38,7 @@ CFGMODE=644
 
 .installdirs:  $(I3BIN)
 
-.installconfigs:  $(I3CFG) $(I3STATUSCFG) $(COMPOSITORCFG)
+.installconfigs:  $(I3CFG) $(I3STATUSCFG) $(COMPOSITORCFG) $(NOTIFIERCFG)
 
 .installscripts: \
 $(I3BIN)/i3-command-prompt \
@@ -114,6 +117,11 @@ $(I3CFG):  i3-config \
 $(COMPOSITORCFG): compton.conf
 	@install -m $(CFGMODE) compton.conf $@
 	@touch restart
+
+$(NOTIFIERCFG): dunstrc
+	@install -m $(CFGMODE) dunstrc $@
+	@$(I3BIN)/i3-config-scripts restart dunst
+
 $(I3STATUSCFG):  i3-status-config
 	@install -m $(CFGMODE) i3-status-config $@
 	@touch restart
