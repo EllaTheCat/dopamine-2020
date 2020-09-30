@@ -21,18 +21,11 @@ usbaudioport=analog-output-speaker
 i3_triple_digit()
 {
     case "$1" in
-        ([346789][0-9][0-9])
-        ;;
-        ([5][0-9][0-9])
-            # Swap this container with the matching marked container.
-            arg="${1:1:2}"
-            i3-msg "swap container with mark ${arg}"
-            ;;
         ([1][0-9][0-9])
             # Audio latency offset. The two digits are interpreted as
             # a percentage of one second.
             arg="${1:1:2}"
-            arg=$((arg * 110000))
+            arg=$((arg * 10000))
             pactl set-port-latency-offset \
                   ${usbaudiocard} ${usbaudioport} ${arg}
             ;;
@@ -42,7 +35,27 @@ i3_triple_digit()
             arg="${1:1:2}"  # USB volume as a percentage.
             pactl set-sink-volume ${usbaudiosink} "${arg}0000"
             ;;
-    esac
+        ([[4]0-9][0-9])
+            # Visit a two-digit mark using numpad or voice.
+            arg="${1:1:2}"
+            i3-msg "[con_mark=\"${arg}\"] focus"
+            ;;
+         ([5][0-9][0-9])
+            # Swap this container with the matching marked container.
+            arg="${1:1:2}"
+            i3-msg "swap container with mark ${arg}"
+            ;;
+         ([036789][0-9][0-9])
+             # Define all other 3 digit matches.
+             arg="${1:1:2}"
+             notify-send "undefined 3 digit command alias >${arg}< acknowledged."
+             ;;
+         ([0-9][0-9])
+             # Available 2 digit matches.
+             arg="${1:0:2}"
+             notify-send "undefined 2 digit command alias >${arg}< acknowledged."
+             ;;
+   esac
 }
 
 #

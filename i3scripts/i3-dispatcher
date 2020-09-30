@@ -11,10 +11,15 @@ forward ()
     export PATH=${HOME}/local/bin:${PATH}
     case "$1" in
         ([0-9][0-9][0-9])
+            # Sent from numpad command prompt. The numpad layout is
+            # allegedly faster than the Menu key command prompt due
+            # to the numbers being close together.
             nohup i3-triple-digit-command "$1"
             ;;
         ([0-9][0-9])
-            nohup i3-double-digit-command "$1"
+            # Sent from numpad command prompt.
+            # "triple" is not a typo here.
+            nohup i3-triple-digit-command "$1"
             ;;
 	([a-z][0-9])
             # Sent from command prompt.
@@ -39,7 +44,7 @@ forward ()
             eval "${*:2}"
             ;;
 	(*)
-            notify-send "i-dispatcher: >$*< ignored"
+            notify-send "i3-dispatcher: >$*< ignored"
 	    ;;
     esac
 }

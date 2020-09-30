@@ -3,22 +3,15 @@
 # i3-double-digit-command
 #
 
-i3_double_digit()
-{
-    case "$1" in
-        ([0-9][0-9])
-            # Visit a two-digit mark using numpad or voice.
-            arg="${1:0:2}"
-            i3-msg "[con_mark=\"${arg}\"] focus"
-            ;;
-    esac
-}
+# RESERVED. Functionality moved into triple-digit-command file. If we
+# add another file, editing the Makefile is faciltated by search and
+# replace.
 
 #
 # Start here.
 #
 
-i3_double_digit "$1"
+/bin/true
 
 #
 # Done.
