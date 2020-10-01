@@ -1,5 +1,4 @@
 # .gitignore
-# dot-gtignore
 
 nohup.out
 
@@ -8,5 +7,6 @@ nohup.out
 i3scripts/*log
 myscripts/*log
 
-
+#
 # Done.
+#
