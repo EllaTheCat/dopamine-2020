@@ -25,15 +25,14 @@ i3_triple_digit()
             # Audio latency offset. The two digits are interpreted as
             # a percentage of one second.
             arg="${1:1:2}"
-            arg=$((arg * 10000))
             pactl set-port-latency-offset \
-                  ${usbaudiocard} ${usbaudioport} ${arg}
+                  ${usbaudiocard} ${usbaudioport} "${arg}0000"
             ;;
         ([2][0-9][0-9])
             # Volume settings 00 to 99. Although pavucontrol allows as
             # high as 150% the API doesn't.
-            arg="${1:1:2}"  # USB volume as a percentage.
-            pactl set-sink-volume ${usbaudiosink} "${arg}0000"
+            arg="${1:1:2}%"  # USB volume as a percentage.
+            pactl set-sink-volume ${usbaudiosink} "${arg}"
             ;;
         ([[4]0-9][0-9])
             # Visit a two-digit mark using numpad or voice.
