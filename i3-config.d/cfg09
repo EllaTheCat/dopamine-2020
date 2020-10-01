@@ -19,7 +19,7 @@ bar {
     font pango:DejaVu Sans 11
     #
     bindsym button2 nop
-    bindsym button3 nop
+    bindsym button3 $i3marks numeric
     # Opacity is to be used with restraint. primarily on terminals.
     # Mouse wheel rotate up/down applies opacity to focused window.
     bindsym button4 exec compton-trans -c -o  80
