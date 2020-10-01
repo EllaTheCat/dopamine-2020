@@ -31,7 +31,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x5-30+20"
+    geometry = "480x5-0+0"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -48,7 +48,7 @@
     # The height of the entire notification.  If the height is smaller
     # than the font height and padding combined, it will be raised
     # to the font height and padding.
-    notification_height = 0
+    notification_height = 240
 
     # Draw a line of "separator_height" pixel height between two
     # notifications.
