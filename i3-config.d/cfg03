@@ -1,0 +1,291 @@
+# -*- Mode: Shell-script -*-
+#
+# Double-digit workspaces for i3wm.
+
+#
+# - The standard workspace bindings should be removed.
+# - The workspaces [0-9] and 0[0-9] are not available.
+# - The limitations above exist to keep things simple.
+#
+
+bindsym $mod+1 mode ws1
+bindsym $mod+2 mode ws2
+bindsym $mod+3 mode ws3
+bindsym $mod+4 mode ws4
+bindsym $mod+5 mode ws5
+bindsym $mod+6 mode ws6
+bindsym $mod+7 mode ws7
+bindsym $mod+8 mode ws8
+bindsym $mod+9 mode ws9
+
+
+bindsym $mod+Shift+1 mode cws1
+bindsym $mod+Shift+2 mode cws2
+bindsym $mod+Shift+3 mode cws3
+bindsym $mod+Shift+4 mode cws4
+bindsym $mod+Shift+5 mode cws5
+bindsym $mod+Shift+6 mode cws6
+bindsym $mod+Shift+7 mode cws7
+bindsym $mod+Shift+8 mode cws8
+bindsym $mod+Shift+9 mode cws9
+
+
+#
+# You shouldn't need to edit anything below here.
+#
+
+
+mode "ws1" {
+     bindsym 0 mode default, workspace 10
+     bindsym 1 mode default, workspace 11
+     bindsym 2 mode default, workspace 12
+     bindsym 3 mode default, workspace 13
+     bindsym 4 mode default, workspace 14
+     bindsym 5 mode default, workspace 15
+     bindsym 6 mode default, workspace 16
+     bindsym 7 mode default, workspace 17
+     bindsym 8 mode default, workspace 18
+     bindsym 9 mode default, workspace 19
+}
+
+
+mode "ws2" {
+     bindsym 0 mode default, workspace 20
+     bindsym 1 mode default, workspace 21
+     bindsym 2 mode default, workspace 22
+     bindsym 3 mode default, workspace 23
+     bindsym 4 mode default, workspace 24
+     bindsym 5 mode default, workspace 25
+     bindsym 6 mode default, workspace 26
+     bindsym 7 mode default, workspace 27
+     bindsym 8 mode default, workspace 28
+     bindsym 9 mode default, workspace 29
+}
+
+
+mode "ws3" {
+     bindsym 0 mode default, workspace 30
+     bindsym 1 mode default, workspace 31
+     bindsym 2 mode default, workspace 32
+     bindsym 3 mode default, workspace 33
+     bindsym 4 mode default, workspace 34
+     bindsym 5 mode default, workspace 35
+     bindsym 6 mode default, workspace 36
+     bindsym 7 mode default, workspace 37
+     bindsym 8 mode default, workspace 38
+     bindsym 9 mode default, workspace 39
+}
+
+
+mode "ws4" {
+     bindsym 0 mode default, workspace 40
+     bindsym 1 mode default, workspace 41
+     bindsym 2 mode default, workspace 42
+     bindsym 3 mode default, workspace 43
+     bindsym 4 mode default, workspace 44
+     bindsym 5 mode default, workspace 45
+     bindsym 6 mode default, workspace 46
+     bindsym 7 mode default, workspace 47
+     bindsym 8 mode default, workspace 48
+     bindsym 9 mode default, workspace 49
+}
+
+
+mode "ws5" {
+     bindsym 0 mode default, workspace 50
+     bindsym 1 mode default, workspace 51
+     bindsym 2 mode default, workspace 52
+     bindsym 3 mode default, workspace 53
+     bindsym 4 mode default, workspace 54
+     bindsym 5 mode default, workspace 55
+     bindsym 6 mode default, workspace 56
+     bindsym 7 mode default, workspace 57
+     bindsym 8 mode default, workspace 58
+     bindsym 9 mode default, workspace 59
+}
+
+
+mode "ws6" {
+     bindsym 0 mode default, workspace 60
+     bindsym 1 mode default, workspace 61
+     bindsym 2 mode default, workspace 62
+     bindsym 3 mode default, workspace 63
+     bindsym 4 mode default, workspace 64
+     bindsym 5 mode default, workspace 65
+     bindsym 6 mode default, workspace 66
+     bindsym 7 mode default, workspace 67
+     bindsym 8 mode default, workspace 68
+     bindsym 9 mode default, workspace 69
+}
+
+
+mode "ws7" {
+     bindsym 0 mode default, workspace 70
+     bindsym 1 mode default, workspace 71
+     bindsym 2 mode default, workspace 72
+     bindsym 3 mode default, workspace 73
+     bindsym 4 mode default, workspace 74
+     bindsym 5 mode default, workspace 75
+     bindsym 6 mode default, workspace 76
+     bindsym 7 mode default, workspace 77
+     bindsym 8 mode default, workspace 78
+     bindsym 9 mode default, workspace 79
+}
+
+
+mode "ws8" {
+     bindsym 0 mode default, workspace 80
+     bindsym 1 mode default, workspace 81
+     bindsym 2 mode default, workspace 82
+     bindsym 3 mode default, workspace 83
+     bindsym 4 mode default, workspace 84
+     bindsym 5 mode default, workspace 85
+     bindsym 6 mode default, workspace 86
+     bindsym 7 mode default, workspace 87
+     bindsym 8 mode default, workspace 88
+     bindsym 9 mode default, workspace 89
+}
+
+
+mode "ws9" {
+     bindsym 0 mode default, workspace 90
+     bindsym 1 mode default, workspace 91
+     bindsym 2 mode default, workspace 92
+     bindsym 3 mode default, workspace 93
+     bindsym 4 mode default, workspace 94
+     bindsym 5 mode default, workspace 95
+     bindsym 6 mode default, workspace 96
+     bindsym 7 mode default, workspace 97
+     bindsym 8 mode default, workspace 98
+     bindsym 9 mode default, workspace 99
+}
+
+
+mode "cws1" {
+     bindsym 0 mode default, move container to workspace 10
+     bindsym 1 mode default, move container to workspace 11
+     bindsym 2 mode default, move container to workspace 12
+     bindsym 3 mode default, move container to workspace 13
+     bindsym 4 mode default, move container to workspace 14
+     bindsym 5 mode default, move container to workspace 15
+     bindsym 6 mode default, move container to workspace 16
+     bindsym 7 mode default, move container to workspace 17
+     bindsym 8 mode default, move container to workspace 18
+     bindsym 9 mode default, move container to workspace 19
+}
+
+
+mode "cws2" {
+     bindsym 0 mode default, move container to workspace 20
+     bindsym 1 mode default, move container to workspace 21
+     bindsym 2 mode default, move container to workspace 22
+     bindsym 3 mode default, move container to workspace 23
+     bindsym 4 mode default, move container to workspace 24
+     bindsym 5 mode default, move container to workspace 25
+     bindsym 6 mode default, move container to workspace 26
+     bindsym 7 mode default, move container to workspace 27
+     bindsym 8 mode default, move container to workspace 28
+     bindsym 9 mode default, move container to workspace 29
+}
+
+
+mode "cws3" {
+     bindsym 0 mode default, move container to workspace 30
+     bindsym 1 mode default, move container to workspace 31
+     bindsym 2 mode default, move container to workspace 32
+     bindsym 3 mode default, move container to workspace 33
+     bindsym 4 mode default, move container to workspace 34
+     bindsym 5 mode default, move container to workspace 35
+     bindsym 6 mode default, move container to workspace 36
+     bindsym 7 mode default, move container to workspace 37
+     bindsym 8 mode default, move container to workspace 38
+     bindsym 9 mode default, move container to workspace 39
+}
+
+
+mode "cws4" {
+     bindsym 0 mode default, move container to workspace 40
+     bindsym 1 mode default, move container to workspace 41
+     bindsym 2 mode default, move container to workspace 42
+     bindsym 3 mode default, move container to workspace 43
+     bindsym 4 mode default, move container to workspace 44
+     bindsym 5 mode default, move container to workspace 45
+     bindsym 6 mode default, move container to workspace 46
+     bindsym 7 mode default, move container to workspace 47
+     bindsym 8 mode default, move container to workspace 48
+     bindsym 9 mode default, move container to workspace 49
+}
+
+
+mode "cws5" {
+     bindsym 0 mode default, move container to workspace 50
+     bindsym 1 mode default, move container to workspace 51
+     bindsym 2 mode default, move container to workspace 52
+     bindsym 3 mode default, move container to workspace 53
+     bindsym 4 mode default, move container to workspace 54
+     bindsym 5 mode default, move container to workspace 55
+     bindsym 6 mode default, move container to workspace 56
+     bindsym 7 mode default, move container to workspace 57
+     bindsym 8 mode default, move container to workspace 58
+     bindsym 9 mode default, move container to workspace 59
+}
+
+
+mode "cws6" {
+     bindsym 0 mode default, move container to workspace 60
+     bindsym 1 mode default, move container to workspace 61
+     bindsym 2 mode default, move container to workspace 62
+     bindsym 3 mode default, move container to workspace 63
+     bindsym 4 mode default, move container to workspace 64
+     bindsym 5 mode default, move container to workspace 65
+     bindsym 6 mode default, move container to workspace 66
+     bindsym 7 mode default, move container to workspace 67
+     bindsym 8 mode default, move container to workspace 68
+     bindsym 9 mode default, move container to workspace 69
+}
+
+
+mode "cws7" {
+     bindsym 0 mode default, move container to workspace 70
+     bindsym 1 mode default, move container to workspace 71
+     bindsym 2 mode default, move container to workspace 72
+     bindsym 3 mode default, move container to workspace 73
+     bindsym 4 mode default, move container to workspace 74
+     bindsym 5 mode default, move container to workspace 75
+     bindsym 6 mode default, move container to workspace 76
+     bindsym 7 mode default, move container to workspace 77
+     bindsym 8 mode default, move container to workspace 78
+     bindsym 9 mode default, move container to workspace 79
+}
+
+
+mode "cws8" {
+     bindsym 0 mode default, move container to workspace 80
+     bindsym 1 mode default, move container to workspace 81
+     bindsym 2 mode default, move container to workspace 82
+     bindsym 3 mode default, move container to workspace 83
+     bindsym 4 mode default, move container to workspace 84
+     bindsym 5 mode default, move container to workspace 85
+     bindsym 6 mode default, move container to workspace 86
+     bindsym 7 mode default, move container to workspace 87
+     bindsym 8 mode default, move container to workspace 88
+     bindsym 9 mode default, move container to workspace 89
+}
+
+
+mode "cws9" {
+     bindsym 0 mode default, move container to workspace 90
+     bindsym 1 mode default, move container to workspace 91
+     bindsym 2 mode default, move container to workspace 92
+     bindsym 3 mode default, move container to workspace 93
+     bindsym 4 mode default, move container to workspace 94
+     bindsym 5 mode default, move container to workspace 95
+     bindsym 6 mode default, move container to workspace 96
+     bindsym 7 mode default, move container to workspace 97
+     bindsym 8 mode default, move container to workspace 98
+     bindsym 9 mode default, move container to workspace 99
+}
+
+#
+# Done.
+#

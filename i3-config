@@ -72,11 +72,11 @@ set $i3inputfont "pango:DejaVu Sans 11"
 # Refactoring the associated script(s) might require stubs.
 set $stub nop
 
-###INSERT_CFG00_HERE###
-
 #
 # BINDINGS
 #
+
+###INSERT_CFG00_HERE###
 
 # Menu is a design decision please do not change.
 # I have used 'xcape' to bind Super_L to Menu for the left hand.
@@ -99,6 +99,8 @@ bindsym KP_Insert $i3cmdprompt menu 4
 #
 # MODES
 #
+
+###INSERT_CFG03_HERE###
 
 ###INSERT_CFG04_HERE###
 

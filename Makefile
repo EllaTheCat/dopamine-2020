@@ -92,7 +92,7 @@ $(i3BIN):
 # This rule immediately modifies the recently installed file.
 $(I3CFG):  i3-config \
 	i3-config.d/cfg00 i3-config.d/cfg01 i3-config.d/cfg02 \
-	i3-config.d/cfg04 i3-config.d/cfg05 \
+	i3-config.d/cfg03 i3-config.d/cfg04 i3-config.d/cfg05 \
 	i3-config.d/cfg07 i3-config.d/cfg08 \
 	i3-config.d/cfg09
 	@install -m $(CFGMODE)  i3-config $@
@@ -101,6 +101,8 @@ $(I3CFG):  i3-config \
 	@sed -e '/###INSERT_CFG01_HERE###/ {' -e 'r i3-config.d/cfg01' -e 'd' -e '}' \
          -i   $(I3CFG)
 	@sed -e '/###INSERT_CFG02_HERE###/ {' -e 'r i3-config.d/cfg02' -e 'd' -e '}' \
+         -i   $(I3CFG)
+	@sed -e '/###INSERT_CFG03_HERE###/ {' -e 'r i3-config.d/cfg03' -e 'd' -e '}' \
          -i   $(I3CFG)
 	@sed -e '/###INSERT_CFG04_HERE###/ {' -e 'r i3-config.d/cfg04' -e 'd' -e '}' \
          -i   $(I3CFG)
