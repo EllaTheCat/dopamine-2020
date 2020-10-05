@@ -44,7 +44,8 @@ forward ()
             eval "${*:2}"
             ;;
 	(*)
-            notify-send "i3-dispatcher: >$*< ignored"
+            notify-send "i3-dispatcher:" \
+                        "Command not found: &lt;$*&gt; request rejected."
 	    ;;
     esac
 }

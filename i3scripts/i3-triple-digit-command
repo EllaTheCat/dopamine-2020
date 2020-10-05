@@ -34,26 +34,38 @@ i3_triple_digit()
             arg="${1:1:2}%"  # USB volume as a percentage.
             pactl set-sink-volume ${usbaudiosink} "${arg}"
             ;;
-        ([[4]0-9][0-9])
+        ([4][0-9][0-9])
             # Visit a two-digit mark using numpad or voice.
             arg="${1:1:2}"
-            i3-msg "[con_mark=\"${arg}\"] focus"
+            for mark in $(i3-msg -t get_marks | sed 's/,/ /g' | sed 's/[][]//g')
+            do
+                if [ "\"${arg}\"" = "${mark}" ]; then
+                    i3-msg "[con_mark=\"${arg}\"] focus"
+                    return
+                fi
+            done
+            notify-send "i3-triple-digit:" \
+                        "Mark not found: &gt;${arg}&lt;, visit request rejected."
             ;;
-         ([5][0-9][0-9])
+        ([5][0-9][0-9])
             # Swap this container with the matching marked container.
             arg="${1:1:2}"
-            i3-msg "swap container with mark ${arg}"
+            for mark in $(i3-msg -t get_marks | sed 's/,/ /g' | sed 's/[][]//g')
+            do
+                if [ "\"${arg}\"" = "${mark}" ]; then
+                    i3-msg "swap container with mark ${arg}"
+                    return
+                fi
+            done
+            notify-send "i3-triple-digit:" \
+                        "Mark not found: &gt;${arg}&lt;, swap request rejected."
             ;;
-         ([036789][0-9][0-9])
-             # Define all other 3 digit matches.
-             arg="${1:1:2}"
-             notify-send "undefined 3 digit command alias >${arg}< acknowledged."
-             ;;
-         ([0-9][0-9])
-             # Available 2 digit matches.
-             arg="${1:0:2}"
-             notify-send "undefined 2 digit command alias >${arg}< acknowledged."
-             ;;
+        ([036789][0-9][0-9])
+            # Any other 3 digit matches.
+            arg="${1:1:2}"
+            notify-send "i3-triple-digit:" \
+                        "Command alias not found: &gt;${arg}&lt;, request rejected"
+            ;;
    esac
 }
 
