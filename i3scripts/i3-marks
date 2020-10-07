@@ -44,10 +44,46 @@ commandalias()
     done
     # Apply the workspace mark without changing the numeric mark.
     i3-msg "[id=\"${windowid}\"] mark --add --replace ${cws}"
+
+    # Having set up a window subscription and a listener for updating
+    # marks, add another listener to the linked list.
+    (floating) &
 }
 
 #
-# When the monitor indicates a window change, update the marks.
+# If a workspace is empty and a terminal is launched from there, the
+# terminal will be made floating, but should any other window appear,
+# it will be tiled.
+#
+floating()
+{
+    # 4 years ago /u/airblader wrote the code to return the
+    # identifiers of the windows on the current workspace.
+    count=$(for w in $(xdotool search --all --onlyvisible --desktop \
+                       "$(xprop -notype -root _NET_CURRENT_DESKTOP | \
+                                               cut -c 24-)" "" 2>/dev/null) ; do
+                # EllaTheCat wrapped that in a for-loop to count the
+                # identifiers.
+                xdotool getwindowname "$w"; done | wc -l)
+
+    case "${count}" in
+        (1)
+            # Forced floating should be specific, hence the command
+            # criteria ("cc") mention xfce4-terminal.
+            cc="[workspace=\"__focused__\" instance=\"xfce4-terminal\"]"
+            cmds="floating enable, resize set 60 ppt 60 ppt, move position center;"
+            i3-msg "$(printf "%s %s" "${cc}" "${cmds}")"
+            ;;
+        (2)
+            i3-msg "[workspace=\"__focused__\"] floating disable;"
+            ;;
+    esac
+}
+
+
+#
+# When the monitor indicates a window change, walk the "linked list"
+# with "commandalias" at the head.
 #
 update()
 {
@@ -67,6 +103,9 @@ case "_$1" in
         ;;
     (_commandalias)
         commandalias
+        ;;
+    (_floating)
+        floating
         ;;
     (_update)
         update

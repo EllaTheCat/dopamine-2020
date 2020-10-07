@@ -89,8 +89,8 @@ bindsym Print $primary
 bindsym KP_Insert $i3cmdprompt menu 4
 
 # "HJKL" replaces "JKL:" because I'm used to "vi","b" can replace "h"
-# (for horizontal) because they look similar and it's adjacent to v
-# (vertical).
+# (for horizontal) because they look similar and it's adjacent to "v"
+# (for vertical).
 
 ###INSERT_CFG01_HERE###
 
@@ -118,7 +118,7 @@ mode "restart" {
 # SETTINGS
 #
 
-# Desktop wallpaper, sometimes it does nothing.
+# Desktop wallpaper, sometimes it does nothing.  Try again later.
 exec_always --no-startup-id nitrogen --restore
 
 ###INSERT_CFG07_HERE###
