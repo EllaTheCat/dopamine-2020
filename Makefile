@@ -118,11 +118,12 @@ $(I3CFG):  i3-config \
 
 $(COMPOSITORCFG): compton.conf
 	@install -m $(CFGMODE) compton.conf $@
-	@touch restartqq
+	@touch restart
 
 $(NOTIFIERCFG):  i3-config.d/dunstrc
+	@$(I3BIN)/i3-config-scripts stop dunst
 	@install -m $(CFGMODE) i3-config.d/dunstrc $@
-	@$(I3BIN)/i3-config-scripts restart dunst
+	@$(I3BIN)/i3-config-scripts start dunst
 
 $(I3STATUSCFG):  i3-status-config
 	@install -m $(CFGMODE) i3-status-config $@

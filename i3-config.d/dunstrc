@@ -17,7 +17,10 @@
     #
     # If this option is set to mouse or keyboard, the monitor option
     # will be ignored.
-    follow = keyboard
+    follow = mouse
+    # EllaTheCat: "keyboard" may be causing this:
+    # WARNING: BadWindow (invalid Window parameter)
+
 
     # The geometry of the window:
     #   [{width}]x{height}[+/-{x}+/-{y}]
