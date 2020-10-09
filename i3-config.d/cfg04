@@ -11,14 +11,13 @@ mode "Primary" {
     # This is independent of the similarly named configuration setting.
     bindsym q $default, workspace back_and_forth
 
-    # (W)orkspace.
-    bindsym w  \
-            $default, exec i3-input -f $i3inputfont  -l 2 \
-            -P '(workspace): ' -F 'workspace "%s"'
+    # (W)orkspace. If the workspace does not exist beforehand it is
+    # created, if it already exists, it is focused.
+    bindsym w $default, exec --no-startup-id i3-input -f $i3inputfont -l 2 \
+         -P '(workspace): ' -F 'workspace "%s"'
 
     # (R)ename a workspace.
-    bindsym r \
-            $default, exec i3-input -f $i3inputfont -l 2 \
+    bindsym r $default, exec --no-startup-id i3-input -f $i3inputfont -l 2 \
             -P '(rename this workspace to): ' \
             -F 'rename workspace to "%s"'
 
@@ -53,7 +52,7 @@ mode "Primary" {
     # S for Side by Side.
     bindsym s $default, focus down, split h, focus up, move down, move left;
 
-    # Layouts.
+    # Layouts. Unfortunately the t and tab keys are already allocated.
     bindsym d $default, layout default
     bindsym e $default, layout tabbed
 
@@ -97,8 +96,7 @@ mode "Primary" {
     bindsym n $default, $i3marks numeric
 
     # (M)ove container to named workspace.
-    bindsym m \
-            $default, exec i3-input -f $i3inputfont  -l 2 \
+    bindsym m $default, exec --no-startup-id i3-input -f $i3inputfont -l 2 \
             -P '(move container to workspace): ' \
             -F 'move container to workspace "%s"'
 
