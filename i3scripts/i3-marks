@@ -34,26 +34,29 @@ commandalias()
     cws=$(i3-msg -t get_workspaces | jq '.[] | .name,.focused' | \
               grep true -B1 | grep -v true)
     windowid=$(printf "0x%x" "$(xdotool getwindowfocus)")
-    # Fetch all the workspace marks in a list and walk that list,
-    # removing any matching mark on the current window. This ugly
-    # "brute force and ignorance" method needs improvement.
+    # Fetch all marks in a list and walk that list, ignoring any mark
+    # that isn't a "workspace mark as indicated by a lowercase letter
+    # followed by another or a digit.  Remove any matching workspace
+    # mark on the current window. Numeric marks (two digits) remain.
     for mark in $(i3-msg -t get_marks | \
                       sed 's/"[0-9][0-9]"//g' | sed 's/,/ /g'| sed 's/[][]//g')
     do
         i3-msg "[id=\"${windowid}\"] unmark ${mark}"
     done
-    # Apply the workspace mark without changing the numeric mark.
+    # Apply the new workspace mark, replacing the old one. This may
+    # mean that the brute force loop above is utterly superfluous!
     i3-msg "[id=\"${windowid}\"] mark --add --replace ${cws}"
 
     # Having set up a window subscription and a listener for updating
-    # marks, add another listener to the linked list.
+    # marks, we can add another listener at the end like this, and it
+    # could add yet another, etc.
     (floating) &
 }
 
 #
 # If a workspace is empty and a terminal is launched from there, the
 # terminal will be made floating, but should any other window appear,
-# it will be tiled.
+# it will be tiled. THIS WORKS ANND LOOKS GOOD.
 #
 floating()
 {
