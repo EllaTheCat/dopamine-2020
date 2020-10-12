@@ -12,13 +12,14 @@
 ###INSERT_APPS00_HERE###
 
 #
-# Focus an instance of an app given its command alias, launching the
-# instance as necessary.
+# Focus a running instance of an app given its command alias,
+# launching the instance beforehand as necessary.
 #
 focus ()
 {
     case "$1" in
         ([e][0-9])
+            # Run  emacs server for the emacsclients.
             if [ "$(pgrep -c -f "emacs --daemon -rv")" -eq 0 ]; then
                 (emacs --daemon -rv) &
                 sleep 3
@@ -27,59 +28,68 @@ focus ()
     esac
     case "$1" in
 	([a-z][0-9]|[a-z][a-z])
+            # The app can launch in its dedicated workspace.
             # shellcheck disable=SC2154
-            app=${wsapps[$1]}
-            if [ "_${app}" = "_" ]; then
-                # [1] Program $1 is not assigned to a workspace in
-                # wwsapps[]. Cross-check any i3 assign directves!
-                ws="$(i3-msg -t get_workspaces | jq '.[] | .name'| grep "$1")"
-                if [ "_${ws}" = "_" ]; then
-                    # [1A] Workspace $1 does not exist. $1 is allowed
-                    # to specify a program to launch in the current
-                    # workspace, see not_wsapps[].
-                    #
-                    # shellcheck disable=SC2154
-                    app=${not_wsapps[$1]}
-                    if [ "_${app}" != "_" ]; then
-                        # Similar lines to these are commented below.
-                        arg0=${app%% *}
-                        path=$(command -v  "${arg0}")    # "which"
-                        path=${path/${arg0}/}
-                        i3-msg "exec --no-startup-id ${path}${app}"
-                    fi
-                else
-                    # [1B] Workspace $1 exists, focus it. Programs
-                    # running there have no other association with it.
-                    i3-msg "workspace --no-auto-back-and-forth \"$1\""
-                fi
-            else
-	        status=$(i3-msg "[workspace=\"$1\" con_mark=\"${1:0:2}\"] focus")
+            wsapp=${wsapps[$1]}
+            # The app can only launch in the current workspace.
+            # shellcheck disable=SC2154
+            not_wsapp=${not_wsapps[$1]}
+
+            # A workspace whose name matches the command alias.
+            ws="$(i3-msg -t get_workspaces | jq '.[] | .name'| grep "$1")"
+            # The current workspace.
+            cws=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused).name')
+
+            if [ "_${wsapp}" != "_" ]; then
+                status=$(i3-msg "[workspace=\"$1\" con_mark=\"${1:0:2}\"] focus")
+                # "No window matches given criteria" is not an
+                # error here, it's one of two desired outcomes.
 	        case "${status}" in
 		    (*true*)
 		        i3-msg "workspace --no-auto-back-and-forth \"$1\""
+                        notify-send "i3-focus-apps-by-alias" "$(printf% "%s\n%s" \
+                                    "the current workspace has changed to >$1&lt;," \
+                                    "${wsapp} was already running.")"
                         ;;
 		    (*false*)
-                        # "No window matches given criteria" is not an
-                        # error here, it's one of two desired outcomes.
-		        i3-msg "workspace --no-auto-back-and-forth \"$1\""
-                        # Getting this to work was fun!
                         # We want the script to terminate hence using i3-msg.
+		        i3-msg "workspace --no-auto-back-and-forth \"$1\""
 		        # The enhanced PATH is exported by the dispatcher.
                         # The i3-msg recipient can't see the enhanced PATH.
                         # Extract and prepend the path directory components.
-
                         # The executable name remains after removing the
                         # "longest matching suffix", defined by space star.
-                        arg0=${app%% *}
                         # Get the full path to the executable, remove the
                         # name part, prepend the rest to the command.
-                        path=$(command -v  "${arg0}")    # "which"
+                        arg0=${wsapp%% *}
+                        path=$(command -v "${arg0}")    # "which"
                         path=${path/${arg0}/}
-                        i3-msg "exec --no-startup-id ${path}${app}"
-		        ;;
-	        esac
+                        i3-msg "exec --no-startup-id ${path}${wsapp}"
+                        notify-send "i3-focus-apps-by-alias" "$(printf "%s\n%s" \
+                                    "the current workspace has changed to >$1&lt;," \
+                                    "${wsapp} has been launched.")"
+                        ;;
+                esac
+            elif [ "_${not_wsapp}" != "_" ]; then
+                arg0=${not_wsapp%% *}
+                path=$(command -v "${arg0}")
+                path=${path/${arg0}/}
+                i3-msg "exec --no-startup-id ${path}${not_wsapp}"
+                notify-send "i3-focus-apps-by-alias" "$(printf "%s\n%s"  \
+                            "the current workspace >${cws}&lt;is unchanged," \
+                            "${not_wsapp} has been launched.")"
+            elif [ "_$ws" != "_" ]; then
+                i3-msg "workspace --no-auto-back-and-forth \"$1\""
+                notify-send "i3-focus-apps-by-alias" "$(printf "%s\n%s"  \
+                            "the current workspace has changed to >$1&lt;," \
+                            "no app has been launched.")"
+            else
+                i3-msg "workspace --no-auto-back-and-forth \"$1\""
+                i3-msg "exec --no-startup-id xfce4-terminal"
+                notify-send "i3-focus-apps-by-alias" "$(printf "%s\n%s" \
+                            "the current workspace has changed to >$1&lt;," \
+                            "xfce4-terminal has been launched.")"
             fi
-            ;;
     esac
 }
 
@@ -88,9 +98,9 @@ focus ()
 # Start here.
 #
 
-# focus $2 ...
+# focus $1 ...
 "${@}"
 
 #
-# Done
+# Done.
 #
