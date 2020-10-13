@@ -93,6 +93,9 @@ update()
     # shellcheck disable=SC2034
     i3-msg -t subscribe -m '[ "window" ]' | \
         while read -r line ; do commandalias; read -r line; read -r line; done
+    # Why 3 reads? I thought I had seen each event sending 3 lines.
+    # With just 1 read, CPU usage rises, the marks on the title bar
+    # flicker. This ought to be investigated further, but it works.
 }
 
 
