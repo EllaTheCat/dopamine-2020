@@ -36,18 +36,21 @@ focus ()
             not_wsapp=${not_wsapps[$1]}
 
             # A workspace whose name matches the command alias.
-            ws="$(i3-msg -t get_workspaces | jq '.[] | .name'| grep "$1")"
-            # The current workspace.
+            ws=$(i3-msg -t get_workspaces | jq '.[] | .name'| grep "$1")
+            # The current workspace. Thank you i3wm subreddit.
             cws=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused).name')
 
             if [ "_${wsapp}" != "_" ]; then
+                # Why does this work? Initially app "xy" is marked
+                # "[xy]". The mark may be passed on to other apps in
+                # the workspace.
                 status=$(i3-msg "[workspace=\"$1\" con_mark=\"${1:0:2}\"] focus")
                 # "No window matches given criteria" is not an
                 # error here, it's one of two desired outcomes.
 	        case "${status}" in
 		    (*true*)
 		        i3-msg "workspace --no-auto-back-and-forth \"$1\""
-                        notify-send "i3-focus-apps-by-alias" "$(printf% "%s\n%s" \
+                        notify-send "i3-focus-apps-by-alias" "$(printf "%s\n%s" \
                                     "the current workspace has changed to >$1&lt;," \
                                     "${wsapp} was already running.")"
                         ;;

@@ -31,8 +31,7 @@ numeric()
 #
 commandalias()
 {
-    cws=$(i3-msg -t get_workspaces | jq '.[] | .name,.focused' | \
-              grep true -B1 | grep -v true)
+    cws=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused).name')
     windowid=$(printf "0x%x" "$(xdotool getwindowfocus)")
     # Fetch all marks in a list and walk that list, ignoring any mark
     # that isn't a "workspace mark as indicated by a lowercase letter
@@ -56,7 +55,7 @@ commandalias()
 #
 # If a workspace is empty and a terminal is launched from there, the
 # terminal will be made floating, but should any other window appear,
-# it will be tiled. THIS WORKS ANND LOOKS GOOD.
+# it will be tiled. THIS WORKS AND LOOKS GOOD.
 #
 floating()
 {
