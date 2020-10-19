@@ -59,25 +59,37 @@ commandalias()
 #
 floating()
 {
+    # Fullscreen windows complicate matters. This function plays safe
+    # and should one be detected (see link) exits without causing any
+    # changes.  https://unix.stackexchange.com/a/605758
+    root=$(xdotool search --maxdepth 0 '.*' getwindowgeometry --shell | grep 'Geometry:')
+
     # 4 years ago /u/airblader wrote the code to return the
     # identifiers of the windows on the current workspace.
-    count=$(for w in $(xdotool search --all --onlyvisible --desktop \
+    count=0
+    for w in $(xdotool search --all --onlyvisible --desktop \
                        "$(xprop -notype -root _NET_CURRENT_DESKTOP | \
-                                               cut -c 24-)" "" 2>/dev/null) ; do
-                # EllaTheCat wrapped that in a for-loop to count the
-                # identifiers.
-                xdotool getwindowname "$w"; done | wc -l)
+                                                        cut -c 24-)" "" 2>/dev/null) ; do
+        # EllaTheCat wrapped that in a for-loop to count the
+        # identifiers.
+        this=$(xdotool getwindowgeometry --shell "$w" | grep 'Geometry:')
+        if [ "${this}" = "${root}" ]; then
+            return
+        else
+            count-$((count +1))
+        fi
+    done
 
     case "${count}" in
         (1)
-            # Forced floating should be specific, hence the command
-            # criteria ("cc") mention xfce4-terminal.
             cc="[workspace=\"__focused__\" instance=\"xfce4-terminal\"]"
             cmds="floating enable, resize set 60 ppt 60 ppt, move position center;"
             i3-msg "$(printf "%s %s" "${cc}" "${cmds}")"
             ;;
         (2)
-            i3-msg "[workspace=\"__focused__\"] floating disable;"
+            cc="[workspace=\"__focused__\" instance=\"xfce4-terminal\"]"
+            cmds="floating disable;"
+            i3-msg "$(printf "%s %s" "${cc}" "${cmds}")"
             ;;
     esac
 }

@@ -57,8 +57,9 @@ mode "Primary" {
     bindsym e $default, layout tabbed
 
     # Enter [f]ullscreen mode for the focused container.
-    bindsym f $default, fullscreen toggle
-    bindsym g $default, fullscreen toggle global
+    # The modifier is a temporary reminder of unwanted side effects.
+    bindsym Mod4+f $default, fullscreen toggle
+    bindsym Mod4+g $default, fullscreen toggle global
 
     # Increase or decrease the height or width symmetrically.
     # I orient myself by how the border separating windows moves.

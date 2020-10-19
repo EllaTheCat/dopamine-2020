@@ -45,7 +45,6 @@ set $i3filewatcher exec_always --no-startup-id ~/local/bin/i3-file-watcher
 set $i3marks exec --no-startup-id ~/local/bin/i3-marks
 set $i3mode exec --no-startup-id ~/local/bin/i3-mode
 set $i3mouse exec --no-startup-id ~/local/bin/i3-mouse
-set $i3scratchpad exec --no-startup-id ~/local/bin/i3-scratchpad
 set $i3listwindows exec --no-startup-id ~/local/bin/i3-list-windows
 
 # Use 'xrandr' with no arguments to list monitor names and geometry.
@@ -136,8 +135,7 @@ assign [title="dunst$"] wm
 assign [title="marks$"] wm
 assign [title="commands$"] wm
 
-# This helper script provides "services" that run continuously.
-# Reloading i3 config does not run this script.
+# These "services" run continuously.
 $i3configscripts restart compton
 $i3configscripts restart dunst
 $i3configscripts restart marks
