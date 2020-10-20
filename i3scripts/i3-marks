@@ -62,7 +62,8 @@ floating()
     # Fullscreen windows complicate matters. This function plays safe
     # and should one be detected (see link) exits without causing any
     # changes.  https://unix.stackexchange.com/a/605758
-    root=$(xdotool search --maxdepth 0 '.*' getwindowgeometry --shell | grep 'Geometry:')
+    root=$(xdotool search --all --maxdepth 0 '.*' \
+                   getwindowgeometry --shell | grep 'Geometry:')
 
     # 4 years ago /u/airblader wrote the code to return the
     # identifiers of the windows on the current workspace.
