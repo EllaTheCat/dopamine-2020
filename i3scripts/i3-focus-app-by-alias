@@ -51,7 +51,7 @@ focus ()
 		    (*true*)
 		        i3-msg "workspace --no-auto-back-and-forth \"$1\""
                         notify-send "i3-focus-apps-by-alias" "$(printf "%s\n%s" \
-                                    "the current workspace has changed to >$1&lt;," \
+                                    "the current workspace has changed to [$1]," \
                                     "${wsapp} was already running.")"
                         ;;
 		    (*false*)
@@ -69,7 +69,7 @@ focus ()
                         path=${path/${arg0}/}
                         i3-msg "exec --no-startup-id ${path}${wsapp}"
                         notify-send "i3-focus-apps-by-alias" "$(printf "%s\n%s" \
-                                    "the current workspace has changed to >$1&lt;," \
+                                    "the current workspace has changed to [$1]," \
                                     "${wsapp} has been launched.")"
                         ;;
                 esac
@@ -84,13 +84,13 @@ focus ()
             elif [ "_$ws" != "_" ]; then
                 i3-msg "workspace --no-auto-back-and-forth \"$1\""
                 notify-send "i3-focus-apps-by-alias" "$(printf "%s\n%s"  \
-                            "the current workspace has changed to >$1&lt;," \
+                            "the current workspace has changed to [$1]," \
                             "no app has been launched.")"
             else
                 i3-msg "workspace --no-auto-back-and-forth \"$1\""
                 i3-msg "exec --no-startup-id xfce4-terminal"
                 notify-send "i3-focus-apps-by-alias" "$(printf "%s\n%s" \
-                            "the current workspace has changed to >$1&lt;," \
+                            "the current workspace has changed to [$1]," \
                             "xfce4-terminal has been launched.")"
             fi
     esac
