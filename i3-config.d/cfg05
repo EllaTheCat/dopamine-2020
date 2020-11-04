@@ -44,11 +44,13 @@ mode "Secondary" {
 
     bindsym g nop
     bindsym j nop
-    bindsym l nop
 
     # Set modifiers with 'xcape', set CapsLock to Control,
     # mimic US layout on UK keyboard.
     bindsym k $default, $i3keyboard
+
+    # Left / Right confirmation.
+    bindsym l $default, exec mpv https://www.youtube.com/watch?v=6TWJaFD6R2s
 
     # All monitors turn ON after being turned OFF.
     # The mode is set to default, we are done...
