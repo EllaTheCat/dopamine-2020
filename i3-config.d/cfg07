@@ -62,6 +62,11 @@ for_window [title="Software Updater"] floating enable, \
            exec --no-startup-id notify-send \
            "Compositor has been disabled to safeguard software update. Secondary [ = compositor off Secondary ] = compositor on" ;
 
+# A long standing issue with ImageMagick dialogs. The list is
+# incomplete but sufficient.
+for_window [class="Display-im6.q16" title="Browse and Select a File"] \
+           floating enable, move absolute position 2820 100, resize set 200 ppt 300 ppt;
+
 # Application windows.
 for_window [instance="xfce4-terminal"] $i3marks numeric
 for_window [instance="emacs"] $i3marks numeric
@@ -79,6 +84,7 @@ for_window [title="Clementine"] layout tabbed;
 
 # Windows to hide.
 for_window [title="KeyClick"] move scratchpad;
+for_window [title="Command Interface"] move scratchpad;
 for_window [title="Window Change Monitor"] move scratchpad;
 
 # Windows that annoy me, that I can't fix.
