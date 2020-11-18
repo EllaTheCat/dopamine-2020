@@ -1,0 +1,87 @@
+#!/bin/bash
+#
+# Objective: Show a facsimile of a running program with a commentary.
+#
+# Solution: This module can screengrab still images or capture short
+# videos from the desktop. These clips can then be aggregated to make
+# a demo video in the style of YouTube.
+#
+# Considerations: (1) The dimensions of a clip during playback are
+# those of a single HD screen or less. (2) Any panel widgets that show
+# the passage of time complicate non-linear editing. (3) Notifications
+# can appear at any time in the upper right of the screen.
+#
+# References: (1) https://unix.stackexchange.com/a/117623
+#
+
+# I have dual monitors, each 1920x1080, by default region to be
+# recorded is the left half of the monitor to the right. 10 seconds =>
+# 253M on pass1, 8M on pass 2.
+
+# Geometry. Last one wins when there are multiple definitions.
+
+xy=+1920+0   ### current monitor is the one on the right of dual monitors.
+wh=960x1080  ### region occupying the left half of the current monitor.
+wh=1920x1080 ### region occupying the entire screen of the current monitor
+
+pass1dir=/dev/shm/$USER/i3/video/
+pass2dir=${HOME}/Videos/
+pass1file=grab.avi
+pass2file=grab.mp4
+
+#
+# Record a region on the desktop for a minute or thereabouts.
+#
+# Pass 1 captures live video and saves it uncompressed in shared memory.
+# Pass 2 converts uncompressed video from pass 1 to mp4 and saves it to HDD.
+#
+# The 'start' and 'stop' invocations support one way of working but
+# the preferred invocation is <seconds>. This constrains the capture
+# duration and hence can avoid shared memory exhaustion.
+#
+# A 3 minute test recording at 1920x1080 (HD) used 11Gbytes for the
+# uncompressed video. Encoding took my machine to 64C with all cores
+# and ran at 3.36x real-time.
+#
+# If you prefer to write to HDD or SSD, that's less likely to run out
+# of space. The bandwidth is about 500 Mbits/s. I can't speak about
+# SSD or HDD stalls. Change the 'pass1dir' to suit.
+#
+
+record()
+{
+    case "$1 $2" in
+        (video?start)
+            (ffmpeg -f x11grab -y -s ${wh} -r 25 -i :0.0${xy} -qscale 0 -vcodec huffyuv \
+                    "${pass1dir}/${pass1file}") &
+            ;;
+        (video?stop)
+            # The pattern is small but sufficient, take care not to break it!
+            pkill -f "ffmpeg -f x11grab"
+            ffmpeg -y -i "${pass1dir}/${pass1file}" -qscale 0 -vcodec mpeg4 \
+                   "${pass2dir}/${pass2file}"
+            ;;
+        (video?[1-9]|video?[1-9][0-9]|video?1[0-8][0-9])
+            record 'video' 'start'
+            sleep "$2"
+            record 'video' 'stop'
+            ;;
+        (*)
+            echo "record: video command argument: $2 not supported"
+            exit 1
+            ;;
+    esac
+}
+
+
+#
+# Start here.
+#
+
+mkdir -p "${pass1dir}" "${pass2dir}"
+
+record "$1" "$2"
+
+#
+# Done.
+#

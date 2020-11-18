@@ -55,7 +55,7 @@ $(I3BIN)/i3-mouse \
 $(I3BIN)/i3-scratchpad \
 $(I3BIN)/i3-transcribe \
 $(I3BIN)/i3-triple-digit-command \
-$(I3BIN)/i3-double-digit-command \
+$(I3BIN)/i3-recorder \
 $(I3BIN)/i3-status
 
 .installextras: \
@@ -247,13 +247,13 @@ $(I3BIN)/i3-triple-digit-command: \
 $(I3SCRIPTS)/i3-triple-digit-command.log: $(I3SCRIPTS)/i3-triple-digit-command
 	@shellcheck $(I3SCRIPTS)/i3-triple-digit-command > $@
 
-$(I3BIN)/i3-double-digit-command: \
-	$(I3SCRIPTS)/i3-double-digit-command \
-	$(I3SCRIPTS)/i3-double-digit-command.log
-	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-double-digit-command $(I3BIN)
+$(I3BIN)/i3-recorder: \
+	$(I3SCRIPTS)/i3-recorder \
+	$(I3SCRIPTS)/i3-recorder.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-recorder $(I3BIN)
 
-$(I3SCRIPTS)/i3-double-digit-command.log: $(I3SCRIPTS)/i3-double-digit-command
-	@shellcheck $(I3SCRIPTS)/i3-double-digit-command > $@
+$(I3SCRIPTS)/i3-recorder.log: $(I3SCRIPTS)/i3-recorder
+	@shellcheck $(I3SCRIPTS)/i3-recorder > $@
 
 $(I3BIN)/i3-status: \
 	$(I3SCRIPTS)/i3-status \
