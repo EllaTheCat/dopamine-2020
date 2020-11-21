@@ -1,60 +1,40 @@
 #!/bin/bash
 #
-# Objective: Show a facsimile of a running program with a commentary.
-#
-# Solution: This module can screengrab still images or capture short
-# videos from the desktop. These clips can then be aggregated to make
-# a demo video in the style of YouTube.
+# Objective: This module captures desktop video and audio. Clips can
+# then be aggregated to make a demo video in the style of YouTube.
 #
 # References: (1) https://unix.stackexchange.com/a/117623
 #
 
 
-xy=+1920+0   ### current monitor is the one on the right of dual monitors.
-wh=960x1080  ### region occupying the left half of the current monitor.
-wh=1920x1080 ### region occupying the entire screen of the current monitor
+xy=+1920+0   ### top left corner of the region, i.e anchot
+wh=1920x1080 ### region occupying the entire screen of the current monitor.
 
 pass1dir=/dev/shm/$USER/i3/video/
+pass1dir=${HOME}/Videos/
 pass2dir=${HOME}/Videos/
 pass1file=grab.mkv
 pass2file=grab.mp4
 
 #
-# Record a region on the desktop for three minutes.
+# 2 pass recording: pass 1 lossless capture, pass 2 encoding
 #
-# Pass 1 captures live video and saves it uncompressed in shared memory.
-# Pass 2 converts uncompressed video from pass 1 to mp4 and saves it to HDD.
-#
-# The 'start' and 'stop' invocations support one way of working but
-# the preferred invocation is <seconds>. This constrains the capture
-# duration and hence can avoid shared memory exhaustion.
-#
-# A 3 minute test recording at 1920x1080 (HD) used 11 Gbytes for the
-# uncompressed video. My machine has 16 Gbyte /dev/shm, one half of
-# the 32G of actual RAM. Encoding took my machine to 64 degrees C with
-# all cores busy and ran at 3.26x real-time.
-#
-# If you prefer to write to HDD or SSD, that's less likely to run out
-# of space. The bandwidth is about 500 Mbits/s. I can't speak about
-# SSD or HDD stalls.
-
 record()
 {
     case "$1 $2" in
         (video?start)
             rm -f "${pass1dir}/${pass1file}"
-            (ffmpeg -f x11grab -y -s ${wh} -r 25 -i :0.0${xy} -vcodec huffyuv \
-                    -f pulse -ac 2 -i alsa_output.pci-0000_00_1b.0.analog-stereo.monitor \
-                    -qscale 0 "${pass1dir}/${pass1file}") &
+            (ffmpeg \
+                 -f pulse -ac 2 -i alsa_output.pci-0000_00_1b.0.analog-stereo.monitor \
+                 -f x11grab -s ${wh} -r 25 -i :0.0${xy} -c:v huffyuv \
+                 -q:v 0 -y "${pass1dir}/${pass1file}") &
             ;;
         (video?stop)
-            # The pkill pattern is small but sufficient, take care not to break it!
-            pkill -f "ffmpeg -f x11grab"
-            ffmpeg -y -i "${pass1dir}/${pass1file}" -vcodec mpeg4 \
-                   -acodec mp3 \
-                   -qscale 0 "${pass2dir}/${pass2file}"
+            pkill -f "ffmpeg"
+            ffmpeg -i "${pass1dir}/${pass1file}" -c:v mpeg4 -c:a mp3 \
+                   -q:v 0 -y "${pass2dir}/${pass2file}"
             ;;
-        (video?[1-9][0-9]|video?1[0-7][0-9]|video?180)
+        (video?[1-9][0-9]|video?[1-5][0-9][0-9])
             record 'video' 'start'
             sleep "$2"
             record 'video' 'stop'
