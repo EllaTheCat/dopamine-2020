@@ -29,23 +29,3 @@ bar {
 #
 # I3BAR SETTINGS END HERE.
 #
-
-
-#
-# DEBUG MODE KEY BINDINGS BEGIN HERE.
-#
-
-#
-# Debug use only.
-#
-mode "debug" {
-
-    # Back to the default.
-    bindsym Control+Menu mode "default"
-
-}
-bindsym Control+Menu mode "debug"
-
-#
-# DEBUG MODE KEY BINDINGS END HERE.
-#

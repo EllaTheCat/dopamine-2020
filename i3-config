@@ -135,7 +135,9 @@ assign [title="dunst$"] wm
 assign [title="marks$"] wm
 assign [title="commands$"] wm
 
-# These "services" run continuously.
+# These "services" should run continuously.
+# Invoking them here with exec or from a terminal works fine.
+# Unfortunately  exec_always or bindsym invocation fails!
 $i3configscripts restart compton
 $i3configscripts restart dunst
 $i3configscripts restart marks

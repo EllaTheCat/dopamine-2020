@@ -16,10 +16,10 @@ menu ()
     # [
     #   "36"
     # ]
-    #
+    # Added the null filter in i3 4.19 (2020-11-15).
     menu="$(i3-msg -t get_tree | jq '.. | objects | .name,.marks' | \
                   grep -B1 -A1 '[[]' | tr -d \\n[  | sed 's/--/\n/g' | \
-                               grep -v "$2")'             )"
+                               grep -v 'null' | grep -v "$2")"
     # Argument parsing is order dependent. $1 required $2 optional.
     # S1 How menu items are laid out. $2 Where to put the window.
     case "$1" in
@@ -41,7 +41,11 @@ menu ()
 # Start here.
 #
 
-# e.g. i3-list-windows menu column monitor-output
+# command line
+# i3-list-windows menu column output
+# this-script    function  $1     $2
+# function signature
+
 "$1" "${@:2}"
 
 #
