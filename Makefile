@@ -283,14 +283,36 @@ $(I3BIN)/%: $(MYSCRIPTS)/%
 	@shellcheck $<
 	@install -m $(EXEMODE) $< $(I3BIN)
 
-# Keep the raspberry pi that I use for video playback up to date.
-cheesecake:
-	@rsync -av $(MYSCRIPTS)/my-file-watcher pi@$@:///home/pi/local/bin/
-	@rsync -av $(MYSCRIPTS)/my-minidlna     pi@$@:///home/pi/local/bin/
+# The "services" invoked last of all in the i3-config file must be
+# running all the time. Restarting them fails in situations where I
+# expect them to work. Restart should kill the running service and
+# start another singleton instance in its own window with a unique
+# numeric mark on workspace 'wm'.
 
-# Debug use only.
-vars:
-	@echo "$(DOPAMINE)\n$(I3CFG)\n$(I3STATUSCFG)\n$(I3SCRIPTS)\n$(MYSCRIPTS)\n"
+# 2020-11-29: Using make with these targets looks promising. The
+# window survives should the terminal where 'make' was invoked be
+# closed. The mark is added quickly enough, by mimicing what works
+# manually. The title timestamp confirms =something= happened.
+
+# must-have
+commands:
+	@i3-config-scripts restart $@
+	@i3-msg "[workspace="wm" title=".+$@"] focus, exec xdotool key --delay 200 Menu n;"
+
+# must-have
+marks:
+	@i3-config-scripts restart $@
+	@i3-msg "[workspace="wm" title=".+$@"] focus, exec xdotool key --delay 200 Menu n;"
+
+# nice-to-have
+dunst:
+	@i3-config-scripts restart $@
+	@i3-msg "[workspace="wm" title=".+$@"] focus, exec xdotool key --delay 200 Menu n;"
+
+# silent, no window, ...
+compton:
+	@i3-config-scripts restart $@
+
 
 #
 # Done
