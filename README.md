@@ -68,7 +68,6 @@ directory accessible to git.  Decide in which directory the git clone
 - Performs a dry-run, printing to the console whatever commands
 would have been executed without the "-n" argument.
 
-
 ## Classic default mode bindings
 By default, the i3 config file includes a set of $mod+keysym bindings
 corresponding to the bindings described in the i3 User's Guide.  I
@@ -211,10 +210,30 @@ Work is in progress to provide a simple editor operated by voice.
 ## Services
 The "i3-config-scripts" file tidies up the management of "services"
 that run in the background. It is introduced at the very end of the
-i3-coonfig file.
+i3-config file.
 
     i3-config-scripts \
         start|stop|restart|status compton|dunst|marks|commands
 
 Crikey it's fast! The effort involved in creating a tidy script has
 paid off.
+
+## Running "make ..."
+The use cases of "make" and "make -n" were intended to be the only
+ones involving "make", to keep things simple and non-scary.
+
+The "file watcher" and "marks" are examples of "services" that are
+supposed to run for the entire session. Sometimes these misbehave,
+they can be restared using "make", thus:
+
+###  Running "make commands"
+
+- In the event something goes wrong with the file watcher, it can be
+  restarted with this command invoked from a terminal.
+
+###  Running "make marks"
+
+- In the event something goes wrong with the window titlebar, it can
+  be restarted with this command invoked from a terminal. i3-marks is
+  the "service" that puts the workspace name on one of the windows in
+  each workspace.
