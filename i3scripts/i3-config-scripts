@@ -4,7 +4,11 @@
 # Delegating to a bash script is easier than "scripting" in i3 config.
 # $1 start | stop | restart | status ...
 # $2 informal program name.
-#
+# i3-config starts up and runs quickly, and it seems that marking the
+# windows here must be explicit.
+# The compositor (compton) doesn't make a window.
+# The notifier (dunst) window is hidden in the scratchpad at startup.
+
 
 case "$1" in
     (start)
@@ -15,14 +19,17 @@ case "$1" in
             (dunst)
                 (xfce4-terminal -T "$(date +%T) dunst" \
                                 -x dunst -config "${HOME}/.config/dunst/dunstrc") &
+                i3-msg "move scratchpad"
                 ;;
             (marks)
                 (xfce4-terminal -T "$(date +%T) marks" \
                                 -x "${HOME}/local/bin/i3-marks" update) &
+                i3-marks numeric
                 ;;
             (commands)
                 (xfce4-terminal -T "$(date +%T) commands" \
                                 -x "${HOME}/local/bin/i3-file-watcher") &
+                i3-marks numeric
                 ;;
         esac
         ;;
