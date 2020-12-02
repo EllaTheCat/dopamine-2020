@@ -36,6 +36,11 @@ mode "Primary" {
     bindsym o $default, focus child
     bindsym p $default, focus parent
 
+    # Scratchpad (generic) - equal is unshifted plus.
+    bindsym minus $default, move scratchpad
+    bindsym equal $default, scratchpad show
+    bindsym grave $default, focus, floating toggle;
+
     # Scratchpad for the pulseaudio sound settings.
     bindsym bracketleft   $default, [title="Volume Control"] move scratchpad
     bindsym bracketright  $default, [title="Volume Control"] unmark, scratchpad show;
