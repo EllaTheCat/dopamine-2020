@@ -29,8 +29,8 @@ mode "Primary" {
     # Focus the workspace with the latest [u]rgency hint.
     bindsym u $default, [urgent=latest] focus
 
-    # [I]nfo on keyboard bindings. Reserved.
-    bindsym i nop
+    # [I]nfo on keyboard bindings.
+    bindsym i $default, $help
 
     # P for Parent. O for Offspring.
     bindsym o $default, focus child
