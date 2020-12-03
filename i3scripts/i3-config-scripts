@@ -1,11 +1,9 @@
 #!/bin/bash
 #
-# These programs should run continuously for a session.
-# Delegating to a bash script is easier than "scripting" in i3 config.
-# $1 start | stop | restart | status ...
-# $2 informal program name.
-# i3-config starts up and runs quickly, and it seems that marking the
-# windows here must be explicit.
+# These programs must run continuously throughout the session.
+# It may be necessary to manage them by hand (see also the Makefile).
+#   $1 = start | stop | restart | status
+#   $2 = compton | dunst | marks | commands
 # The compositor (compton) doesn't make a window.
 # The notifier (dunst) window is hidden in the scratchpad at startup.
 
@@ -17,9 +15,11 @@ case "$1" in
                 compton -b --config "${HOME}/.config/compton.conf"
                 ;;
             (dunst)
-                (xfce4-terminal -T "$(date +%T) dunst" \
+                title="$(date +%T) dunst"
+                (xfce4-terminal -T "${title}" \
                                 -x dunst -config "${HOME}/.config/dunst/dunstrc") &
-                i3-msg "move scratchpad"
+                sleep 5
+                i3-msg "[title=\"${title}\"] move scratchpad"
                 ;;
             (marks)
                 (xfce4-terminal -T "$(date +%T) marks" \

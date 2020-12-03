@@ -3,20 +3,18 @@
 # i3 version 4.18 (2020-02-17) Xubuntu 20.04 LTS 01 May 2020
 #
 # Combines EllaTheCat's advocacy of marks and modes with the de facto
-# standard i3 bindings..
+# standard i3 bindings.
 
 # IMPORTANT.
 #
 # You *must* run 'make' successfully from the "dopamine-2020"
 # directory to complete installation!
 
-
+# ESSENTIALS.
 #
-# ESSENTIALS
-#
-# - i3 defines bindings and settings such that  "first one wins".
+# - i3 defines bindings and settings such that "first one wins".
 # - A corollary is that essentials be defined as early as possible.
-#
+
 
 # Choose a terminal you can use to repair a broken configuration.
 bindsym Mod4+Return exec xfce4-terminal
@@ -139,9 +137,8 @@ assign [title="dunst$"] wm
 assign [title="marks$"] wm
 assign [title="commands$"] wm
 
-# These "services" should run continuously.
-# Invoking them here with exec or from a terminal works fine.
-# Unfortunately  exec_always or bindsym invocation fails!
+# i3 config "services" run continuously.
+
 $i3configscripts restart compton
 $i3configscripts restart dunst
 $i3configscripts restart marks
