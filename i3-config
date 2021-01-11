@@ -70,7 +70,7 @@ set $i3inputfont "pango:DejaVu Sans 11"
 set $stub nop
 
 # This script parses the installed i3 config file.
-set $help exec --no-startup-id xfce4-terminal -x /bin/bash -c \
+set $help exec --no-startup-id xfce4-terminal -T Bindings -x /bin/bash -c \
   "grep -v \# ~/.i3/config | grep -v 'bindsym [1-8] mode' \
    cpp - | grep -E 'bind|mode|bar|}' | sed 's/(standard input)://g' | less"
 #
@@ -133,14 +133,12 @@ exec_always --no-startup-id ~/local/bin/i3-keyboard xmodmapkeys
 exec_always --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 
 # Various diagnostic terminals for "services".
-assign [title="dunst$"] wm
 assign [title="marks$"] wm
 assign [title="commands$"] wm
 
 # i3 config "services" run continuously.
 
 $i3configscripts restart compton
-$i3configscripts restart dunst
 $i3configscripts restart marks
 $i3configscripts restart commands
 

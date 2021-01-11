@@ -1,40 +1,55 @@
 #!/bin/bash
-#
-# Objective: This module captures desktop video and audio. Clips can
-# then be aggregated to make a demo video in the style of YouTube.
-#
-# References: (1) https://unix.stackexchange.com/a/117623
-#
 
+# This module captures desktop video inside a clipping rectangle in
+# sync with ssociated audio. Resource usage is roughly proportional to
+# the rectangle area as defined by variables xy and wh.
 
-xy=+1920+0   ### top left corner of the region, i.e anchot
-wh=1920x1080 ### region occupying the entire screen of the current monitor.
+# Full HD on 2nd monitor counting from left to right is the default.
+xy_default=+1920,0
+wh_default=1920x1080
 
-pass1dir=/dev/shm/$USER/i3/video/
+# Geometry can be set from the command line.
+xy=${3:-$xy_default}
+wh=${4:-$wh_default}
+#
+# 2 pass recording: pass 1 does realtime lossless capture, pass 2 does
+# encoding as a postprocess.  The absurd resource usage is deliberate,
+# the end result must not blur text. Consequently the storage for the
+# output of pass 1 has to be fast. Full HD video ~45 Mbytes/s
+#
 pass1dir=${HOME}/Videos/
 pass2dir=${HOME}/Videos/
 pass1file=grab.mkv
 pass2file=grab.mp4
+#
+# HDMI is reported as disconnected on my machine (because DVI to DVI
+# cable) hence audio recording uses the analog line out monitor input.
+analogaudiosource=alsa_input.pci-0000_00_1b.0.analog-stereo
+audio=${analogaudiosource}.monitor
+
 
 #
-# 2 pass recording: pass 1 lossless capture, pass 2 encoding
+#
 #
 record()
 {
     case "$1 $2" in
+        (audio?100|audio?[1-9][0-9]|audio?[0-9])
+            pactl set-source-volume "${audio}" "$2"
+            ;;
         (video?start)
             rm -f "${pass1dir}/${pass1file}"
             (ffmpeg \
                  -f pulse -ac 2 -i alsa_output.pci-0000_00_1b.0.analog-stereo.monitor \
-                 -f x11grab -s ${wh} -r 25 -i :0.0${xy} -c:v huffyuv \
+                 -f x11grab -s "${wh}" -r 25 -i :0.0"${xy}" -c:v huffyuv \
                  -q:v 0 -y "${pass1dir}/${pass1file}") &
             ;;
         (video?stop)
-            pkill -f "ffmpeg"
+            pkill -f "ffmpeg -f pulse"
             ffmpeg -i "${pass1dir}/${pass1file}" -c:v mpeg4 -c:a mp3 \
                    -q:v 0 -y "${pass2dir}/${pass2file}"
             ;;
-        (video?[1-9][0-9]|video?[1-5][0-9][0-9])
+        (video?[1-9][0-9]|video?[1-5][0-9][0-9])  # 10 minutes
             record 'video' 'start'
             sleep "$2"
             record 'video' 'stop'
@@ -53,7 +68,7 @@ record()
 
 mkdir -p "${pass1dir}" "${pass2dir}"
 
-record "$1" "$2"
+record "$1" "$2" "${@:3}"
 
 #
 # Done.

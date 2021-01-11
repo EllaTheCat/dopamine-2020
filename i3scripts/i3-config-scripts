@@ -3,9 +3,11 @@
 # These programs must run continuously throughout the session.
 # It may be necessary to manage them by hand (see also the Makefile).
 #   $1 = start | stop | restart | status
-#   $2 = compton | dunst | marks | commands
-# The compositor (compton) doesn't make a window.
-# The notifier (dunst) window is hidden in the scratchpad at startup.
+#   $2 = compton | marks | commands
+# The compositor (compton) doesn't make a window. It must be disabled
+# whenever the xubuntu software updater runs, lest the latter becomes
+# invisible (shaded)!
+#
 
 
 case "$1" in
@@ -13,13 +15,6 @@ case "$1" in
         case "$2" in
             (compton)
                 compton -b --config "${HOME}/.config/compton.conf"
-                ;;
-            (dunst)
-                title="$(date +%T) dunst"
-                (xfce4-terminal -T "${title}" \
-                                -x dunst -config "${HOME}/.config/dunst/dunstrc") &
-                sleep 5
-                i3-msg "[title=\"${title}\"] move scratchpad"
                 ;;
             (marks)
                 (xfce4-terminal -T "$(date +%T) marks" \
@@ -39,10 +34,6 @@ case "$1" in
                 # start|stop strings must be identical.
                 pkill -f "compton -b --config ${HOME}/.config/compton.conf"
                 ;;
-            (dunst)
-                # start|stop strings must be identical.
-                pkill -f "dunst -config ${HOME}/.config/dunst/dunstrc"
-                ;;
             (marks)
                 # This kills everything shown in status.
                 [ "$(pgrep -c -f i3-marks)" -gt 0 ] && killall i3-marks
@@ -57,7 +48,7 @@ case "$1" in
         ;;
     (restart)
         case "$2" in
-            (compton|dunst|marks|commands)
+            (compton|marks|commands)
                 # Reusing stop|start and status cases facilitates testing.
                 $0 stop "$2"
                 sleep 2
@@ -69,7 +60,7 @@ case "$1" in
         ;;
     (status)
         case "$2" in
-            (compton|dunst)
+            (compton)
                 pgrep -a -f "$2" | grep -v grep | grep -v "$(basename "$0")"
                 ;;
             (marks)
@@ -85,7 +76,7 @@ case "$1" in
                 ;;
             (all)
                 #
-                for option in compton dunst marks commands; do
+                for option in compton marks commands; do
                     printf "%s:\n%s\n" ${option} "$($0 status $option)"
                 done
                 ;;
