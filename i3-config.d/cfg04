@@ -29,8 +29,10 @@ mode "Primary" {
     # Focus the workspace with the latest [u]rgency hint.
     bindsym u $default, [urgent=latest] focus
 
-    # [I]nfo on keyboard bindings.
-    bindsym i $default, $help
+    # [I]nfo on keyboard bindings. $help is available as a fallback.
+    # https://github.com/glennular/i3help
+    # https://www.reddit.com/r/i3wm/comments/k3ifyq/i3help_keyboard_binding_help_dialog_gtk/
+    bindsym i $default, exec --no-startup-id i3help -f ~/.i3/config
 
     # P for Parent. O for Offspring.
     bindsym o $default, focus child
