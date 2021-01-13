@@ -84,7 +84,7 @@ restarted: restart
 
 # .installdirs
 
-$(i3BIN):
+$(I3BIN):
 	@install -m $(DIRMODE) -d $(I3BIN)
 
 # .installconfigs
