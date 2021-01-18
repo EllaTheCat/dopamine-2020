@@ -9,13 +9,22 @@ exec --no-startup-id pactl set-source-mute $usbaudiosource 1
 exec --no-startup-id pactl set-source-mute $analogaudiosource 1
 exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
 
-exec --no-startup-id pactl set-default-sink \
-     $analogaudiosink
+# My machine has HDMI driving DVI on the monitor so I use analogue
+# audio from the green 3.5 mm jack.
+exec --no-startup-id pactl set-default-sink $analogaudiosink
 
 # Spindown at startup by default. Explicit PATH required here.
 exec --no-startup-id $HOME/local/bin/my-usb-disks configure
 exec --no-startup-id $HOME/local/bin/my-usb-disks spindown sdc
 exec --no-startup-id $HOME/local/bin/my-usb-disks spindown sdd
+
+# My "xubuntu fix broken bluetooth" incantation.
+# Authenticated automatically by '/etc/sudoers.d/shevek'.
+# Do not use dunst if you use this.
+# The Bluetooth icon should appear in xfce4-panel.
+
+exec --no-startup-id sudo systemctl restart bluetooth
+exec --no-startup-id sudo modprobe btusb
 
 #
 # EXECUTABLE SETTINGS END HERE.
