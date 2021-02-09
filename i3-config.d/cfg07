@@ -45,6 +45,10 @@ for_window [instance="yad"] floating enable;
 for_window [title="Bluetooth Devices"] floating enable;
 for_window [title="Cheese"] floating enable;
 for_window [title="Do Not Panic"] floating enable;
+for_window [title="Edit Launcher"] \
+           floating enable, move absolute position 2400 48;
+for_window [title="^Launcher"] \
+           floating enable, move absolute position 3000 48;
 for_window [title="File Operation Progress"] floating enable;
 for_window [title="Scratchpad"] floating enable;
 for_window [title="Unlock Keyring"] floating enable;
