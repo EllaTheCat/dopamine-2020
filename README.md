@@ -237,3 +237,40 @@ they can be restared using "make", thus:
   be restarted with this command invoked from a terminal. i3-marks is
   the "service" that puts the workspace name on one of the windows in
   each workspace.
+
+## i3-status
+
+The i3-status script (note the dash) wraps the i3status script (that
+comes with i3) such that extra indicators can be prepended to those of
+i3status. You can revert to i3status only by editing the i3bar config
+in i3-config.d/cfg09. i3-status prepends the following variables:
+
+- ${Wmic} ${umic} ${rmic} each shows 0 when muted, 1 when active.
+
+- ${wcam} This is set to "idle" by default, unless it is active, in
+  which case the name of the program accessing the webcam is
+  shown.
+
+- ${ccmt} My desktop PC has Intel mobo graphics that have recently
+  developed screen tearing on video. My workaround is to use a
+  Raspberry Pi Model 4 running Kodi and LibreElec on the Broadcom
+  video core. This variable tracks on-chip temperature. With passive
+  cooling, no fan, rendering SD video fullscreen, the temperature is
+  45'C, ambient is 19'C.
+
+- ${cursor} This shows the mouse position (x,y) pixel co-ordinates,
+  origin top left of the leftmost screen. i3 usage of the mouse is
+  reduced, ao it's easier to lose it, hence this helps find it.
+
+## settings-2020
+
+settings-2020 is a sibling github repo of dopamine-2020. It holds my
+dotfiles, configs and scripts in a directory along with a Makefile
+that installs them in their runtime locations. Scripts are vetted by
+the ShellCheck utility. I intend that the scripts in the myscripts
+directory will be moved from dopamine-2020 to settings-2020.
+
+settings-2020 also manages sensitive information. On the one hand I
+want to share but on the other hand I want my privacy preserved.
+
+[eof]
