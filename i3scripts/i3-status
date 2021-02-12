@@ -11,7 +11,11 @@ do
     umic=$(pactl list sources | grep -A 7 alsa_input.usb-C-Media_Electronics_Inc._USB_Audio_Device-00 | grep -c 'Mute: no')
     rmic=$(pactl list sources | grep -A 7 alsa_input.pci-0000_00_1b.0.analog-stereo | grep -c 'Mute: no')
     eval "$(xdotool getmouselocation --shell)"
-    echo "| cursor $X $Y | webcam ${wcam} | mic ${wmic} ${umic} ${rmic} | ${line}" || exit 1
+    ccmt='cc offline'
+    if [ "$(ping -c 1 192.168.1.114 | grep -c "1 received")" -ne 0 ]; then
+        ccmt="cc $(ssh cheesecake vcgencmd measure_temp)"
+    fi
+    echo "| cursor $X $Y | ${ccmt} | webcam ${wcam} | mic ${wmic} ${umic} ${rmic} | ${line}" || exit 1
 done
 
 #
