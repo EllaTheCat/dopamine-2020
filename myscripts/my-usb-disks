@@ -36,6 +36,13 @@ spindown ()
             sudo /usr/sbin/hd-idle -t "${sdc}"
             sudo /usr/sbin/hd-idle -t "${sdd}"
             ;;
+        (tabasco)
+            # This is the only command affecting just one drive.
+            # Don't bloat this acript with non-essentials.
+            # Prefer familiar names like 'tabasco'in commands.
+            sudo /usr/sbin/hd-idle -t "${sdd}"
+            ;;
+
     esac
 }
 
