@@ -26,6 +26,11 @@ exec --no-startup-id $HOME/local/bin/my-usb-disks spindown all
 exec --no-startup-id sudo systemctl restart bluetooth
 exec --no-startup-id sudo modprobe btusb
 
+# The volume on the 3.5mm analog jack occasionally assumes a value
+# much higher than 100% during startup, prevent speaker damage.
+exec --no-startup-id pactl set-sink-volume $analogaudiosink 70%
+
+
 #
 # EXECUTABLE SETTINGS END HERE.
 #
