@@ -294,26 +294,19 @@ $(I3BIN)/%: $(MYSCRIPTS)/%
 # closed. The mark is added quickly enough, by mimicing what works
 # manually. The title timestamp confirms =something= happened.
 
-# must-have
 commands:
 	@i3-config-scripts restart $@
 	@i3-msg "[workspace="wm" title=".+$@"] focus, exec xdotool key --delay 200 Menu n;"
 
-# must-have
 marks:
 	@i3-config-scripts restart $@
 	@i3-msg "[workspace="wm" title=".+$@"] focus, exec xdotool key --delay 200 Menu n;"
 
-# nice-to-have
-dunst:
-	@i3-config-scripts restart $@
-	@i3-msg "[workspace="wm" title=".+$@"] focus, exec xdotool key --delay 200 Menu n;"
-
-# silent, no window, ...
+# This isn't a service. it's a hack.
+# i3 kills compton during xubuntu software updater execution.
 compton:
 	@i3-config-scripts restart $@
 
-
 #
-# Done
+# Done.
 #

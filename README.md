@@ -238,6 +238,18 @@ they can be restared using "make", thus:
   the "service" that puts the workspace name on one of the windows in
   each workspace.
 
+### Rnnning "make commands|marks" from Emacs
+
+- To avoid using a terminal, a user can invoke "make commands" or
+  "make marks" from wihin Emacs:.
+
+  (defun i3commands ()
+      ""
+      (interactive)
+      (setq default-directory "/home/EllaTheCat/dopamine-2020")
+      (start-process "commands" nil "/usr/bin/make" "commands" "restart")
+      )
+
 ## i3-status
 
 The i3-status script (note the dash) wraps the i3status script (that
