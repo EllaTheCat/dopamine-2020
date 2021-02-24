@@ -283,30 +283,6 @@ $(I3BIN)/%: $(MYSCRIPTS)/%
 	@shellcheck $<
 	@install -m $(EXEMODE) $< $(I3BIN)
 
-# The "services" invoked last of all in the i3-config file must be
-# running all the time. Restarting them fails in situations where I
-# expect them to work. Restart should kill the running service and
-# start another singleton instance in its own window with a unique
-# numeric mark on workspace 'wm'.
-
-# 2020-11-29: Using make with these targets looks promising. The
-# window survives should the terminal where 'make' was invoked be
-# closed. The mark is added quickly enough, by mimicing what works
-# manually. The title timestamp confirms =something= happened.
-
-commands:
-	@i3-config-scripts restart $@
-	@i3-msg "[workspace="wm" title=".+$@"] focus, exec xdotool key --delay 200 Menu n;"
-
-marks:
-	@i3-config-scripts restart $@
-	@i3-msg "[workspace="wm" title=".+$@"] focus, exec xdotool key --delay 200 Menu n;"
-
-# This isn't a service. it's a hack.
-# i3 kills compton during xubuntu software updater execution.
-compton:
-	@i3-config-scripts restart $@
-
 #
 # Done.
 #

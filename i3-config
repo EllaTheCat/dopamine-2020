@@ -136,11 +136,10 @@ exec_always --no-startup-id ~/local/bin/i3-keyboard xcapekeys
 assign [title="marks$"] wm
 assign [title="commands$"] wm
 
-# i3 config "services" run continuously.
-
-$i3configscripts restart compton
-$i3configscripts restart marks
-$i3configscripts restart commands
+# Start (don't restart) i3 config "services" with exec (not
+# exec_always), as indicated by omitting the workspace name..
+#
+$i3configscripts restart
 
 #
 # Done.

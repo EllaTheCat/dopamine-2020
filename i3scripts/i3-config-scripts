@@ -46,18 +46,6 @@ case "$1" in
                 ;;
         esac
         ;;
-    (restart)
-        case "$2" in
-            (compton|marks|commands)
-                # Reusing stop|start and status cases facilitates testing.
-                $0 stop "$2"
-                sleep 2
-                $0 start "$2"
-                sleep 1
-                $0 status "$2"
-                ;;
-        esac
-        ;;
     (status)
         case "$2" in
             (compton)
@@ -81,6 +69,29 @@ case "$1" in
                 done
                 ;;
         esac
+        ;;
+    (restart)
+        # 2021-02-24: Shutdown both services before restarting the WM,
+        # allow time for WM restart, then restart both services.  The
+        # workspace for the terminal windows is renamed by setting $2
+        # to the old name and $3 to the new name. Omitting $3 uses $2
+        # as the workspace name. Omitting $2 sets the workspace name
+        # to the default "wm" and starts both services (for use with
+        # i3-config on first run of the session).
+        if [ "_$2" = "_" ]; then
+            i3-msg "workspace wm"
+        else
+            $0 stop commands
+            $0 stop marks
+            i3-msg "[workspace=\"${3:-$2}\"] kill"
+            sleep 3
+            i3-msg "restart"
+            sleep 5
+            i3-msg "workspace \"$2\""
+        fi
+        sleep 2
+        $0 start commands
+        $0 start marks
         ;;
 esac
 
