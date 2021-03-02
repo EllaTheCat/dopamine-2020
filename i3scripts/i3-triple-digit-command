@@ -34,6 +34,12 @@ i3_triple_digit()
             arg="${1:1:2}%"  # USB volume as a percentage.
             pactl set-sink-volume ${usbaudiosink} "${arg}"
             ;;
+        ([3][0-9][0-9])
+            # Volume settings 00 to 99. Although pavucontrol allows as
+            # high as 150% the API doesn't.
+            arg="${1:1:2}%"  # Line Out volume as a percentage.
+            pactl set-sink-volume ${analogaudiosink} "${arg}"
+            ;;
         ([4][0-9][0-9])
             # Visit a two-digit mark using numpad or voice.
             arg="${1:1:2}"
@@ -60,7 +66,7 @@ i3_triple_digit()
             notify-send "i3-triple-digit:" \
                         "Mark not found: &gt;${arg}&lt;, swap request rejected."
             ;;
-        ([036789][0-9][0-9])
+        ([06789][0-9][0-9])
             # Any other 3 digit matches.
             arg="${1:1:2}"
             notify-send "i3-triple-digit:" \
