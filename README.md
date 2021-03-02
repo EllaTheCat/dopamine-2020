@@ -207,48 +207,24 @@ in an Emacs buffer "Clipboard".
 
 Work is in progress to provide a simple editor operated by voice.
 
-## Services
+## i3-config-scripts
+
 The "i3-config-scripts" file tidies up the management of "services"
-that run in the background. It is introduced at the very end of the
-i3-config file.
+that run in the background.
 
-    i3-config-scripts \
-        start|stop|restart|status compton|dunst|marks|commands
+    i3-config-scripts restart
 
-Crikey it's fast! The effort involved in creating a tidy script has
-paid off.
+Invoked wih arguments as above, preceded by 'exec' in i3-config, it
+starts the commands and mark "services" after everything else in the
+i3-config startup sequence.
 
-## Running "make ..."
-The use cases of "make" and "make -n" were intended to be the only
-ones involving "make", to keep things simple and non-scary.
+    i3-config-scripts restart wm
 
-The "file watcher" and "marks" are examples of "services" that are
-supposed to run for the entire session. Sometimes these misbehave,
-they can be restared using "make", thus:
-
-###  Running "make commands"
-
-- In the event something goes wrong with the file watcher, it can be
-  restarted with this command invoked from a terminal.
-
-###  Running "make marks"
-
-- In the event something goes wrong with the window titlebar, it can
-  be restarted with this command invoked from a terminal. i3-marks is
-  the "service" that puts the workspace name on one of the windows in
-  each workspace.
-
-### Rnnning "make commands|marks" from Emacs
-
-- To avoid using a terminal, a user can invoke "make commands" or
-  "make marks" from wihin Emacs:.
-
-  (defun i3commands ()
-      ""
-      (interactive)
-      (setq default-directory "/home/EllaTheCat/dopamine-2020")
-      (start-process "commands" nil "/usr/bin/make" "commands" "restart")
-      )
+Invoked as above from a terminal, it stops the commands and marks
+"services", restarts the i3 window manager, then starts the two
+"services" again. I had not realised that restarting i3 required
+restarting the "services". The date and time of the last startup
+appears in the window title.
 
 ## i3-status
 
@@ -268,7 +244,8 @@ in i3-config.d/cfg09. i3-status prepends the following variables:
   Raspberry Pi Model 4 running Kodi and LibreElec on the Broadcom
   video core. This variable tracks on-chip temperature. With passive
   cooling, no fan, rendering SD video fullscreen, the temperature is
-  45'C, ambient is 19'C.
+  45'C, ambient is 19'C. A one second ping fails should the Raspberry
+  Pi be offline, so the refresh of the bar is set to three seconds.
 
 - ${cursor} This shows the mouse position (x,y) pixel co-ordinates,
   origin top left of the leftmost screen. i3 usage of the mouse is
