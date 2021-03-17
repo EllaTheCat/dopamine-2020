@@ -71,24 +71,17 @@ case "$1" in
         esac
         ;;
     (restart)
-        # 2021-02-24: Shutdown both services before restarting the WM,
-        # allow time for WM restart, then restart both services.  The
-        # workspace for the terminal windows is renamed by setting $2
-        # to the old name and $3 to the new name. Omitting $3 uses $2
-        # as the workspace name. Omitting $2 sets the workspace name
-        # to the default "wm" and starts both services (for use with
-        # i3-config on first run of the session).
-        if [ "_$2" = "_" ]; then
-            i3-msg "workspace wm"
-        else
-            $0 stop commands
-            $0 stop marks
-            i3-msg "[workspace=\"${3:-$2}\"] kill"
+        # 2021-03-17: Shutdown both services before restarting the WM,
+        # allow time for WM restart, then restart both services. KISS.
+        $0 stop commands
+        $0 stop marks
+        if [ "$(i3-msg -t get_workspaces | grep -c wm)" -ne 0 ]; then
+            i3-msg "[workspace=\"wm\"] kill"
             sleep 3
             i3-msg "restart"
             sleep 5
-            i3-msg "workspace \"$2\""
         fi
+        i3-msg "workspace \"wm\""
         sleep 2
         $0 start commands
         $0 start marks
