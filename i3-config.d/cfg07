@@ -12,19 +12,23 @@ font pango:DejaVu Sans 11
 # does not preclude a ' toggle workspaces' key binding that works.
 workspace_auto_back_and_forth no
 
+# u/airblader has said that i3 names the initially empty workspace on
+# a screen using a simple algorithm. I expect "wm' and "e0" on $lmon
+# and $cmon, as of 2021-04-16.
+
 # Status to the side.
 workspace "wm" output $lmon
-
-# Media. Using the primary monitor to evauate a hypothesis.
-workspace "tv" output $cmon
-workspace "mp" output $cmon
-workspace "fp" output $cmon
-workspace "vp" output $cmon
+workspace "tv" output $lmon
 
 # Editor and browser straight ahead.  I assume dual monitors are
 # positioned in the left and centre of the three monitor layout.
 workspace "e0" output $cmon
 workspace "f0" output $cmon
+
+# Media to the side.
+workspace "fp" output $lmon
+workspace "mp" output $lmon
+workspace "vp" output $lmon
 
 # Assign applications to workspaces.
 # Use this method when launching applications indirectly.
@@ -58,18 +62,15 @@ for_window [title="Volume Control"] \
            resize set 50 ppt 80 ppt;
 for_window [class="Display"] floating enable;
 for_window [class="Display-im6"] floating enable;
-
-# A workaround to prevent the software updater window going
-# transparent. I think this is an Ubuntu issue.
-for_window [title="Software Updater"] floating enable, \
-           $i3configscripts stop compton, \
-           exec --no-startup-id notify-send \
-           "Compositor has been disabled to safeguard software update. Secondary [ = compositor off Secondary ] = compositor on" ;
+for_window [class="Display-im6.q16"] floating enable;
+for_window [title="Software Updater"] floating enable;
 
 # A long standing issue with ImageMagick dialogs. The list is
 # incomplete but sufficient.
+for_window [class="Display-im6" title="Browse and Select a File"] \
+           floating enable, move absolute position 2400 100, resize set 50 ppt 50 ppt;
 for_window [class="Display-im6.q16" title="Browse and Select a File"] \
-           floating enable, move absolute position 2820 100, resize set 200 ppt 300 ppt;
+           floating enable, move absolute position 2400 100, resize set 50 ppt 50 ppt;
 
 # Application windows.
 for_window [instance="xfce4-terminal"] $i3marks numeric
