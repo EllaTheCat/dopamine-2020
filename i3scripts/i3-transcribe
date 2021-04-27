@@ -89,7 +89,7 @@ mklast ()
         # Use a simple heuristic with "question words" as a fallback
         # should you either forget to prefix or should AutoVoice miss
         # the first word as sometimes happens.
-        (What*|When*|Which*|Who*|How*|Do*)
+        (What\ *|When\ *|Where\ *|Which\ *|Who\ *|How\ *|Do\ *)
         printf "%s?" "$1"
         ;;
         # This default is frequently correct.
