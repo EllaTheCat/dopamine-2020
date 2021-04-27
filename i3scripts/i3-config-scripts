@@ -1,21 +1,20 @@
 #!/bin/bash
 #
-# These programs must run continuously throughout the session.
-# It may be necessary to manage them by hand (see also the Makefile).
-#   $1 = start | stop | restart | status
-#   $2 = compton | marks | commands
-# The compositor (compton) doesn't make a window. It must be disabled
-# whenever the xubuntu software updater runs, lest the latter becomes
-# invisible (shaded)!
+# The "services" (note the "fingers in the air" quotes) are intended
+# to run contnuously for the session lifetime.
 #
-
-
+# The early code was both over-engineered and clueless, hence there is
+# legacy stuff that persists as I carefully excise the pretentious
+# bits and address the cluelessness.
+#
+# 2021-04-03: The commands and marks "services" interact with starting
+# and restarting i3 itself. This has been encapsulated in the command
+# 'i3-config-scripts restart'; calling any other comm
+and is trouble.
+#
 case "$1" in
     (start)
         case "$2" in
-            (compton)
-                compton -b --config "${HOME}/.config/compton.conf"
-                ;;
             (marks)
                 (xfce4-terminal -T "$(date +%T) marks" \
                                 -x "${HOME}/local/bin/i3-marks" update) &
@@ -30,10 +29,6 @@ case "$1" in
         ;;
     (stop)
         case "$2" in
-            (compton)
-                # start|stop strings must be identical.
-                pkill -f "compton -b --config ${HOME}/.config/compton.conf"
-                ;;
             (marks)
                 # This kills everything shown in status.
                 [ "$(pgrep -c -f i3-marks)" -gt 0 ] && killall i3-marks
@@ -43,30 +38,6 @@ case "$1" in
                 cmd="--watch-files /dev/shm/$USER/i3/command"
                 exe="--on-modify-command /dev/shm/$USER/i3/execute"
                 pkill -f "perl /usr/bin/inotify-hookable ${cmd} ${exe}"
-                ;;
-        esac
-        ;;
-    (status)
-        case "$2" in
-            (compton)
-                pgrep -a -f "$2" | grep -v grep | grep -v "$(basename "$0")"
-                ;;
-            (marks)
-                # Expect 3 pids, contiguously numbered, but not shown
-                # in order, when not stopped.
-                pgrep -a -f 'i3-msg -t subscribe -m' | grep window
-                pgrep -a -f 'i3-marks update'
-                ;;
-            (commands)
-                # Expect 2 pids.
-                pgrep -a -f '/usr/bin/inotify-hookable'
-                pgrep -a -f 'i3-file-watcher'
-                ;;
-            (all)
-                #
-                for option in compton marks commands; do
-                    printf "%s:\n%s\n" ${option} "$($0 status $option)"
-                done
                 ;;
         esac
         ;;
