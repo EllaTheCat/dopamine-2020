@@ -9,8 +9,7 @@
 #
 # 2021-04-03: The commands and marks "services" interact with starting
 # and restarting i3 itself. This has been encapsulated in the command
-# 'i3-config-scripts restart'; calling any other comm
-and is trouble.
+# 'i3-config-scripts restart'; calling any other command is trouble.
 #
 case "$1" in
     (start)
