@@ -46,7 +46,6 @@ assign [title="VLC media player$"] vp
 for_window [instance="dtvkit"] floating enable;
 for_window [instance="xfce4-notifyd$"] floating enable;
 for_window [instance="yad"] floating enable;
-for_window [title="Bluetooth Devices"] floating enable;
 for_window [title="Cheese"] floating enable;
 for_window [title="Do Not Panic"] floating enable;
 for_window [title="Edit Launcher"] \
@@ -64,6 +63,9 @@ for_window [class="Display"] floating enable;
 for_window [class="Display-im6"] floating enable;
 for_window [class="Display-im6.q16"] floating enable;
 for_window [title="Software Updater"] floating enable;
+
+# Windows that look'n'feel better when tiled.
+for_window [title="Bluetooth Devices"] floating disable;
 
 # A long standing issue with ImageMagick dialogs. The list is
 # incomplete but sufficient.
