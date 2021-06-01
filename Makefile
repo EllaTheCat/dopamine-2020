@@ -78,8 +78,8 @@ reloaded: reload
 	i3-msg "reload"
 
 restarted: restart
-	touch $@
-	i3-msg "restart"
+	@touch $@
+	@$(I3BIN)/i3-config-scripts restart
 
 
 # .installdirs
