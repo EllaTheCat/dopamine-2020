@@ -49,7 +49,9 @@ commandalias()
     # Having set up a window subscription and a listener for updating
     # marks, we can add another listener at the end like this, and it
     # could add yet another, etc.
-    (floating) &
+
+    ### (floating) &
+    (mousewarp) &
 }
 
 #
@@ -83,6 +85,34 @@ floating()
     esac
 }
 
+#
+# Warp the mouse to normalised window coords (0.33,0.33) inside the
+# window in focus. Allow a fraction of a second for the requested
+# window to gain focus.
+#
+# https://www.reddit.com/r/i3wm/comments/nr73k6/
+# mouse_following_the_focused_window/
+# h0f4var?utm_source=share&utm_medium=web2x&context=3
+#
+mousewarp ()
+{
+    sleep 0.2
+    HERE="$(xdotool getwindowfocus)"
+
+    ULX=$(xwininfo -id "$HERE" | grep "  Absolute upper-left X:" | awk '{print $4}')
+    ULY=$(xwininfo -id "$HERE" | grep "  Absolute upper-left Y:" | awk '{print $4}')
+
+    # If there is no window, ULX == 1 and ULY == 1.
+    if [ "$ULX" != "-1" ] || [ "$ULY" != "-1" ]; then
+        eval "$(xdotool getwindowgeometry --shell "$HERE")"
+
+        ((NX="$WIDTH"/3))
+        ((NY="$HEIGHT"/3))
+
+        xdotool mousemove --window "$WINDOW" "$NX" "$NY"
+    fi
+}
+
 
 #
 # When the monitor indicates a window change, walk the "linked list"
@@ -112,6 +142,9 @@ case "_$1" in
         ;;
     (_floating)
         floating
+        ;;
+    (_mousewarp)
+        mousewarp
         ;;
     (_update)
         update

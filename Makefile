@@ -203,6 +203,7 @@ $(I3BIN)/i3-marks: \
 	$(I3SCRIPTS)/i3-marks \
 	$(I3SCRIPTS)/i3-marks.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-marks $(I3BIN)
+	@touch restart
 
 $(I3SCRIPTS)/i3-marks.log: $(I3SCRIPTS)/i3-marks
 	@shellcheck $(I3SCRIPTS)/i3-marks > $@
