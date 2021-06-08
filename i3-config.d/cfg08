@@ -30,6 +30,20 @@ exec --no-startup-id sudo modprobe btusb
 # much higher than 100% during startup, prevent speaker damage.
 exec --no-startup-id pactl set-sink-volume $analogaudiosink 70%
 
+# These are i3wm variables, not bash variables.
+set $dir "/dev/shm/${USER}/i3"
+set $file "command"
+
+# We should be able to focus or launch from i3 config (or a bash
+# script) as we already do via the command prompt.
+#
+# These are the last commands to be invoked. The minimum delay is 30s
+# so that i3config can complete. (30,35,40) defines a 5 second delay
+# between successive commands being actioned, and a 30 second wait in
+# order to let things settle down a bit.
+exec --no-startup-id sleep 30s && echo 'tv' > $dir/$file
+exec --no-startup-id sleep 35s && echo 'g0' > $dir/$file
+exec --no-startup-id sleep 40s && echo 'e0' > $dir/$file
 
 #
 # EXECUTABLE SETTINGS END HERE.

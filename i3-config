@@ -139,14 +139,6 @@ assign [title="commands$"] wm
 # i3 "services".
 $i3configscripts restart
 
-# These are i3 variables, not bash variables.
-set $dir "/dev/shm/${USER}/i3"
-set $file "command"
-
-# We should be able to focus or launch from i3 config (or a bash
-# script) as we already do via the command prompt.
-exec --no-startup-id sleep 30s && echo 'tv' > $dir/$file
-
 #
 # Done.
 #
