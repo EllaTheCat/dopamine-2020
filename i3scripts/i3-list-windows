@@ -17,6 +17,9 @@ menu ()
     #   "36"
     # ]
     # Added the null filter in i3 4.19 (2020-11-15).
+    # One of the "services" windows "*commands" "*marks" is marked
+    # with the workspace name only, the other is unmarked, hence one
+    # will not be listed here. It is not a coding mistake..
     menu="$(i3-msg -t get_tree | jq '.. | objects | .name,.marks' | \
                   grep -B1 -A1 '[[]' | tr -d \\n[  | sed 's/--/\n/g' | \
                                grep -v 'null' | grep -v "$2")"
