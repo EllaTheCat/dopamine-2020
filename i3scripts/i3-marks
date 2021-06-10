@@ -50,8 +50,7 @@ commandalias()
     # marks, we can add another listener at the end like this, and it
     # could add yet another, etc.
 
-    ### (floating) &
-    (mousewarp) &
+    (mousewarp && floating) &
 }
 
 #

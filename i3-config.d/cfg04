@@ -63,9 +63,12 @@ mode "Primary" {
     bindsym d $default, layout default
     bindsym e $default, layout tabbed
 
-    # Enter [f]ullscreen mode for the focused container.
-    bindsym f $default, fullscreen toggle
-    bindsym g $default, fullscreen toggle global
+    # Enter [f]ullscreen mode for the focused container.  This races
+    # with the marks "service" that makes single windows floating with
+    # a transpaent frame to reveal wallpaper. It is currently working
+    # and robust but ideally these bindings should call into i3-marks.
+    bindsym f $default, floating disable, fullscreen toggle;
+    bindsym g $default, floating disable, fullscreen toggle global;
 
     # Increase or decrease the height or width symmetrically.
     # I orient myself by how the border separating windows moves.
