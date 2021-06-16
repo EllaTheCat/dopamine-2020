@@ -5,7 +5,8 @@
 
 # Copy from i3-config, paste and edit to be bash environment variables.
 export analogaudiosink=alsa_output.pci-0000_00_1b.0.analog-stereo
-export bluetoothaudiosink=bluez_sink.00_01_01_00_12_CB
+###### bluetoothaudiosink=bluez_sink.00_01_01_00_12_CB
+export bluetoothaudiosink=bluez_sink.30_22_00_00_C7_F5.a2dp_sink
 export hdmiaudiosink=alsa_output.pci-0000_00_03.0.hdmi-stereo
 usbaudiosink=alsa_output.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.analog-stereo
 
@@ -65,12 +66,18 @@ i3_triple_digit()
             done
             notify-send "i3-triple-digit:" \
                         "Mark not found: &gt;${arg}&lt;, swap request rejected."
+                    ;;
+        ([6][0-9][0-9])
+            # Volume settings 00 to 99. Although pavucontrol allows as
+            # high as 150% the API doesn't.
+            arg="${1:1:2}%"  # Line Out volume as a percentage.
+            pactl set-sink-volume ${bluetoothaudiosink} "${arg}"
             ;;
         ([7][0-9][0-9])
             arg="${1:1:2}"
             i3-msg "resize set width ${arg}ppt"
             ;;
-        ([0689][0-9][0-9])
+        ([089][0-9][0-9])
             # Any other 3 digit matches.
             arg="${1:1:2}"
             notify-send "i3-triple-digit:" \
