@@ -48,9 +48,9 @@ set $i3listwindows exec --no-startup-id ~/local/bin/i3-list-windows
 # Use 'xrandr' with no arguments to list monitor names and geometry.
 # Assign outputs to monitors from left to right, repeat last assignment,
 # thus a dual monitor config can refer to $lmon and $rmon.
-set $lmon HDMI-2
-set $cmon HDMI-1
-set $rmon HDMI-1
+set $lmon HDMI2
+set $cmon HDMI1
+set $rmon HDMI1
 
 ## Type 'pactl list sinks' to list audio outputs.
 set $analogaudiosink alsa_output.pci-0000_00_1b.0.analog-stereo

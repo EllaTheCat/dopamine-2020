@@ -11,13 +11,13 @@ case "$(hostname)" in
     (cheesecake)
         case "${1:-same}" in
             (left*)
-                xrandr --output HDMI-2 --left-of HDMI-1
+                xrandr --output HDMI2 --left-of HDMI1
                 ;;
             (right*)
-                xrandr --output HDMI-2 --right-of HDMI-1
+                xrandr --output HDMI2 --right-of HDMI1
                 ;;
             (same*)
-                xrandr --output HDMI-2 --same-as HDMI-1
+                xrandr --output HDMI2 --same-as HDMI1
                 ;;
         esac
     ;;

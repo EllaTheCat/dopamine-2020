@@ -9,8 +9,8 @@
 # and chats,
 assets=${HOME}/Pictures
 # The xrandr names of the outputs connected to the displays.
-lmon=HDMI-2
-rmon=HDMI-1
+lmon=HDMI2
+rmon=HDMI1
 
 i3-msg "workspace phonecall2,
 exec --no-startup-id ristretto -f ${assets}/phonecall2.jpg,
