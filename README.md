@@ -101,12 +101,11 @@ These "cfg" files live in "i3-config.d':
 - cfg09 - Settings (i3bar, debug mode)
 
 There's nothing to stop competent users editing "cfg" files, and this
-is to be encouraged, but don't forget measures to prevent overwriting
-by 'git pull'.
-
-I concede that the decisions about the contents of each "cfg" file
-will need reviewing, so "i3-config" won't become stable in git
-overnight. Eggs, omelettes.
+is to be encouraged. I think, in practice, a user would have to accept
+my changes via 'git pull' and then restore their cfg files with their
+changes. I think the use of multiple cfg files makes that manual chore
+slightly easier. What has been done is a step forward but it's not
+enough.
 
 ## Three modes, one key to bind them
 
@@ -135,11 +134,10 @@ Alt keys are mapped to Escape when used solo; it follows that Win and
 Alt can be swapped as some users prefer.
 
 ## Mode indication
-When not in default mode  the word Primary or Secondary is shown on a
-tab next to the workspace tabs. The same word  appears on the title bar
-of the currently focused window.  You can change focus and the name
-follows.  If that's not enough, the screen dims slightly in Primary
-mode and a little bit more for Secondary mode.
+When not in default mode the word Primary or Secondary is shown on a
+red tab next to the workspace tabs. Furthermore, comared to default
+mode, the screen dims slightly in Primary mode and dims slightly more
+in Secondary mode.
 
 ## Command prompt
 The command prompt is a dmenu. It is invoked with one of the key
@@ -149,7 +147,7 @@ comfortable.  It then reads two characters, and forwards them to the
 
 The command prompt can also be invoked by KP_Insert, which configures
 the numpad to read in two or three digits, and as before, forwards
-them to the "i3-filewatcher" script..
+them to the "i3-filewatcher" script.
 
 Both methods timeout after four seconds and send a key event
 equivalent to pressing Enter (Return). My PD makes the delay
@@ -157,12 +155,12 @@ acceptable and the automatic Enter key appreciated.
 The delay is implemented wth sleep() and configurable.
 The Enter key automation can be disabled.
 
-## Tasker, AutoVoice, AutoTools, AutoShare
-Tasker is a popular android application that lets users write programs
-to run on their phone or tablet. AutoVoice is a Tasker plugin for
-speech-to-text. AutoTools is a Tasker plugin that provides "ssh".
-AutoShare lets you share (for example) a link from a TV EPG so you can
-play the show on your PC.
+## Tasker, AutoVoice, AutoTools
+Tasker is a popular android application that lets users write android
+programs to run on their phone or tablet. AutoVoice is a Tasker plugin
+for speech-to-text. AutoTools is a Tasker plugin that provides "ssh".
+together, they can let the user send commands from the phone to the
+"i3-filewatcher" script.
 
 ## File Watcher
 The file watcher watches the file "/dev/shm/$USER/i3/command".
@@ -185,27 +183,21 @@ monitor that marks the focused window with the workspace name.
 
 There should be only one window per output marked with the name of the
 workspace. Two marks with the same name on the same workspace is a
-major bug. Zero marks is a minor bug because the system usually
-recovers.
-
-Note: This wasn't easy to get working, and strictly speaking it still
-doesn't work immediately after startup, but two or three window events
-let it settle down.
+major bug.
 
 ## Launcher
-The launcher starts and stops media playback from files or tvheadend
-streams.
+Deprecated in favour of android apps. To be removed.
 
 ## Transcribe
+Deprecated in favour of android apps. To be retained.
+
 This is a niche feature, speech to text, that just happens to be
 important for EllaTheCat.
 
 On the phone, saying "OK Google" triggers speech to text. The
 resulting lowercase text is written to the File Watcher via the ssh
-conection just like commands are. Eventually punctuated text appears
-in an Emacs buffer "Clipboard".
-
-Work is in progress to provide a simple editor operated by voice.
+conection. Eventually punctuated text appears in an Emacs buffer
+"Clipboard".
 
 ## i3-config-scripts
 
@@ -218,7 +210,7 @@ Invoked wih arguments as above, preceded by 'exec' in i3-config, it
 starts the commands and mark "services" after everything else in the
 i3-config startup sequence.
 
-    i3-config-scripts restart wm
+    i3-config-scripts restart
 
 Invoked as above from a terminal, it stops the commands and marks
 "services", restarts the i3 window manager, then starts the two

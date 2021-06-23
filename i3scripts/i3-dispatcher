@@ -33,10 +33,6 @@ forward ()
             # Sent from Tasker & AutoVoice.
             nohup i3-transcribe "${@}"
             ;;
-        (start|stop)
-            # Sent from Tasker & TVH plugin.
-            nohup i3-launcher "${@}"
-            ;;
         (interrupt)
             # I use this to overlay each of my screens with a specific
             # image when my phone is ringing. The user should supply

@@ -3,7 +3,6 @@
 # i3-launcher
 #
 
-
 #
 # Launch a media player instance and register it.
 # - Assume 'mpv' if the command omits the media player.
@@ -50,6 +49,8 @@ stop ()
 #
 # Start here.
 #
+
+echo "i3-launcher is deprecated"
 
 # start|stop  stream
 # start|stop  mpv|vlc|... stream
