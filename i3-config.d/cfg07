@@ -42,6 +42,7 @@ assign [title="DVB Inspector"] di
 assign [title="Meld$"] md
 assign [title="SM-G930F"] s7
 assign [title="VLC media player$"] vp
+assign [title="Bluetooth Devices"] bt
 
 # Windows that look'n'feel better when floating.
 for_window [instance="dtvkit"] floating enable;
@@ -66,7 +67,7 @@ for_window [class="Display-im6.q16"] floating enable;
 for_window [title="Software Updater"] floating enable;
 
 # Windows that look'n'feel better when tiled.
-for_window [title="Bluetooth Devices"] floating disable;
+for_window [title="Bluetooth Devices"] floating disable
 
 # A long standing issue with ImageMagick dialogs. The list is
 # incomplete but sufficient.
