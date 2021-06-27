@@ -9,8 +9,8 @@ file="command"
 
 
 #
-#  Provide a text entry command prompt for command aliases and command
-#  numbers.
+# Pass the command entered into the dmenu command prompt into the
+# command interface.
 #
 menu()
 {
@@ -35,12 +35,25 @@ menu()
 }
 
 #
+# Pass the specified command directly into the command interface.
+#
+nomenu()
+{
+    echo "$1" > "${dir}/${file}"
+}
+
+#
 # Start here.
 #
 
-# menu $2
-"$1" "$2"
-
+case "$1" in
+    (menu)
+        "$1" "$2"  # $2 is the timeout.
+        ;;
+    (nomenu)
+        "$1" "$2" # $2 is the command.
+        ;;
+esac
 #
 # Done.
 #
