@@ -16,7 +16,11 @@ mode "Secondary" {
     bindsym w nop
 
     bindsym r nop
-    bindsym t nop
+
+    # Perform USB HDD housekeeping then xfce4-session-logout.
+    # My Maxtor 4 Tbyte drive is excessively prone to spinning up.
+    bindsym t exec --no-startup-id $HOME/local/bin/my-usb-disks tidyexit
+
     bindsym y nop
 
     bindsym i nop
@@ -42,8 +46,9 @@ mode "Secondary" {
     bindsym d $default, $i3mouse disable
     bindsym e $default, $i3mouse enable
 
-    bindsym g nop
-    bindsym j nop
+    # G for graphics. Manual commands for evaluation
+    bindsym g $default, exec --no-startup-id $compton
+    bindsym j $default, exec --no-startup-id killall compton
 
     # Set modifiers with 'xcape', set CapsLock to Control,
     # mimic US layout on UK keyboard.
@@ -65,8 +70,7 @@ mode "Secondary" {
     bindsym x focus output $cmon, $primary;
     bindsym c focus output $rmon, $primary;
 
-    # This Maxtor 4Tbyte drive is excessively prone to spinning up.
-    bindsym v exec --no-startup-id $HOME/local/bin/my-usb-disks spindown tabasco
+    bindsym v nop
 
     # Desktop background.
     #  Here is the attribution for the images I use:

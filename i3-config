@@ -70,10 +70,13 @@ set $i3inputfont "pango:DejaVu Sans 11"
 # Refactoring the associated script(s) might require stubs.
 set $stub nop
 
+set $compton compton -b --config ~/.config/compton.conf
+
 # This script parses the installed i3 config file.
 set $help exec --no-startup-id xfce4-terminal -T Bindings -x /bin/bash -c \
   "grep -v \# ~/.i3/config | grep -v 'bindsym [1-8] mode' \
    cpp - | grep -E 'bind|mode|bar|}' | sed 's/(standard input)://g' | less"
+
 #
 # BINDINGS
 #
