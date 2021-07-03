@@ -50,7 +50,59 @@ commandalias()
     # marks, we can add another listener at the end like this, and it
     # could add yet another, etc.
 
-    (floating) &
+    (playing;floating) &
+}
+
+
+
+# shellcheck disable=SC2034
+declare A  audioactions=(
+    ["strf68959315b7e"]="pactl set-sink-input-mute XYZZY toggle"
+    )
+
+#
+# Obtain the titles of thw windows in the current workspace.
+#
+playing()
+{
+    # shellcheck disable=SC2034
+    for w in $(xdotool search --onlyvisible --desktop \
+                       "$(xprop -notype -root _NET_CURRENT_DESKTOP | \
+                                                        cut -c 24-)" "" 2>/dev/null) ; do
+        # Keys are coerced to strings. Hashes are trunncated cf git.
+        title=$(xdotool getwindowname "$w")
+        hash=$(echo "$title" | md5sum)
+        key=$(printf "%s%s" "str" "${hash:0:12}")
+        pactl list sink-inputs | while read -r line
+        do
+            case "${line}" in
+                (Sink?Input*)
+                    # ^^^ The anchor, line 1
+                    index="${line:12}"
+                    echo "$index"
+                    while read -r line
+                    do
+                        # Strip any whitespace indentation.
+                        line=${line##*( )}
+                        case "${line}" in
+                            (media?name*)
+                                idxtitle="${line:14}"
+                                idxtitle="${idxtitle%?}"
+                                idxhash=$(echo "${idxtitle}" | md5sum)
+                                idxkey=$(printf "%s%s" "str" "${idxhash:0:12}")
+                                echo "->$title<->$idxtitle<- $key $idxkey"
+                                if [ "${idxtitle}" = "${title}" ]; then
+                                    cmd="${audioactions["$idxkey"]}"
+                                    cmd="${cmd/XYZZY/$index}"
+                                    echo "COMMAND = ${cmd}"
+                                    return 0
+                                fi
+                                ;;
+                        esac
+                    done
+            esac
+        done
+    done
 }
 
 #
@@ -60,8 +112,6 @@ commandalias()
 #
 floating()
 {
-    # /u/airblader wrote the code to return the identifiers of the
-    # windows on the current workspace. Thanks!
     count=0
     # shellcheck disable=SC2034
     for w in $(xdotool search --onlyvisible --desktop \
@@ -83,6 +133,7 @@ floating()
             ;;
     esac
 }
+
 
 #
 # Warp the mouse to normalised window coords (0.33,0.33) inside the
