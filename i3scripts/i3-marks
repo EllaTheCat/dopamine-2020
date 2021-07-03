@@ -56,8 +56,8 @@ commandalias()
 
 
 # shellcheck disable=SC2034
-declare A  audioactions=(
-    ["strf68959315b7e"]="pactl set-sink-input-mute XYZZY toggle"
+declare -A  audioactions=(
+    ["str5cc7e6ef20c9"]="pactl set-sink-input-mute XYZZY toggle"
     )
 
 #
@@ -94,7 +94,7 @@ playing()
                                 if [ "${idxtitle}" = "${title}" ]; then
                                     cmd="${audioactions["$idxkey"]}"
                                     cmd="${cmd/XYZZY/$index}"
-                                    echo "COMMAND = ${cmd}"
+                                    eval "${cmd}"
                                     return 0
                                 fi
                                 ;;
