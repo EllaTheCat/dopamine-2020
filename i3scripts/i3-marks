@@ -53,12 +53,28 @@ commandalias()
     (playing;floating) &
 }
 
-
+#
+# The bindings of audio actions to window titles. The dictionary is
+# assembled by adding items. Items are added by pressing a key over
+# the window rendering audio to set the dictionary key. Dictionary
+# management is a planned feature.
+#
 
 # shellcheck disable=SC2034
 declare -A  audioactions=(
+    # Ant-Man.
     ["str5cc7e6ef20c9"]="pactl set-sink-input-mute XYZZY toggle"
-    )
+    ["str33ace9ae71db"]="pactl set-sink-input-mute XYZZY toggle"
+)
+
+aainsert ()
+{
+    sleep 7s
+    title=$(xdotool getwindowfocus getwindowname)
+    hash=$(echo "$title" | md5sum)
+    key=$(printf "%s%s" "str" "${hash:0:12}")
+    audioactions["$key"]="$action"
+}
 
 #
 # Obtain the titles of thw windows in the current workspace.
@@ -69,37 +85,32 @@ playing()
     for w in $(xdotool search --onlyvisible --desktop \
                        "$(xprop -notype -root _NET_CURRENT_DESKTOP | \
                                                         cut -c 24-)" "" 2>/dev/null) ; do
-        # Keys are coerced to strings. Hashes are trunncated cf git.
         title=$(xdotool getwindowname "$w")
         hash=$(echo "$title" | md5sum)
         key=$(printf "%s%s" "str" "${hash:0:12}")
         pactl list sink-inputs | while read -r line
         do
+            line=${line##*( )}
             case "${line}" in
                 (Sink?Input*)
-                    # ^^^ The anchor, line 1
-                    index="${line:12}"
-                    echo "$index"
-                    while read -r line
-                    do
-                        # Strip any whitespace indentation.
-                        line=${line##*( )}
-                        case "${line}" in
-                            (media?name*)
-                                idxtitle="${line:14}"
-                                idxtitle="${idxtitle%?}"
-                                idxhash=$(echo "${idxtitle}" | md5sum)
-                                idxkey=$(printf "%s%s" "str" "${idxhash:0:12}")
-                                echo "->$title<->$idxtitle<- $key $idxkey"
-                                if [ "${idxtitle}" = "${title}" ]; then
-                                    cmd="${audioactions["$idxkey"]}"
-                                    cmd="${cmd/XYZZY/$index}"
-                                    eval "${cmd}"
-                                    return 0
-                                fi
-                                ;;
-                        esac
-                    done
+                    # ^^^ Sync to this line.
+                    index="${line/*#/}"
+                    ;;
+                (media?name*)
+                    # Remove enclosing double quotes.
+                    idxtitle="${line:14}"
+                    idxtitle="${idxtitle%?}"
+                    idxhash=$(echo "${idxtitle}" | md5sum)
+                    idxkey=$(printf "%s%s" "str" "${idxhash:0:12}")
+                    echo "->$title<->$idxtitle<- $key $idxkey"
+                    if [ "${idxtitle}" = "${title}" ]; then
+                        cmd="${audioactions["$idxkey"]}"
+                        cmd="${cmd/XYZZY/$index}"
+                        eval "${cmd}"
+                        echo "COMMAND ${cmd}"
+                        return 0
+                    fi
+                    ;;
             esac
         done
     done
@@ -198,6 +209,9 @@ case "_$1" in
         ;;
     (_update)
         update
+        ;;
+    (_aainsert)
+        aainsert "${*:2}"
         ;;
 esac
 

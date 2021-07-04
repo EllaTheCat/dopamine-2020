@@ -40,7 +40,6 @@ exec --no-startup-id $HOME/local/bin/my-usb-disks spindown all
 # Authenticated automatically by '/etc/sudoers.d/shevek'.
 # Do not use dunst if you use this.
 # The Bluetooth icon should appear in xfce4-panel.
-
 exec --no-startup-id sudo systemctl restart bluetooth
 exec --no-startup-id sudo modprobe btusb
 
@@ -56,12 +55,11 @@ set $file "command"
 # script) as we already do via the command prompt.
 #
 # These are the last commands to be invoked. The minimum delay is 30s
-# so that i3config can complete. (30,35,40) defines a 5 second delay
-# between successive commands being actioned, and a 30 second wait in
-# order to let things settle down a bit.
+# so that i3config can complete.
 exec --no-startup-id sleep 30s && echo 'tv' > $dir/$file
-exec --no-startup-id sleep 35s && echo 'g0' > $dir/$file
-exec --no-startup-id sleep 40s && echo 'e0' > $dir/$file
+exec --no-startup-id sleep 34s && echo 'f0' > $dir/$file
+exec --no-startup-id sleep 38s && echo 'g0' > $dir/$file
+exec --no-startup-id sleep 42s && echo 'e0' > $dir/$file
 
 #
 # EXECUTABLE SETTINGS END HERE.
