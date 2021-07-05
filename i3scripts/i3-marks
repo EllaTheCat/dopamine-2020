@@ -60,24 +60,10 @@ commandalias()
 # management is a planned feature.
 #
 
-# shellcheck disable=SC2034
-declare -A  audioactions=(
-    # Ant-Man.
-    ["str5cc7e6ef20c9"]="pactl set-sink-input-mute XYZZY toggle"
-    ["str33ace9ae71db"]="pactl set-sink-input-mute XYZZY toggle"
-)
-
-aainsert ()
-{
-    sleep 7s
-    title=$(xdotool getwindowfocus getwindowname)
-    hash=$(echo "$title" | md5sum)
-    key=$(printf "%s%s" "str" "${hash:0:12}")
-    audioactions["$key"]="$action"
-}
+###INSERT_APPS01_HERE###
 
 #
-# Obtain the titles of thw windows in the current workspace.
+# Obtain the titles of the windows in the current workspace.
 #
 playing()
 {
@@ -104,6 +90,7 @@ playing()
                     idxkey=$(printf "%s%s" "str" "${idxhash:0:12}")
                     echo "->$title<->$idxtitle<- $key $idxkey"
                     if [ "${idxtitle}" = "${title}" ]; then
+                        # shellcheck disable=SC2154
                         cmd="${audioactions["$idxkey"]}"
                         cmd="${cmd/XYZZY/$index}"
                         eval "${cmd}"
@@ -209,9 +196,6 @@ case "_$1" in
         ;;
     (_update)
         update
-        ;;
-    (_aainsert)
-        aainsert "${*:2}"
         ;;
 esac
 
