@@ -1,10 +1,11 @@
 # -*- Mode: Shell-script -*-
 
 declare -A audioactions=(
-    ["str5cc7e6ef20c9"]="pactl set-sink-input-mute XYZZY 0"
-    ["str33ace9ae71db"]="pactl set-sink-input-mute XYZZY 0"
-    ["str7293250b039c"]="pactl set-sink-input-mute XYZZY 0"
-    )
+    ["str5cc7e6ef20c9"]="pactl set-sink-input-mute XYZZY_ARGS"
+    ["str33ace9ae71db"]="pactl set-sink-input-mute XYZZY_ARGS"
+    ["str337069dc07c6"]="pactl set-sink-input-mute XYZZY_ARGS"
+)
 
-
-# Ant-Man. Ant-Man & The Wasp. Rampage
+#
+# Done.
+#
