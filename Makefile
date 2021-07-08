@@ -204,8 +204,6 @@ $(I3BIN)/i3-marks: \
 	$(I3SCRIPTS)/i3-marks.log \
 	i3-config.d/apps01
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-marks $(I3BIN)
-	@sed -e '/###INSERT_APPS01_HERE###/ {' -e 'r i3-config.d/apps01' -e 'd' -e '}' \
-         -i   $(I3BIN)/i3-marks
 	@touch restart
 
 $(I3SCRIPTS)/i3-marks.log: $(I3SCRIPTS)/i3-marks

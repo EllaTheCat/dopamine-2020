@@ -50,89 +50,9 @@ commandalias()
     # marks, we can add another listener at the end like this, and it
     # could add yet another, etc.
 
-    (playing;floating) &
+    (floating) &
 }
 
-
-#
-# config.d apps01 table
-#
-# Using a table (easily) generted offline, for each window in the
-# current workspace, derive a key from the window title, lookup a
-# "pactl' command (template), list the audio sinks and find one with
-# the same title to obtain the index used by pactl and execute the
-# command, eg to unmute the audio associated with the selected
-# window. Prepare but do not invoke the commmand to eg mute the
-# audio. The table may have mute commands for other windows, invoke
-# these and remove them from the table, then add the mute commmand for
-# the selected window to the table.
-#
-
-###INSERT_APPS01_HERE###
-
-#
-# Unmute audio on a registered window, mute other registered windows.
-#
-playing()
-{
-    # shellcheck disable=SC2034
-    for w in $(xdotool search --onlyvisible --desktop \
-                       "$(xprop -notype -root _NET_CURRENT_DESKTOP | \
-                                                        cut -c 24-)" "" 2>/dev/null) ; do
-        title=$(xdotool getwindowname "$w")
-        hash=$(echo "$title" | md5sum)
-        key=$(printf "%s%s" "str" "${hash:0:12}")
-        pactl list sink-inputs | while read -r line
-        do
-            # Remove whitespace at start of indented lines.
-            line=${line##*( )}
-            case "${line}" in
-                (Sink?Input*)
-                    # ^^^ Sync to this line. Leave only the digits.
-                    index="${line/*#/}"
-                    ;;
-                (media?name*)
-                    # idxtitle has enclosing double quotes, title does
-                    # not so remove the quotes in the next two lines.
-                    idxtitle="${line:14}"
-                    idxtitle="${idxtitle%?}"
-                    idxhash=$(echo "${idxtitle}" | md5sum)
-                    idxkey=$(printf "%s%s" "str" "${idxhash:0:12}")
-                    if [ "${idxtitle}" = "${title}" ]; then
-                        # shellcheck disable=SC2154
-                        cmd="${audioactions[$idxkey]}"
-                        # XYZZY_ prefix facilitates substitutions.
-                        cmd0="${cmd/XYZZY_ARGS/$index 0}"
-                        cmd1="${cmd/XYZZY_ARGS/$index 1}"
-                        echo "COMMAND 0 ${cmd0}"
-                        eval "${cmd0}"
-                        echo "${#audioactions[*]} entries 0"
-                        # The pending mute operations for windows
-                        # other than this one will be run once.
-                        for key in "${!audioactions[*]}"; do
-                            echo "Trying mute key $key"
-                            if [ "${key:0:3}" = "rst" ]; then
-                                echo "COMMAND 1 ${cmd1}"
-                                eval "${cmd1}"
-                                undef audioactions["${key}"]
-                            fi
-                        done
-                        echo "${#audioactions[*]} entries 1"
-                        # Stash the cmd1 that undoes cmd0, preserving
-                        # the index, mark it as run-once-only belongs
-                        # to this window.
-                        idxkey="${idxkey}/str/rst/}"
-                        audioactions["${idxkey}"]="${cmd1}"
-                        echo "${#audioactions[*]} entries 2"
-                        return 0
-                    else
-                        echo "${#audioactions[*]} entries ?"
-                    fi
-                    ;;
-            esac
-        done
-    done
-}
 
 #
 # If a workspace is empty and a terminal is launched from there, the
