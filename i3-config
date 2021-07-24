@@ -70,7 +70,10 @@ set $i3inputfont "pango:DejaVu Sans 11"
 # Refactoring the associated script(s) might require stubs.
 set $stub nop
 
-set $compton compton -b --config ~/.config/compton.conf
+# Conmmands to respectively invoke and kill a compositor which I need
+# to be OFF by default in case the Ubuntu Software Updater appears.
+set $compositor exec --no-startup-id compton -b --config ~/.config/compton.conf
+set $nocompositor exec --no-startup-id killall compton
 
 # This script parses the installed i3 config file.
 set $help exec --no-startup-id xfce4-terminal -T Bindings -x /bin/bash -c \

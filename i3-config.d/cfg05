@@ -46,9 +46,11 @@ mode "Secondary" {
     bindsym d $default, $i3mouse disable
     bindsym e $default, $i3mouse enable
 
-    # G for graphics. Manual commands for evaluation
-    bindsym g $default, exec --no-startup-id $compton
-    bindsym j $default, exec --no-startup-id killall compton
+    # Compositor enable and disable bindings. G evokes "3D >g<raphics
+    # hardware acceleration". J sounds like G but unlike G is not in
+    # the aforementioned phrase.
+    bindsym g $default, $compositor
+    bindsym j $default, $nocompositor
 
     # Set modifiers with 'xcape', set CapsLock to Control,
     # mimic US layout on UK keyboard.
