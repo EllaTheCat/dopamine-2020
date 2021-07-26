@@ -65,6 +65,7 @@ for_window [class="Display"] floating enable;
 for_window [class="Display-im6"] floating enable;
 for_window [class="Display-im6.q16"] floating enable;
 for_window [title="Software Updater"] floating enable, $nocompositor;
+for_window [title="Live Caption"] floating enable;
 
 # Windows that look'n'feel better when tiled.
 for_window [title="Bluetooth Devices"] floating disable
