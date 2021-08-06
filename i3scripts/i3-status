@@ -14,7 +14,7 @@ do
     eval "$(xdotool getmouselocation --shell)"
     ccmt='cc offline'
     if [ "$(ping -c 1 -W 1 192.168.1.114 | grep -c "1 received")" -ne 0 ]; then
-        ccmt="cc $(ssh cheesecake vcgencmd measure_temp)"
+        ccmt="cc $(ssh cheesecake /opt/vc/bin/vcgencmd measure_temp)"
     fi
     echo "| cursor $X $Y | compositor ${compositor} | ${ccmt} | webcam ${wcam} | mic ${wmic} ${umic} ${rmic} | ${line}" || exit 1
 done
