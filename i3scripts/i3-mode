@@ -37,6 +37,11 @@ case "$1" in
 	i3-msg -t subscribe  '[ "window" ]'
 	i3-msg "unmark Secondary"
 	;;
+    (*)
+        # This is the equivalent of the default case in 'C'.
+        # This shouldn't ever happen but I've seen it occur.
+        i3-msg 'mode "default"'
+        ;;
 esac
 
 #
