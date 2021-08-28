@@ -93,6 +93,10 @@ bindsym $mod+z move workspace to output $lmon
 bindsym $mod+x move workspace to output $cmon
 bindsym $mod+c move workspace to output $rmon
 
+# EllaTheCat support for large|small floating windows.
+bindsym --release  $mod+Control+space       floating enable, resize set 60 ppt 60 ppt, move position center;
+bindsym --release  $mod+Control+Shift+space floating enable, resize set 30 ppt 30 ppt, move position center;
+
 #
 # CLASSIC BINDINGS END HERE.
 #
