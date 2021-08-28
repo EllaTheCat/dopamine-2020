@@ -5,25 +5,29 @@
 
 
 #
-# 2021-01-28: hd-idle takes sda/sdb/sdc/sdd argument(s) but the syatem
+# 2021-08-26: I now have just the one external USB drive 'banana'
+# connected to my machine 'quietpc'.
+#
+# 2021-01-28: hd-idle takes sda/sdb/sdc/sdd argument(s) but the system
 # no longer guarantees how these map to drives.
 #
-# Replace hardcoded names {sdc,sdd} with global variables of the same
-# name but with the modified name as the value.
-#
-sdc=$(df -h | grep "usb-Seagate_M3_Portable_BFF77E010D000086-0:0-part1" \
-          | awk '{print $1}')  # Banana 1T byte.
-sdd=$(df -h | grep "usb-Seagate_M3_Portable_NM14ATY5-0:0-part2" \
-          | awk '{print $1}')  # Tabasco 4T byte.
-sdc=${sdc:5:3}
-sdd=${sdd:5:3}
+
+# The value of the variable matches sd[abcd] on my machine, with its one
+# solid state drive and two hard drives, and is likely to be 'sdd', but
+# we play safe and interrogate. The identify option tells us the value.
+banana=$(df -h | grep "usb-Seagate_M3_Portable_BFF77E010D000086-0:0-part1")
+banana=${banana:5:3}
 
 #
-# Set auto spindown times.
+# Set auto spindown time.
 #
 configure ()
 {
-   sudo  /usr/sbin/hd-idle -i 0 -a "${sdc}" -i 1200 -a "${sdd}" -i 1200
+    case "$1" in
+        (banana)
+            sudo /usr/sbin/hd-idle -i 0 -a "${banana}" -i 1200
+            ;;
+    esac
 }
 
 #
@@ -32,40 +36,11 @@ configure ()
 spindown ()
 {
     case "$1" in
-        (all)
-            sudo /usr/sbin/hd-idle -t "${sdc}"
-            sudo /usr/sbin/hd-idle -t "${sdd}"
+        (banana)
+            sudo /usr/sbin/hd-idle -t "${banana}"
             ;;
-        (tabasco)
-            # This is the only command affecting just one drive.
-            # Don't bloat this script with non-essentials.
-            # Prefer familiar names like 'tabasco'in commands.
-            sudo /usr/sbin/hd-idle -t "${sdd}"
-            ;;
-
     esac
 }
-
-#
-# Perform a tidy exit from i3wm and xubuntu.
-#
-# It seems that hd-idle must be called soon after umount to ensure
-# that the USB disks stay spun down when the PC shuts down.
-#
-tidyexit()
-{
-    sudo  /usr/sbin/hd-idle -i 0 -a "${sdc}" -i 1200 -a "${sdd}" -i 1200
-    sleep 10
-    sudo umount /mnt/usb-Seagate_M3_Portable_BFF77E010D000086-0:0-part1
-    sudo umount /mnt/usb-Seagate_M3_Portable_NM14ATY5-0:0-part2
-    sudo /usr/sbin/hd-idle -t "${sdc}"
-    sudo /usr/sbin/hd-idle -t "${sdd}"
-    # The "--halt" option should perform quietpc shutdown without the
-    # dialog that appears without it, BUT it also saves the session.
-    sleep 30
-    xfce4-session-logout
-}
-
 
 #
 # Start here.
@@ -74,14 +49,15 @@ tidyexit()
 # Do a "belt and braces" check for "safe" script arguments because
 # "sudo" and "/etc/sudoers.d" are involved.
 case "$1" in
-    (configure|dismount)
-        "$1"
-        ;;
-    (spindown|tidyexit)
-        "$1" "$2"
+    (configure|spindown)
+        case "$2" in
+            (banana)
+                "$1" "$2"
+                ;;
+        esac
         ;;
     (identify)
-        echo "Banana sdc -> ${sdc} Tabasco sdd -> ${sdd}"
+        echo "banana -> ${banana}"
         ;;
 esac
 

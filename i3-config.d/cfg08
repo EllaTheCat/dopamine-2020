@@ -9,18 +9,11 @@
 #
 # The router and the access point share a workspace.
 for_window [title="Plusnet Hub Manager"] \
-           move container to workspace f7, $i3cmdprompt nomenu ff;
+           move container to workspace ip, workspace --no-auto-back-and-forth ip;
 for_window [title="TL-WR710N"] \
-           move container to workspace f7, $i3cmdprompt nomenu ff;
-# The tvheadend browser clients share a workspace.
-for_window [title="tvh 33"] \
-           move container to workspace f8, $i3cmdprompt nomenu ff;
-for_window [title="tvh 114"] \
-           move container to workspace f8, $i3cmdprompt nomenu ff;
-for_window [title="reddit"] \
-           move container to workspace f6, $i3cmdprompt nomenu ff;
+           move container to workspace ip, workspace --no-auto-back-and-forth ip;
 for_window [title="WhatsApp"] \
-           move container to workspace f9, $i3cmdprompt nomenu ff;
+           move container to workspace wa, workspace --no-auto-back-and-forth wa;
 
 # Microphones' defaults (see key bindings). 1 = mute here.
 exec --no-startup-id pactl set-source-mute $usbaudiosource 1
@@ -32,9 +25,8 @@ exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
 exec --no-startup-id pactl set-default-sink $analogaudiosink
 
 # Spindown at startup by default. Explicit PATH required here.
-# 2021-01-28: Removed support for spindown of individual disks.
-exec --no-startup-id $HOME/local/bin/my-usb-disks configure
-exec --no-startup-id $HOME/local/bin/my-usb-disks spindown all
+exec --no-startup-id $HOME/local/bin/my-usb-disks configure banana
+exec --no-startup-id $HOME/local/bin/my-usb-disks  spindown banana
 
 # My "xubuntu fix broken bluetooth" incantation.
 # Authenticated automatically by '/etc/sudoers.d/shevek'.
