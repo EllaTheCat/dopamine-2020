@@ -16,7 +16,12 @@ do
     if [ "$(ping -c 1 -W 1 192.168.1.114 | grep -c "1 received")" -ne 0 ]; then
         ccmt="cc $(ssh cheesecake /opt/vc/bin/vcgencmd measure_temp)"
     fi
-    echo "| cursor $X $Y | compositor ${compositor} | ${ccmt} | webcam ${wcam} | mic ${wmic} ${umic} ${amic} | ${line}" || exit 1
+    # Use the (truncated) UUID to obtain the device.
+    titan=$(df -h | grep f9fd1893)
+    mimas=$(df -h | grep 94bd806f)
+    titan=$(sudo /usr/sbin/hddtemp "${titan:0:8}" | awk '{print $3}')
+    mimas=$(sudo /usr/sbin/hddtemp "${mimas:0:8}" | awk '{print $3}')
+    echo "| cursor $X $Y | compositor ${compositor} | ${ccmt} | webcam ${wcam} | mic ${wmic} ${umic} ${amic} | ${mimas} ${titan} | ${line}" || exit 1
 done
 
 #
