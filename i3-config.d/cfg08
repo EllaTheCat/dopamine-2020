@@ -52,6 +52,7 @@ exec --no-startup-id sleep 30s && echo 'tv' > $dir/$file
 exec --no-startup-id sleep 34s && echo 'f0' > $dir/$file
 exec --no-startup-id sleep 38s && echo 'g0' > $dir/$file
 exec --no-startup-id sleep 42s && echo 'e0' > $dir/$file
+exec --no-startup-id sleep 46s && echo 'ds' > $dir/$file
 
 #
 # EXECUTABLE SETTINGS END HERE.

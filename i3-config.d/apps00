@@ -27,7 +27,7 @@ declare -A wsapps=(
     ["ap"]="impress"
     ["tb"]="thunderbird"
     ["md"]="meld"
-    ["s7"]="xfce4-terminal -e scrcpy"
+    ["sc"]="xfce4-terminal -e scrcpy"
     ["sk"]="skype"
     ["sp"]="spotify"
     ["sy"]="synaptic-pkexec"
@@ -40,6 +40,7 @@ declare -A not_wsapps=(
     ["em"]="emacsclient -c"
     ["ff"]="firefox"
     ["gc"]="google-chrome"
+    ["ds"]="dropbox start"
     ["th"]="exo-open --launch FileManager"
     ["vc"]="pavucontrol"
 )    #  ---------------------------------------------------------------- #
