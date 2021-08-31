@@ -8,7 +8,7 @@
 
 case "$(hostname)" in
   (quietpc)
-  tvhpath=/home/${USER}/Zebra/packages/tvheadend/tvheadend
+  tvhpath=/home/${USER}/hdd-Mimas/packages/tvheadend/tvheadend
   cd "${tvhpath}" || exit
   # shellcheck disable=SC2154
   xfce4-terminal --title="tvh-server-$(hostname)" -x ./build.linux/tvheadend --noacl
