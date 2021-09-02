@@ -126,8 +126,8 @@ mode "restart" {
 # SETTINGS
 #
 
-# Desktop wallpaper, sometimes it does nothing.  Try again later.
-exec_always --no-startup-id nitrogen --restore
+# Desktop wallpaper. 'nitrogen' broke 2021-09-02.
+exec_always --no-startup-id ${HOME}/.fehbg
 
 ###INSERT_CFG07_HERE###
 
