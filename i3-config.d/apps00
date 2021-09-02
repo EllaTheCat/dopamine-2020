@@ -34,6 +34,7 @@ declare -A wsapps=(
     ["vb"]="virtualbox"
     ["tv"]="my-tvheadend start"
     ["wc"]="cheese"
+    ["av"]="gupnp-av-cp"
 )    #  ---------------------------------------------------------------- #
 
 declare -A not_wsapps=(
@@ -43,4 +44,6 @@ declare -A not_wsapps=(
     ["ds"]="dropbox start"
     ["th"]="exo-open --launch FileManager"
     ["vc"]="pavucontrol"
+    ["zx"]="i3-msg 'workspace 1' && sleep 2 && zenity --info --text='showing desktop wallpaper' 2&>1 > /dev/null"
+    ["xz"]="i3-msg 'workspace 2' && sleep 2 && zenity --info --text='showing desktop wallpaper' 2&>1 > /dev/null"
 )    #  ---------------------------------------------------------------- #
