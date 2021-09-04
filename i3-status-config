@@ -13,6 +13,7 @@ general {
 
 order += "disk /"
 order += "disk /mnt/94bd806f-4aa9-4514-b2fc-9688182fa571"
+order += "disk /mnt/f9fd1893-75d3-4034-ab58-dffb88063e13"
 ### order += "wireless _first_"
 ### order += "ethernet _first_"
 ### order += "battery all"
@@ -53,6 +54,10 @@ disk "/" {
 }
 
 disk "/mnt/94bd806f-4aa9-4514-b2fc-9688182fa571" {
+        format = "%avail"
+}
+
+disk "/mnt/f9fd1893-75d3-4034-ab58-dffb88063e13" {
         format = "%avail"
 }
 
