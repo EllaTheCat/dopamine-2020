@@ -29,12 +29,17 @@ numeric()
 # - Note: These marks could and should be hidden by prefixing with an
 # - underscore. They are exposed for debug and test convenience only.
 #
+# - 2021-09-08: The code between #if 0 / #endif has long been thought
+# - to be unnecessary, so it has been "com mented out" pending review
+# - and removal.
+#
 commandalias()
 {
     cws=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused).name')
+    #if 0
     windowid=$(printf "0x%x" "$(xdotool getwindowfocus)")
     # Fetch all marks in a list and walk that list, ignoring any mark
-    # that isn't a "workspace mark as indicated by a lowercase letter
+    # that isn't a workspace mark as indicated by a lowercase letter
     # followed by another or a digit.  Remove any matching workspace
     # mark on the current window. Numeric marks (two digits) remain.
     for mark in $(i3-msg -t get_marks | \
@@ -42,8 +47,8 @@ commandalias()
     do
         i3-msg "[id=\"${windowid}\"] unmark ${mark}"
     done
-    # Apply the new workspace mark, replacing the old one. This may
-    # mean that the brute force loop above is utterly superfluous!
+    #endif
+    # Apply the new workspace mark, replacing the old one.
     i3-msg "[id=\"${windowid}\"] mark --add --replace ${cws}"
 
     # Having set up a window subscription and a listener for updating
