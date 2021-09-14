@@ -93,8 +93,9 @@ $(I3BIN):
 $(I3CFG):  i3-config \
 	i3-config.d/cfg00 i3-config.d/cfg01 i3-config.d/cfg02 \
 	i3-config.d/cfg03 i3-config.d/cfg04 i3-config.d/cfg05 \
-	i3-config.d/cfg07 i3-config.d/cfg08 \
-	i3-config.d/cfg09
+	i3-config.d/cfg07 i3-config.d/cfg08 i3-config.d/cfg09 \
+	i3-config.d/apps00 \
+	i3-config.d/apps01
 	@install -m $(CFGMODE)  i3-config $@
 	@sed -e '/###INSERT_CFG00_HERE###/ {' -e 'r i3-config.d/cfg00' -e 'd' -e '}' \
          -i   $(I3CFG)

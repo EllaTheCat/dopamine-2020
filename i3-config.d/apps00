@@ -35,6 +35,7 @@ declare -A wsapps=(
     ["tv"]="my-tvheadend start"
     ["wc"]="cheese"
     ["av"]="gupnp-av-cp"
+    ["hb"]="${HOME}/local/public/bin/handbrake-cpulimit"
 )    #  ---------------------------------------------------------------- #
 
 declare -A not_wsapps=(
