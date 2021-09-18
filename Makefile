@@ -45,6 +45,7 @@ $(I3BIN)/i3-command-prompt \
 $(I3BIN)/i3-config-scripts \
 $(I3BIN)/i3-file-watcher \
 $(I3BIN)/i3-dispatcher \
+$(I3BIN)/i3-emacsclient \
 $(I3BIN)/i3-focus-app-by-alias \
 $(I3BIN)/i3-launcher \
 $(I3BIN)/i3-keyboard \
@@ -163,6 +164,14 @@ $(I3BIN)/i3-dispatcher: \
 
 $(I3SCRIPTS)/i3-dispatcher.log: $(I3SCRIPTS)/i3-dispatcher
 	@shellcheck $(I3SCRIPTS)/i3-dispatcher > $@
+
+$(I3BIN)/i3-emacsclient: \
+	$(I3SCRIPTS)/i3-emacsclient \
+	$(I3SCRIPTS)/i3-emacsclient.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-emacsclient $(I3BIN)
+
+$(I3SCRIPTS)/i3-emacsclient.log: $(I3SCRIPTS)/i3-emacsclient
+	@shellcheck $(I3SCRIPTS)/i3-emacsclient > $@
 
 # This rule immediately modifies the recently installed file.
 $(I3BIN)/i3-focus-app-by-alias: \

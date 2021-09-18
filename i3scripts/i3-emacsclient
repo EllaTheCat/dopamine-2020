@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# This is a helper script. In "config.d/apps00" various two character
+# commands each launch or focus a single program. Extending this to
+# launch two file manager instances in a workspace was trivial, but
+# adding terminals to an emacsclient workspace wasn't! Calling this
+# script from apps00 makes things easier. The apps that should run
+# alongside emacsclient are started in a subshell that isn't blocked
+# by emacsclient.
+
+# The $1 parameter is a hook for reusing this script to add other apps
+# alongside emacsclient.
+
+case "$1" in
+    ('t')
+        # Two terminals, one above the other, to the right of Emacs,
+        # Emacs has focus.
+        (sleep 3 && i3-msg '[title="Emacs*"] focus') &
+        (sleep 2 && xfce4-terminal && \
+             i3-msg "splitv, exec xfce4-terminal") &
+        ;;
+esac
+emacsclient -c
+
+#
+# Done.
+#

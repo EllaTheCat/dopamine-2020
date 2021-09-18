@@ -46,14 +46,17 @@ set $file "command"
 # We should be able to focus or launch from i3 config (or a bash
 # script) as we already do via the command prompt.
 #
-# These are the last commands to be invoked. The minimum delay is 30s
-# so that i3config can complete.
-exec --no-startup-id sleep 30s && echo 'tv' > $dir/$file
-exec --no-startup-id sleep 34s && echo 'f0' > $dir/$file
-exec --no-startup-id sleep 38s && echo 'g0' > $dir/$file
-exec --no-startup-id sleep 42s && echo 'e0' > $dir/$file
-exec --no-startup-id sleep 46s && echo 'av' > $dir/$file
-exec --no-startup-id sleep 50s && echo 'ds' > $dir/$file
+# These are the last commands to execute. They are invoked and are
+# waiting to execute, meanwhile the remaining commands and scripts of
+# 'i3-config' are invoked and executed. At startup the user sees the
+# 'wm' workspace of 'i3-config-scripts appear, and after a modest
+# delay, the workspaces specified below appear relatively quickly..
+exec --no-startup-id sleep 21s && echo 'tv' > $dir/$file
+exec --no-startup-id sleep 24s && echo 'f0' > $dir/$file
+exec --no-startup-id sleep 27s && echo 'g0' > $dir/$file
+exec --no-startup-id sleep 30s && echo 't2' > $dir/$file
+exec --no-startup-id sleep 33s && echo 'ds' > $dir/$file
+exec --no-startup-id sleep 36s && echo 'e0' > $dir/$file
 
 #
 # EXECUTABLE SETTINGS END HERE.
