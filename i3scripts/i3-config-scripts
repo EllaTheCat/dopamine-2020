@@ -11,17 +11,20 @@
 # and restarting i3 itself. This has been encapsulated in the command
 # 'i3-config-scripts restart'; calling any other command is trouble.
 #
+# 2021-09-19: The hardcoded paths to i3-marks and i3-commands are a
+# maintenance burden.
+#
 case "$1" in
     (start)
         case "$2" in
             (marks)
                 (xfce4-terminal -T "$(date +%T) marks" \
-                                -x "${HOME}/local/bin/i3-marks" update) &
+                                -x "${HOME}/local/i3/bin/i3-marks" update) &
                 i3-marks numeric
                 ;;
             (commands)
                 (xfce4-terminal -T "$(date +%T) commands" \
-                                -x "${HOME}/local/bin/i3-file-watcher") &
+                                -x "${HOME}/local/i3/bin/i3-file-watcher") &
                 i3-marks numeric
                 ;;
         esac

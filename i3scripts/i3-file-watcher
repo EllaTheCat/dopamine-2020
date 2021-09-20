@@ -24,8 +24,9 @@ chmod 700 "$i3/execute"
 
 # shellcheck disable=SC2016
 echo 'eval /bin/false' > "${i3}/command"
+# Full path to i3-dispatcher.
 # shellcheck disable=SC2016
-echo 'eval $HOME/local/bin/i3-dispatcher forward' \
+echo 'eval $HOME/local/i3/bin/i3-dispatcher forward' \
      '$(cat /dev/shm/$USER/i3/command)' > "${i3}/execute"
 # Be careful! Use no terminal here! Use no ampersand here!
 inotify-hookable --watch-files "${i3}"/command --on-modify-command "${i3}"/execute
@@ -33,3 +34,4 @@ inotify-hookable --watch-files "${i3}"/command --on-modify-command "${i3}"/execu
 #
 # Done.
 #
+jh

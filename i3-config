@@ -31,19 +31,21 @@ set $mod Mod4
 # without having to precisely position the mouse on window edges.
 floating_modifier Mod4
 
-set $default exec --no-startup-id ~/local/bin/i3-mode default
-set $primary exec --no-startup-id ~/local/bin/i3-mode Primary
-set $secondary exec --no-startup-id ~/local/bin/i3-mode Secondary
+set $default exec --no-startup-id ~/local/i3/bin/i3-mode default
+set $primary exec --no-startup-id ~/local/i3/bin/i3-mode Primary
+set $secondary exec --no-startup-id ~/local/i3/bin/i3-mode Secondary
 
 # Helpers. Embedding the path explicitly is belt and braces.
-set $i3cmdprompt exec --no-startup-id ~/local/bin/i3-command-prompt
-set $i3configscripts exec --no-startup-id ~/local/bin/i3-config-scripts
-set $i3dispatcher exec --no-startup-id ~/local/bin/i3-dispatcher
-set $i3filewatcher exec_always --no-startup-id ~/local/bin/i3-file-watcher
-set $i3marks exec --no-startup-id ~/local/bin/i3-marks
-set $i3mode exec --no-startup-id ~/local/bin/i3-mode
-set $i3mouse exec --no-startup-id ~/local/bin/i3-mouse
-set $i3listwindows exec --no-startup-id ~/local/bin/i3-list-windows
+set $i3cmdprompt exec --no-startup-id ~/local/i3/bin/i3-command-prompt
+set $i3configscripts exec --no-startup-id ~/local/i3/bin/i3-config-scripts
+set $i3dispatcher exec --no-startup-id ~/local/i3/bin/i3-dispatcher
+set $i3filewatcher exec_always --no-startup-id ~/local/i3/bin/i3-file-watcher
+set $i3marks exec --no-startup-id ~/local/i3/bin/i3-marks
+set $i3mode exec --no-startup-id ~/local/i3/bin/i3-mode
+set $i3mouse exec --no-startup-id ~/local/i3/bin/i3-mouse
+set $i3listwindows exec --no-startup-id ~/local/i3/bin/i3-list-windows
+# A wrapper around "i3status". Referenced in the i3bar declaration.
+set $i3barstatuscommand ~/local/i3/bin/i3-status
 
 # Use 'xrandr' with no arguments to list monitor names and geometry.
 # Assign outputs to monitors from left to right, repeat last assignment,
@@ -136,8 +138,8 @@ exec_always --no-startup-id ${HOME}/.fehbg
 ###INSERT_CFG09_HERE###
 
 # Additional Menu and Escape keys.
-exec_always --no-startup-id ~/local/bin/i3-keyboard xmodmapkeys
-exec_always --no-startup-id ~/local/bin/i3-keyboard xcapekeys
+exec_always --no-startup-id ~/local/i3/bin/i3-keyboard xmodmapkeys
+exec_always --no-startup-id ~/local/i3/bin/i3-keyboard xcapekeys
 
 # Various diagnostic terminals for "services".
 assign [title="marks$"] wm

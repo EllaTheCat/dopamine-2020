@@ -1,5 +1,5 @@
 #
-# Makefile
+# Makefile for dopamine-2020
 #
 # Requires : shellcheck
 #
@@ -13,10 +13,9 @@ COMPOSITORCFG=$(HOME)/.config/compton.conf
 
 # The i3status config file to be installed.
 I3STATUSCFG=$(HOME)/.i3status.conf
-# Directory where helper scripts will be installed.  I've tried to use
-# absolute paths that take this into account so users don't have to.
-# Including this directory on your ${PATH} is recommended.
-I3BIN=$(HOME)/local/bin
+# Directory where helper scripts will be installed.
+# 2021-09-19: "${HOME}/local/bin" is now deprecated.
+I3BIN=$(HOME)/local/i3/bin
 
 # The dunst config file to be installed.
 NOTIFIERCFG=${HOME}/.config/dunst/dunstrc
@@ -60,7 +59,7 @@ $(I3BIN)/i3-recorder \
 $(I3BIN)/i3-status
 
 .installextras: \
-$(I3BIN)/my-phonecall $(I3BIN)/my-tvheadend $(I3BIN)/my-usb-disks
+$(I3BIN)/my-tvheadend $(I3BIN)/my-usb-disks
 
 .installflags: \
 reloaded \
