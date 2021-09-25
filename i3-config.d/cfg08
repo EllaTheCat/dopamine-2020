@@ -54,7 +54,7 @@ set $file "command"
 exec --no-startup-id sleep 21s && echo 'tv' > $dir/$file
 exec --no-startup-id sleep 24s && echo 'f0' > $dir/$file
 exec --no-startup-id sleep 27s && echo 'g0' > $dir/$file
-exec --no-startup-id sleep 30s && echo 't2' > $dir/$file
+exec --no-startup-id sleep 30s && echo 'ns' > $dir/$file
 exec --no-startup-id sleep 33s && echo 'ds' > $dir/$file
 exec --no-startup-id sleep 36s && echo 'e0' > $dir/$file
 

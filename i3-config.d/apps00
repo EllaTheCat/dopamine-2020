@@ -41,6 +41,8 @@ declare -A wsapps=(
     ["wc"]="cheese"
     ["av"]="gupnp-av-cp"
     ["hb"]="${HOME}/local/public/bin/handbrake-cpulimit"
+    ["ns"]="nautilus"
+
 )    #  ---------------------------------------------------------------- #
 
 declare -A not_wsapps=(
