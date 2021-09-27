@@ -8,8 +8,11 @@
 bindsym $mod+t  split h,exec --no-startup-id xfce4-terminal -T "xfce4-terminal"
 bindsym $mod+y  split v,exec --no-startup-id xfce4-terminal -T "xfce4-terminal"
 
-# kill focused window
+# Kill focused window.
 bindsym $mod+Shift+q kill
+# Kill focused floating window. When killing popups this cannot kill
+# the (tiled) parent (as can happen by accident).
+bindsym $mod+Shift+w [floating] kill
 
 # Start dmenu (a program launcher).
 bindsym $mod+d exec dmenu_run
