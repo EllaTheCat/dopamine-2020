@@ -83,13 +83,7 @@ mode "Primary" {
     bindsym semicolon floating toggle
     bindsym apostrophe focus mode_toggle
 
-    # When the phone rings, related images overlay both my monitors,
-    # this dismisses them with one keypress.
-    bindsym Return $default,\
-            [workspace="phonecall1"] kill, \
-            [workspace="phonecall2"] kill, \
-            focus output $lmon, workspace prev_on_output, \
-            focus output $cmon, workspace prev_on_output;
+    bindsym Return nop
 
     # Move workspace to another output.
     bindsym z $default, move workspace to output $lmon

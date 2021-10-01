@@ -17,10 +17,7 @@ mode "Secondary" {
 
     bindsym r nop
 
-    # Perform USB HDD housekeeping then xfce4-session-logout.
-    # My Maxtor 4 Tbyte drive is excessively prone to spinning up.
-    bindsym t exec --no-startup-id $HOME/local/bin/my-usb-disks tidyexit
-
+    bindsym t nop
     bindsym y nop
 
     bindsym i nop
@@ -74,12 +71,7 @@ mode "Secondary" {
 
     bindsym v nop
 
-    # Desktop background.
-    #  Here is the attribution for the images I use:
-    #  https://commons.wikimedia.org/wiki/
-    #  File:London_360%C2%B0_Panorama_from_the_London_Eye.jpg,
-    #  Photo by Gregg M. Erickson, cropped into overlapping 5760x1080 images.
-    bindsym n $default, exec --no-startup-id nitrogen --restore
+    bindsym n nop
 
     # All [m]onitors turn OFF. The mode does NOT change here.
     bindsym --release m exec --no-startup-id xset dpms force off
