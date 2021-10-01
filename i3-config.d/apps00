@@ -46,12 +46,13 @@ declare -A wsapps=(
 )    #  ---------------------------------------------------------------- #
 
 declare -A not_wsapps=(
+    ["tt"]="xfce4-terminal -T 'xfce4-terminal'"
     ["em"]="emacsclient -c"
     ["ff"]="firefox"
     ["gc"]="google-chrome"
     ["ds"]="dropbox start"
     ["th"]="exo-open --launch FileManager"
     ["vc"]="pavucontrol"
-    ["zx"]="i3-msg 'workspace 1' && sleep 2 && zenity --info --text='showing desktop wallpaper' 2&>1 > /dev/null"
-    ["xz"]="i3-msg 'workspace 2' && sleep 2 && zenity --info --text='showing desktop wallpaper' 2&>1 > /dev/null"
+    ["w1"]="i3-msg 'workspace 1' && sleep 2 && zenity --info --text='showing desktop wallpaper' 2&>1 > /dev/null"
+    ["w2"]="i3-msg 'workspace 2' && sleep 2 && zenity --info --text='showing desktop wallpaper' 2&>1 > /dev/null"
 )    #  ---------------------------------------------------------------- #
