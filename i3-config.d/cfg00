@@ -48,8 +48,13 @@ bindsym $mod+b split h
 # split in vertical orientation
 bindsym $mod+v split v
 
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+#
+# fullscreen toggle and fullscreen toggle global
+# I have only had to disable these because of my PD.
+# They work. I use Primary f and Primary g instead.
+#
+bindsym $mod+f nop
+bindsym $mod+g nop
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
