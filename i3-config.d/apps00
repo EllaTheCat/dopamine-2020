@@ -37,9 +37,8 @@ declare -A wsapps=(
     ["sp"]="spotify"
     ["sy"]="synaptic-pkexec"
     ["vb"]="virtualbox"
+    ["vm"]="vmplayer"
     ["tv"]="my-tvheadend start"
-    ["wc"]="cheese"
-    ["av"]="gupnp-av-cp"
     ["hb"]="${HOME}/local/public/bin/handbrake-cpulimit"
     ["ns"]="nautilus"
 
@@ -53,6 +52,13 @@ declare -A not_wsapps=(
     ["ds"]="dropbox start"
     ["th"]="exo-open --launch FileManager"
     ["vc"]="pavucontrol"
-    ["w1"]="i3-msg 'workspace 1' && sleep 2 && zenity --info --text='showing desktop wallpaper' 2&>1 > /dev/null"
-    ["w2"]="i3-msg 'workspace 2' && sleep 2 && zenity --info --text='showing desktop wallpaper' 2&>1 > /dev/null"
+    ["ww"]="i3-msg 'workspace 1' && sleep 0.2 && i3-msg 'workspace 2'"
+    ["wt"]="feh --no-fehbg --bg-tile --no-xinerama \
+            ${HOME}/local/private/share/fehbg.jpg"
+    ["wc"]="feh --no-fehbg --bg-center --no-xinerama \
+            ${HOME}/local/private/share/fehbg.jpg"
+    ["ws"]="feh --bg-scale --no-xinerama \
+            ${HOME}/local/public/share/fehbg.jpg"
+    ["wf"]="feh --bg-fill --no-xinerama \
+            ${HOME}/local/public/share/fuerte.jpg"
 )    #  ---------------------------------------------------------------- #
