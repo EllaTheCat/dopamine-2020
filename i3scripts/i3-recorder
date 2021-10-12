@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This module captures desktop video inside a clipping rectangle in
-# sync with ssociated audio. Resource usage is roughly proportional to
+# sync with associated audio. Resource usage is roughly proportional to
 # the rectangle area as defined by variables xy and wh.
 
 # Full HD on 2nd monitor counting from left to right is the default.
