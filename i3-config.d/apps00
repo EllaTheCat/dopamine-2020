@@ -52,7 +52,7 @@ declare -A not_wsapps=(
     ["ds"]="dropbox start"
     ["th"]="exo-open --launch FileManager"
     ["vc"]="pavucontrol"
-    ["ww"]="i3-msg 'workspace 1' && sleep 0.2 && i3-msg 'workspace 2'"
+    ["we"]="i3-msg 'workspace 1' && sleep 0.2 && i3-msg 'workspace 2'"
     ["wt"]="feh --no-fehbg --bg-tile --no-xinerama \
             ${HOME}/local/private/share/fehbg.jpg"
     ["wc"]="feh --no-fehbg --bg-center --no-xinerama \
@@ -60,7 +60,7 @@ declare -A not_wsapps=(
     ["ws"]="feh --bg-scale --no-xinerama \
             ${HOME}/local/public/share/fehbg.jpg"
     ["wf"]="feh --bg-fill --no-xinerama \
-            ${HOME}/local/public/share/fuerte.jpg"
+            ${HOME}/local/public/share/fehbg.png"
     ["wz"]="(zenity --info --text='workspace non-empty')&"
 
 )    #  ---------------------------------------------------------------- #
@@ -70,7 +70,7 @@ declare -A not_wsapps=(
 # shows how to 'save' such that the wallpaper is restored when i3
 # starts, the others are volatile because --no-fehbg is present.
 
-# The ww command exposes workspaces 1 and 2 together.  These are
+# The we command exposes workspaces 1 and 2 together.  These are
 # normally made inaccessible by the cfg03 double digit bindings for
 # workspaces 10 to 99. They are assigned to left and right outputs.
 
