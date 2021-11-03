@@ -59,7 +59,9 @@ set $analogaudiosink alsa_output.pci-0000_00_1b.0.analog-stereo
 ### $bluetoothaudiosink bluez_sink.00_01_01_00_12_CB
 set $bluetoothaudiosink bluez_sink.30_22_00_00_C7_F5.a2dp_sink
 set $hdmiaudiosink alsa_output.pci-0000_00_03.0.hdmi-stereo
-set $usbaudiosink alsa_output.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.analog-stereo
+### $usbaudiosink alsa_output.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.analog-stereo
+set $usbaudiosink=alsa_output.usb-Generic_USB2.0_Device_20121120222017-01.analog-stereo
+
 # Type 'pactl list sources' to list audio inputs.
 # Between 20.04 LTS and 16.04 LTS there are minor differences.
 set $webcamaudiosource alsa_input.usb-Alcor_Micro__Corp._TeckNet-02.mono-fallback

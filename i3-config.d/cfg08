@@ -50,7 +50,7 @@ set $file "command"
 # waiting to execute, meanwhile the remaining commands and scripts of
 # 'i3-config' are invoked and executed. At startup the user sees the
 # 'wm' workspace of 'i3-config-scripts appear, and after a modest
-# delay, the workspaces specified below appear relatively quickly.e
+# delay, the workspaces specified below appear relatively quickly.
 exec --no-startup-id sleep 21s && echo 'tv' > $dir/$file
 exec --no-startup-id sleep 23s && echo 'tt' > $dir/$file
 exec --no-startup-id sleep 24s && echo 'f0' > $dir/$file

@@ -33,11 +33,14 @@ bindsym KP_Multiply \
 bindsym KP_Delete \
         exec --no-startup-id pactl set-source-mute $analogaudiosource toggle
 
-# Volume controls.
+# Volume controls. The upper and smaller key is volume up, the lower
+# and larger key is volume down.
 bindsym KP_Add \
-        exec --no-startup-id pactl set-sink-volume $analogaudiosink +6%
+        exec --no-startup-id pactl set-sink-input-volume $usbaudiosink 14 -6%
 bindsym KP_Subtract \
-        exec --no-startup-id pactl set-sink-volume $analogaudiosink -6%
+        exec --no-startup-id pactl set-sink-input-volume $usbaudiosink 14 +6%
+# Footnote: In due course the hardcoded index number will be replaced
+# by a value whose key is the application name.
 
 #
 # NUMPAD BINDINGS END HERE.
