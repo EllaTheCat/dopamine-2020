@@ -55,9 +55,18 @@ commandalias()
     # marks, we can add another listener at the end like this, and it
     # could add yet another, etc.
 
+    (app_pulse_id)&
     (floating) &
 }
 
+#
+#
+#
+app_pulse_id()
+{
+    pactl list sink-inputs | grep Sink | head -1 | \
+        sed 's/Sink Input \#//g' > /dev/shm/"$USER"/i3/app-pulse-id
+}
 
 #
 # If a workspace is empty and a terminal is launched from there, the
