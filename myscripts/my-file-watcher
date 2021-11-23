@@ -12,7 +12,7 @@
 #
 
 case "$(arch)" in
-    (arm*)
+    (arm*|x86_64)
         # Create the directory and files. Set the strictest permissions.
         # Use the i3 directory structure regardless of window manager.
         i3=/dev/shm/pi/i3
@@ -36,7 +36,7 @@ case "$(arch)" in
         # Kill the running inotify-hookable and start another.
         pkill -f "inotify-hookable --watch-files $i3/command"
         # Be careful! Use no terminal here! Use no ampersand here!
-        inotify-hookable --watch-files "${i3}"/command --on-modify-command "${i3}"/command
+        inotify-hookable --watch-files "${i3}"/command --on-modify-command "${i3}"/execute
         ;;
 esac
 
