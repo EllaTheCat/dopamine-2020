@@ -59,8 +59,7 @@ $(I3BIN)/i3-recorder \
 $(I3BIN)/i3-status
 
 .installextras: \
-$(I3BIN)/my-tvheadend $(I3BIN)/my-usb-disks
-
+$(I3BIN)/my-tvheadend $(I3BIN)/my-usb-disks  $(I3BIN)/my-file-watcher
 .installflags: \
 reloaded \
 restarted

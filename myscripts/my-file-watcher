@@ -3,42 +3,38 @@
 # Writing to the $i3/command file causes the $i3/execute file to
 # evaluate the contents of the $i3/command file.
 #
-# This file is a standalone version of the i3-file-watcher file
-# for use with a Raspberry Pi 4B.
-#
+
+# Requires: inotify-hookable - a package provided by ubuntu and debian
+# distros. I have no idea how to provide it in Arch or Manjaro, sorry.
+
 
 #
 # Start here.
 #
 
-case "$(arch)" in
-    (arm*|x86_64)
-        # Create the directory and files. Set the strictest permissions.
-        # Use the i3 directory structure regardless of window manager.
-        i3=/dev/shm/pi/i3
-        mkdir -p "${i3}"
-        touch "$i3/command"
-        chmod 750 "$i3/command"
-        touch "$i3/execute"
-        chmod 700 "$i3/execute"
+# Create the directory and files. Set the strictest permissions.
+i3=/dev/shm/tasker
+mkdir -p "${i3}"
+touch "$i3/command"
+chmod 750 "$i3/command"
+touch "$i3/execute"
+chmod 700 "$i3/execute"
 
-        # Set the file contents. The command is initialised with a
-        # nop.  The execute command has to be expanded at dispatch
-        # time.  Single quotes ensure that the string is not expanded
-        # when copied into the execute file. Shellcheck doesn't think
-        # this is what we want so the warning is disabled. Note:
-        # "echo" joins its string arguments with a space.
+# Set the file contents. The command is initialised with a
+# nop.  The execute command has to be expanded at dispatch
+# time.  Single quotes ensure that the string is not expanded
+# when copied into the execute file. Shellcheck doesn't think
+# this is what we want so the warning is disabled. Note:
+# "echo" joins its string arguments with a space.
 
-        # shellcheck disable=SC2016
-        echo 'eval /bin/false' > "${i3}/command"
-        # shellcheck disable=SC2016
-        echo '(eval /dev/shm/pi/i3/command)' > "${i3}/execute"
-        # Kill the running inotify-hookable and start another.
-        pkill -f "inotify-hookable --watch-files $i3/command"
-        # Be careful! Use no terminal here! Use no ampersand here!
-        inotify-hookable --watch-files "${i3}"/command --on-modify-command "${i3}"/execute
-        ;;
-esac
+# shellcheck disable=SC2016
+echo 'eval /bin/false' > "${i3}/command"
+# shellcheck disable=SC2016
+echo '(eval /dev/shm/tasker/command)' > "${i3}/execute"
+# Kill the running inotify-hookable and start another.
+pkill -f "inotify-hookable --watch-files $i3/command"
+# Be careful! Use no terminal here! Use no ampersand here!
+inotify-hookable --watch-files "${i3}"/command --on-modify-command "${i3}"/execute
 
 #
 # Done.
