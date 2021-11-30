@@ -29,14 +29,10 @@ numeric()
 # - Note: These marks could and should be hidden by prefixing with an
 # - underscore. They are exposed for debug and test convenience only.
 #
-# - 2021-09-08: The code between #if 0 / #endif has long been thought
-# - to be unnecessary, so it has been "com mented out" pending review
-# - and removal.
-#
 commandalias()
 {
     cws=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused).name')
-    #if 0
+
     windowid=$(printf "0x%x" "$(xdotool getwindowfocus)")
     # Fetch all marks in a list and walk that list, ignoring any mark
     # that isn't a workspace mark as indicated by a lowercase letter
@@ -47,21 +43,19 @@ commandalias()
     do
         i3-msg "[id=\"${windowid}\"] unmark ${mark}"
     done
-    #endif
+
     # Apply the new workspace mark, replacing the old one.
     i3-msg "[id=\"${windowid}\"] mark --add --replace ${cws}"
-
-    # Having set up a window subscription and a listener for updating
-    # marks, we can add another listener at the end like this, and it
-    # could add yet another, etc.
-
-    (floating) &
 }
 
 #
 # If a workspace is empty and a terminal is launched from there, the
 # terminal will be made floating, but should any other window appear,
-# it will be tiled. THIS WORKS AND LOOKS GOOD.
+# it will be tiled.
+#
+# This is associated with a bug that inflates a window to be bigger
+# than the screen. It should be called at the end of commandalias() in
+# a backgrounded subshell thus: (floating) &
 #
 floating()
 {
