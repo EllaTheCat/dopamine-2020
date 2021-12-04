@@ -20,7 +20,7 @@ do
     mimas=$(df -h | grep 94bd806f)
     titan=$(sudo /usr/sbin/hddtemp "${titan:0:8}" | awk '{print $3}')
     mimas=$(sudo /usr/sbin/hddtemp "${mimas:0:8}" | awk '{print $3}')
-    pactl list sink-inputs | grep Sink | head -1 | \
+    pactl list sink-inputs | grep 'Sink Input'| tail -1 | \
         sed 's/Sink Input \#//g' > /dev/shm/"$USER"/i3/app-pulse-id
     api=$(cat /dev/shm/"$USER"/i3/app-pulse-id)
     echo "| cursor $X $Y | app-pulse-id ${api} | compositor ${compositor} | ${ccmt} | webcam ${wcam} | mic ${wmic} ${amic} | ${mimas} ${titan} | ${line}" || exit 1
