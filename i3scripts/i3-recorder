@@ -35,7 +35,8 @@ analogaudiosink=alsa_output.usb-Generic_USB2.0_Device_20121120222017-01.analog-s
 
 
 #
-#
+# Duration limit at 3999s supports 1 hour at SD, and is highly likely
+# to fill storage.
 #
 record()
 {
@@ -55,7 +56,7 @@ record()
             ffmpeg -i "${pass1dir}/${pass1file}" -c:v mpeg4 -c:a mp3 \
                    -q:v 0 -y "${pass2dir}/${pass2file}"
             ;;
-        (video?[1-9][0-9]|video?[1-9][0-9][0-9])  # 16.7 minutes
+        (video?[1-9][0-9]|video?[1-9][0-9][0-9]|video?[1-3][0-9][0-9][0-9])
             record 'video' 'start'
             sleep "$2"
             record 'video' 'stop'
