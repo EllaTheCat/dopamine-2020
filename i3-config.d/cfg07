@@ -30,9 +30,7 @@ workspace "f0" output $cmon
 workspace "g0" output $cmon
 
 # Media to the side.
-workspace "fp" output $lmon
 workspace "mp" output $lmon
-workspace "vp" output $lmon
 
 # Assign applications to workspaces.
 # Use this method when launching applications indirectly.
