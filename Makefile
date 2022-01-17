@@ -40,6 +40,7 @@ CFGMODE=644
 .installconfigs:  $(I3CFG) $(I3STATUSCFG) $(COMPOSITORCFG) $(NOTIFIERCFG)
 
 .installscripts: \
+$(I3BIN)/i3-app-mode \
 $(I3BIN)/i3-command-prompt \
 $(I3BIN)/i3-config-scripts \
 $(I3BIN)/i3-file-watcher \
@@ -130,6 +131,14 @@ $(I3STATUSCFG):  i3-status-config
 	@touch restart
 
 # .installscripts
+
+$(I3BIN)/i3-app-mode: \
+	$(I3SCRIPTS)/i3-app-mode \
+	$(I3SCRIPTS)/i3-app-mode.log
+	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-app-mode $(I3BIN)
+
+$(I3SCRIPTS)/i3-app-mode.log: $(I3SCRIPTS)/i3-app-mode
+	@shellcheck $(I3SCRIPTS)/i3-app-mode > $@
 
 $(I3BIN)/i3-command-prompt: \
 	$(I3SCRIPTS)/i3-command-prompt \
