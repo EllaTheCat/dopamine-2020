@@ -8,46 +8,33 @@
 #
 # Set the mode according to the application title.
 # - You must supply the modes and add cases here.
-# - Threre is a 'default mode' default case.
+# - There is a 'default mode' default case.
 # - I have two modes, Primary and Secondary, available for testing.
 #
 app_mode()
 {
+    # shellcheck disable=SC2030
     # shellcheck disable=SC2034
     i3-msg -t subscribe -m '[ "window" ]' | while read -r unused
     do
         i3-msg -t get_tree | jq '.. | select(.type?) | select(.focused==true).name'
-    done | while read -r line
-    do
-        case $line in
-            (*Emacs*)
-                i3-msg mode Primary
-                ;;
-            (*Firefox*)
-                i3-msg mode Secondary
-                ;;
-            (*)
-                i3-msg mode default
-                ;;
-        esac
-    done
-}
-
-#
-# Why does this example echo the name three times per focus change?
-# - Pipe the output into uniq to output once.
-# - In app_mode() the mode is similarly set three times, that's ok.
-#
-example()
-{
-    # shellcheck disable=SC2034
-    i3-msg -t subscribe -m '[ "window" ]' | while read -r unused
-    do
-        i3-msg -t get_tree | jq '.. | select(.type?) | select(.focused==true).name'
-    done | while read -r line
-    do
-        echo "${line}"
-    done
+    done |
+        while read -r line
+        do
+            case $line in
+                (*Emacs*)
+                    i3-msg mode Primary
+                    ;;
+                (*Firefox*)
+                    i3-msg mode Secondary
+                    ;;
+                (*)
+                    i3-msg mode default
+                    ;;
+            esac
+            # shellcheck disable=SC2031
+            echo "$line"
+        done
 }
 
 #
