@@ -59,7 +59,7 @@ for_window [title="File Operation Progress"] floating enable;
 for_window [title="Scratchpad"] floating enable;
 for_window [title="Unlock Keyring"] floating enable;
 for_window [class="ffplay"] floating enable;
-for_window [title="Volume Control"] \
+for_window [title="Control Volume"] \
            floating enable, move absolute position 2400 48, \
            resize set 50 ppt 80 ppt;
 for_window [class="Display"] floating enable;
@@ -69,7 +69,8 @@ for_window [title="Software Updater"] floating enable, $nocompositor;
 for_window [title="Live Caption"] floating enable;
 
 # Windows that look'n'feel better when tiled.
-for_window [title="Bluetooth Devices"] floating disable
+for_window [title="Bluetooth Devices"] floating disable;
+for_window [title="Volume Control"] floating disable;
 
 # A long standing issue with ImageMagick dialogs. The list is
 # incomplete but sufficient.
