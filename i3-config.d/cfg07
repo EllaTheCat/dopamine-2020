@@ -21,7 +21,7 @@ workspace "2" output $cmon
 
 # Status to the side.
 workspace "wm" output $lmon
-workspace "tv" output $lmon
+workspace "cg" output $lmon
 
 # Editor and browser straight ahead.  I assume dual monitors are
 # positioned in the left and centre of the three monitor layout.
@@ -31,19 +31,23 @@ workspace "g0" output $cmon
 
 # Media to the side.
 workspace "mp" output $lmon
+# Volume Controls should be visible without obscuring media.
+workspace "tv" output $cmon
 
 # Assign applications to workspaces.
 # Use this method when launching applications indirectly.
 # For example tvheadend calls mpv automatically.
 assign [class="mpv"]  mp
 assign [instance="wireshark"]  ws
-assign [class="URxvt" title="tvheadend"] tv
 assign [class="Xfce4-terminal" title="tvheadend"] tv
+assign [title="Volume Control"] tv
 assign [title="DVB Inspector"] di
 assign [title="Meld$"] md
 assign [title="SM-G930F"] s7
 assign [title="VLC media player$"] vp
 assign [title="Bluetooth Devices"] bt
+# Don't clutter browser history when used to view webp images.
+assign [title="*webp*"] cg
 
 # Windows that look'n'feel better when floating.
 for_window [instance="dtvkit"] floating enable;
@@ -59,14 +63,18 @@ for_window [title="File Operation Progress"] floating enable;
 for_window [title="Scratchpad"] floating enable;
 for_window [title="Unlock Keyring"] floating enable;
 for_window [class="ffplay"] floating enable;
-for_window [title="Control Volume"] \
+# Underscore in title to disable this in favour of tiled.
+for_window [title="Volume_Control"] \
            floating enable, move absolute position 2400 48, \
            resize set 50 ppt 80 ppt;
 for_window [class="Display"] floating enable;
 for_window [class="Display-im6"] floating enable;
 for_window [class="Display-im6.q16"] floating enable;
+# Turning off the compositor sidesteps a long standing software
+# updater bug that hides everything but the title bar.
 for_window [title="Software Updater"] floating enable, $nocompositor;
-for_window [title="Live Caption"] floating enable;
+# On the top left of ${cmon} leaving ${lmon} clear in fullscreen.
+for_window [title="Live Caption"] floating enable,move absolute position 1968 480;
 
 # Windows that look'n'feel better when tiled.
 for_window [title="Bluetooth Devices"] floating disable;

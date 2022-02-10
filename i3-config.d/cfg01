@@ -28,9 +28,9 @@ bindsym KP_Right workspace next_on_output
 # The i3bar displays the status of two microphones:
 # 0 == muted; 1 == not muted == a "hot" microphone.
 # These are NOT bound in Primary or Secondary modes.
-bindsym KP_Multiply \
-        exec --no-startup-id pactl set-source-mute $webcamaudiosource toggle
 bindsym KP_Delete \
+        exec --no-startup-id pactl set-source-mute $webcamaudiosource toggle
+bindsym KP_Multiply \
         exec --no-startup-id pactl set-source-mute $analogaudiosource toggle
 
 # Volume controls. The upper and smaller key is volume up, the lower
