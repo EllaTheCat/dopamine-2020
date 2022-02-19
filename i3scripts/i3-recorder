@@ -27,11 +27,11 @@ pass2file=grab.mp4
 # apparently exists for each output.
 #
 
-### analogaudiosource=alsa_input.pci-0000_00_1b.0.analog-stereo
-### analogaudiosink=alsa_output.pci-0000_00_1b.0.analog-stereo
+analogaudiosource=alsa_input.pci-0000_00_1b.0.analog-stereo
+analogaudiosink=alsa_output.pci-0000_00_1b.0.analog-stereo
 
-analogaudiosource=alsa_input.usb-Generic_USB2.0_Device_20121120222017-01.analog-stereo
-analogaudiosink=alsa_output.usb-Generic_USB2.0_Device_20121120222017-01.analog-stereo
+### analogaudiosource=alsa_input.usb-Generic_USB2.0_Device_20121120222017-01.analog-stereo
+### analogaudiosink=alsa_output.usb-Generic_USB2.0_Device_20121120222017-01.analog-stereo
 
 
 #
