@@ -31,6 +31,7 @@ workspace "g0" output $cmon
 
 # Media to the side.
 workspace "mp" output $lmon
+workspace "hp" output $lmon
 # Volume Controls should be visible without obscuring media.
 workspace "tv" output $cmon
 
@@ -48,6 +49,10 @@ assign [title="VLC media player$"] vp
 assign [title="Bluetooth Devices"] bt
 # Don't clutter browser history when used to view webp images.
 assign [title="*webp*"] cg
+
+# This hack shows 1920x1080 HDMI as a scaled 1280x720 mpv video.
+for_window [title="video0 - mpv"] \
+           floating enable, move container to workspace hp;
 
 # Windows that look'n'feel better when floating.
 for_window [instance="dtvkit"] floating enable;
@@ -77,6 +82,7 @@ for_window [title="Software Updater"] floating enable, $nocompositor;
 for_window [title="Live Caption"] floating enable,move absolute position 1968 480;
 
 # Windows that look'n'feel better when tiled.
+# Underscore in title to disable these in favour of floating.
 for_window [title="Bluetooth Devices"] floating disable;
 for_window [title="Volume Control"] floating disable;
 
