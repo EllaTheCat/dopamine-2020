@@ -53,19 +53,28 @@ declare -A not_wsapps=(
     ["th"]="exo-open --launch FileManager"
     ["vc"]="pavucontrol"
     ["we"]="i3-msg 'workspace 1' && sleep 0.2 && i3-msg 'workspace 2'"
+    ["wf"]="feh --bg-fill --no-xinerama \
+            ${HOME}/local/public/share/fehbg.png"
+    ["ws"]="feh --bg-center --no-xinerama \
+            ${HOME}/local/private/share/fehbg.jpg"
+    ["wm"]="feh --bg-max \
+            ${HOME}/local/private/share/fehbg.jpg"
     ["wb"]="feh --bg-tile --no-xinerama \
+            ${HOME}/local/public/share/fehbg.jpg"
+    ["wt"]="feh --bg-center --no-xinerama \
             ${HOME}/local/public/share/fehbg.jpg"
     ["wr"]="feh --bg-center --no-xinerama \
             ${HOME}/local/public/share/fehbg.jpg"
-    ["wf"]="feh --bg-fill --no-xinerama \
-            ${HOME}/local/public/share/fehbg.png"
     ["wz"]="(zenity --info --text='workspace non-empty')&"
 
 )    #  ---------------------------------------------------------------- #
 
-# The we command exposes workspaces 1 and 2 together.  These are
+# The we command [e]xposes workspaces 1 and 2 together.  These are
 # normally made inaccessible by the cfg03 double digit bindings for
 # workspaces 10 to 99. They are assigned to left and right outputs.
 
 # The wz command puts up a dialog box that, being a window, keeps an
 # otherwise empty workspace alive. Show off the backdrop!
+
+# I have four wallpaper choices by path {public,private } and by
+# filename {jpg,png}.
