@@ -52,19 +52,11 @@ declare -A not_wsapps=(
     ["ds"]="dropbox start"
     ["th"]="exo-open --launch FileManager"
     ["vc"]="pavucontrol"
+    ["ww"]="i3-msg 'workspace mp' && sleep 0.2 && i3-msg 'workspace e0'"
     ["we"]="i3-msg 'workspace 1' && sleep 0.2 && i3-msg 'workspace 2'"
-    ["wf"]="feh --bg-fill --no-xinerama \
-            ${HOME}/local/public/share/fehbg.png"
-    ["ws"]="feh --bg-center --no-xinerama \
-            ${HOME}/local/private/share/fehbg.jpg"
-    ["wm"]="feh --bg-max \
-            ${HOME}/local/private/share/fehbg.jpg"
-    ["wb"]="feh --bg-tile --no-xinerama \
-            ${HOME}/local/public/share/fehbg.jpg"
-    ["wt"]="feh --bg-center --no-xinerama \
-            ${HOME}/local/public/share/fehbg.jpg"
-    ["wr"]="feh --bg-center --no-xinerama \
-            ${HOME}/local/public/share/fehbg.jpg"
+    ["wf"]="feh --bg-fill --no-xinerama ${HOME}/local/public/share/fehbg.png"
+    ["wt"]="feh --bg-tile --no-xinerama ${HOME}/local/public/share/fehbg.jpg"
+    ["wc"]="feh --bg-center --no-xinerama ${HOME}/local/public/share/fehbg.jpg"
     ["wz"]="(zenity --info --text='workspace non-empty')&"
 
 )    #  ---------------------------------------------------------------- #
@@ -72,9 +64,10 @@ declare -A not_wsapps=(
 # The we command [e]xposes workspaces 1 and 2 together.  These are
 # normally made inaccessible by the cfg03 double digit bindings for
 # workspaces 10 to 99. They are assigned to left and right outputs.
+# Neither 1 nor 2 is tiled so the entire backdrop is visible.
 
 # The wz command puts up a dialog box that, being a window, keeps an
 # otherwise empty workspace alive. Show off the backdrop!
 
-# I have four wallpaper choices by path {public,private } and by
-# filename {jpg,png}.
+# The ww command complements the we command by covering the backdrop
+# with two tiled workspaces instead of the two "empty" ones.
