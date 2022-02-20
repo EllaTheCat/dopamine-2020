@@ -38,6 +38,7 @@ workspace "tv" output $cmon
 # Assign applications to workspaces.
 # Use this method when launching applications indirectly.
 # For example tvheadend calls mpv automatically.
+assign [title="video0 - mpv"]  hp
 assign [class="mpv"]  mp
 assign [instance="wireshark"]  ws
 assign [class="Xfce4-terminal" title="tvheadend"] tv
@@ -47,12 +48,9 @@ assign [title="Meld$"] md
 assign [title="SM-G930F"] s7
 assign [title="VLC media player$"] vp
 assign [title="Bluetooth Devices"] bt
-# Don't clutter browser history when used to view webp images.
-assign [title="*webp*"] cg
 
 # This hack shows 1920x1080 HDMI as a scaled 1280x720 mpv video.
-for_window [title="video0 - mpv"] \
-           floating enable, move container to workspace hp;
+for_window [title="video0 - mpv"] floating enable;
 
 # Windows that look'n'feel better when floating.
 for_window [instance="dtvkit"] floating enable;
@@ -112,6 +110,7 @@ for_window [title="Clementine"] layout tabbed;
 for_window [title="KeyClick"] move scratchpad;
 for_window [title="Command Interface"] move scratchpad;
 for_window [title="Window Change Monitor"] move scratchpad;
+for_window [title="HDMI-USB"] move scratchpad;
 
 # Windows that annoy me, that I can't fix.
 for_window [title="Add Security Exception"] kill;
