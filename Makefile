@@ -302,6 +302,9 @@ $(I3BIN)/%: $(MYSCRIPTS)/%
 	@shellcheck $<
 	@install -m $(EXEMODE) $< $(I3BIN)
 
+$(I3CONFIG)/i3status.conf : $(I3SCRIPTS)/i3-status
+	@echo "Workaround for bug tbc ."
+	@touch $<
 #
 # Done.
 #

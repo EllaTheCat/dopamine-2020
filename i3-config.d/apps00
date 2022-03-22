@@ -54,10 +54,11 @@ declare -A not_wsapps=(
     ["vc"]="pavucontrol"
     ["ww"]="i3-msg 'workspace mp' && sleep 0.2 && i3-msg 'workspace e0'"
     ["we"]="i3-msg 'workspace 1' && sleep 0.2 && i3-msg 'workspace 2'"
+    ["ws"]="feh --bg-max '${HOME}/local/private/share/fehbg.png'"
+    ["wz"]="(zenity --info --text='workspace non-empty')&"
     ["wf"]="feh --bg-fill --no-xinerama ${HOME}/local/public/share/fehbg.png"
     ["wt"]="feh --bg-tile --no-xinerama ${HOME}/local/public/share/fehbg.jpg"
     ["wc"]="feh --bg-center --no-xinerama ${HOME}/local/public/share/fehbg.jpg"
-    ["wz"]="(zenity --info --text='workspace non-empty')&"
 
 )    #  ---------------------------------------------------------------- #
 
