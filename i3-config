@@ -106,6 +106,9 @@ bindsym KP_Insert $i3cmdprompt menu 4
 # (for horizontal) because they look similar and it's adjacent to "v"
 # (for vertical).
 
+# Narcolepsy safety net.
+### TODO
+
 ###INSERT_CFG01_HERE###
 
 ###INSERT_CFG02_HERE###
