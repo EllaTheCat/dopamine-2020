@@ -52,9 +52,9 @@ set $file "command"
 # delay, the workspaces specified below appear relatively quickly.
 exec --no-startup-id sleep 21s && echo 'tv' > $dir/$file
 exec --no-startup-id sleep 23s && echo 'tt' > $dir/$file
-exec --no-startup-id sleep 24s && echo 'f0' > $dir/$file
-exec --no-startup-id sleep 27s && echo 't0' > $dir/$file
-exec --no-startup-id sleep 30s && echo 'ds' > $dir/$file
+exec --no-startup-id sleep 25s && echo 'ds' > $dir/$file
+exec --no-startup-id sleep 27s && echo 'f0' > $dir/$file
+exec --no-startup-id sleep 30s && echo 'g9' > $dir/$file
 exec --no-startup-id sleep 33s && echo 'e0' > $dir/$file
 
 #

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# my-tvheadend
+# tvheadend-start, formerly my-tvheadend
 #
 # -  tvheadend built from source, running from build directory.
 # -  I've had to hardcode the build directory and the hostname.
@@ -8,11 +8,14 @@
 
 case "$(hostname)" in
   (quietpc)
-  tvhpath=/home/${USER}/kaiju/packages/tvheadend/tvheadend
+  tvhpath=/home/"${USER}"/kaiju/packages/tvheadend/tvheadend
   cd "${tvhpath}" || exit
   # shellcheck disable=SC2154
   xfce4-terminal --title="tvh-server-$(hostname)" -x ./build.linux/tvheadend --noacl
   compton-trans -c -o 88
+  # Firefox refuses to open without first saving.
+  # This additional script purges unwanted tickets.
+  tvheadend-firefox /home/"${USER}"/kaiju/Downloads
   ;;
 esac
 

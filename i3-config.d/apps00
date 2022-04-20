@@ -31,16 +31,18 @@ declare -A wsapps=(
     ["ae"]="calc"
     ["ap"]="impress"
     ["tb"]="thunderbird"
+    ["hb"]="${HOME}/local/public/bin/handbrake-cpulimit"
     ["md"]="meld"
+    ["ns"]="nautilus"
     ["sc"]="xfce4-terminal -e scrcpy"
     ["sk"]="skype"
-    ["sp"]="spotify"
     ["sy"]="synaptic-pkexec"
+    ["tf"]="tvheadend-firefox"
+    ["tp"]="xfce4-terminal -T 'bpytop' -e bpytop"
+    ["tv"]="tvheadend-start"
     ["vb"]="virtualbox"
+    ["vc"]="vlc"
     ["vm"]="vmplayer"
-    ["tv"]="my-tvheadend start"
-    ["hb"]="${HOME}/local/public/bin/handbrake-cpulimit"
-    ["ns"]="nautilus"
 
 )    #  ---------------------------------------------------------------- #
 
@@ -59,6 +61,15 @@ declare -A not_wsapps=(
     ["wf"]="feh --bg-fill --no-xinerama ${HOME}/local/public/share/fehbg.png"
     ["wt"]="feh --bg-tile --no-xinerama ${HOME}/local/public/share/fehbg.jpg"
     ["wc"]="feh --bg-center --no-xinerama ${HOME}/local/public/share/fehbg.jpg"
+    ["h0"]="${HOME}/local/public/bin/hdmi-usb vlc play 0"
+    ["h1"]="${HOME}/local/public/bin/hdmi-usb vlc play 1"
+    ["L1"]="i3-msg 'workspace L1'"
+    ["L2"]="i3-msg 'workspace L2'"
+    ["L3"]="i3-msg 'workspace L3'"
+    ["R1"]="i3-msg 'workspace R1'"
+    ["R2"]="i3-msg 'workspace R2'"
+    ["R3"]="i3-msg 'workspace R3'"
+
 
 )    #  ---------------------------------------------------------------- #
 
@@ -72,3 +83,5 @@ declare -A not_wsapps=(
 
 # The ww command complements the we command by covering the backdrop
 # with two tiled workspaces instead of the two "empty" ones.
+
+# L1-3 R1-3 are workspaces each dedicated to showing video.
