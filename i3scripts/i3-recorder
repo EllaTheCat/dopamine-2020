@@ -17,26 +17,28 @@ wh=${4:-$wh_default}
 # the end result must not blur text. Consequently the storage for the
 # output of pass 1 has to be fast. Full HD video ~45 Mbytes/s
 #
-pass1dir=${HOME}/Videos/
-pass2dir=${HOME}/Videos/
+pass1dir=${HOME}/orion/grabber/Videos/
+pass2dir=${HOME}/orion/grabber/Videos/
 pass1file=grab.mkv
 pass2file=grab.mp4
 #
 # HDMI is reported as disconnected on my machine (because DVI to DVI
-# cable) hence audio recording uses the so-called monitor input that
-# apparently exists for each output.
+# cable) hence audio recording uses the monitor input associated with
+# the audio output. I like the 3.5mm jack simplicity but it is analog
+# and can be noisy. I prefer the inexpensive USB2 sound card dongle
+# that is quiet with only a steady hiss not unlike a cassette deck;
+# declare the bug a feature: dither.  .
 #
 
-analogaudiosource=alsa_input.pci-0000_00_1b.0.analog-stereo
-analogaudiosink=alsa_output.pci-0000_00_1b.0.analog-stereo
+### analogaudiosource=alsa_input.pci-0000_00_1b.0.analog-stereo
+### analogaudiosink=alsa_output.pci-0000_00_1b.0.analog-stereo
 
-### analogaudiosource=alsa_input.usb-Generic_USB2.0_Device_20121120222017-01.analog-stereo
-### analogaudiosink=alsa_output.usb-Generic_USB2.0_Device_20121120222017-01.analog-stereo
+analogaudiosource=alsa_input.usb-Generic_USB2.0_Device_20121120222017-01.analog-stereo
+analogaudiosink=alsa_output.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.analog-stereo
 
 
 #
-# Duration limit at 3999s supports 1 hour at SD, and is highly likely
-# to fill storage.
+# Set the duration limit to fit recordings within available storage.
 #
 record()
 {
@@ -56,7 +58,7 @@ record()
             ffmpeg -i "${pass1dir}/${pass1file}" -c:v mpeg4 -c:a mp3 \
                    -q:v 0 -y "${pass2dir}/${pass2file}"
             ;;
-        (video?[1-9][0-9]|video?[1-9][0-9][0-9]|video?[1-3][0-9][0-9][0-9])
+        (video?[1-9][0-9]|video?[1-9][0-9][0-9]|video?[1-7][0-9][0-9][0-9])
             record 'video' 'start'
             sleep "$2"
             record 'video' 'stop'
