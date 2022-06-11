@@ -27,17 +27,20 @@ declare -A wsapps=(
     ["t3"]="exo-open --launch FileManager"
     ["t4"]="exo-open --launch FileManager"
     ["t5"]="exo-open --launch FileManager"
-    ["aw"]="writer"
     ["ae"]="calc"
     ["ap"]="impress"
-    ["tb"]="thunderbird"
+    ["aw"]="writer"
+    ["gi"]="gigolo"
+    ["go"]="gigolo"
     ["hb"]="${HOME}/local/public/bin/handbrake-cpulimit"
     ["md"]="meld"
+    ["na"]="nautilus"
     ["ns"]="nautilus"
     ["sc"]="xfce4-terminal -e scrcpy"
-    ["sp"]="spotify"
     ["sk"]="skype"
+    ["sp"]="spotify"
     ["sy"]="synaptic-pkexec"
+    ["tb"]="thunderbird"
     ["tf"]="tvheadend-firefox"
     ["tm"]="xfce4-terminal -T 'bpytop' -e bpytop"
     ["tv"]="tvheadend-start"
@@ -47,17 +50,16 @@ declare -A wsapps=(
 )    #  ---------------------------------------------------------------- #
 
 declare -A not_wsapps=(
-    ["tt"]="xfce4-terminal -T 'xfce4-terminal'"
+    ["ds"]="dropbox start"
     ["em"]="emacsclient -c"
     ["ff"]="firefox"
     ["gc"]="google-chrome"
-    ["ds"]="dropbox start"
-    ["th"]="exo-open --launch FileManager"
     ["mx"]="pavucontrol"
+    ["th"]="exo-open --launch FileManager"
+    ["tt"]="xfce4-terminal -T 'xfce4-terminal'"
     ["we"]="i3-msg 'workspace 1' && sleep 0.2 && i3-msg 'workspace 2' && sleep 0.2 && i3-msg 'workspace 3'"
-    ["wz"]="(zenity --info --text='workspace non-empty')&"
     ["wf"]="feh --bg-fill --no-xinerama ${HOME}/local/public/share/fehbg.png"
-
+    ["wz"]="(zenity --info --text='workspace non-empty')&"
 )    #  ---------------------------------------------------------------- #
 
 # The we command [e]xposes workspaces 1 & 2 & 3 together.  These are

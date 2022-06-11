@@ -31,6 +31,8 @@ $etcfilewatcher
 # These are i3wm variables, not bash variables.
 set $dir "/dev/shm/${USER}/i3"
 set $file "command"
+# The command prompt dmenu screen number safe default is zero.
+$i3cmdprompt number 0
 
 # We should be able to focus or launch from i3 config (or a bash
 # script) as we already do via the command prompt.

@@ -7,9 +7,6 @@
 dir="/dev/shm/${USER}/i3"
 file="command"
 
-# The prompt appears on the monitor specified here.
-position=$(xrandr --listmonitors | grep 'HDMI1')
-
 #
 # Pass the command entered into the dmenu command prompt into the
 # command interface.
@@ -26,9 +23,10 @@ menu()
     numlockx on
     # This is the stub of a menu because the timeout doesn't allow
     # enough time to navigate.  Spaces are mapped to linefeeds.
+    promptnumber=${1:-0}
     cmd=$(echo "cancel" | sed 's/\ /\n/g' | \
               dmenu -b -fn 'pango:DejaVu Sans 11' -p 'Command: ' \
-                    -m "${position:1:1}")
+                    -m "${promptnumber}")
     if [ "${cmd}" = "cancel" ]; then
         numlockx off
     else
@@ -42,19 +40,21 @@ menu()
 #
 nomenu()
 {
-    echo "$1" > "${dir}/${file}"
+    echo "$1" > "${dir}/${file}" # $1 is the command.
 }
 
 #
 # Start here.
 #
-
 case "$1" in
     (menu)
-        "$1" "$2"  # $2 is the timeout.
+        "$1" "$(cat "${dir}/prompt")" "$2" # $2 is the timeout.
         ;;
     (nomenu)
         "$1" "$2" # $2 is the command.
+        ;;
+    (number)
+        echo "$2" > "${dir}/prompt" # $2 is the number.
         ;;
 esac
 

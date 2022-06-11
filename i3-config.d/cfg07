@@ -33,8 +33,15 @@ assign [title="VLC media player$"] vp
 workspace "mp" output $lmon
 workspace "vp" output $lmon
 
+# This is experimental. Define two command aliases per application,
+# try to position them usefully.
+workspace "ns" output $lmon
+workspace "nt" output $cmon
+workspace "gi" output $lmon
+workspace "go" output $cmon
+
 # Plumbing.
-assign [title="Audio Mixer"] am
+assign [title="PulseAudio Mixer"] mx
 assign [class="Xfce4-terminal" title="tvheadend"] tv
 
 workspace "wm" output $rmon
@@ -75,7 +82,7 @@ for_window [title="^Launcher"] \
            floating enable, move absolute position 3000 48;
 
 # To disable this in favour of tiled, change spaces to underscores in title.
-for_window [title="Audio_Mixer"] \
+for_window [title="PulseAudio_Mixer"] \
            floating enable, move absolute position 2400 48, \
            resize set 50 ppt 80 ppt;
 
