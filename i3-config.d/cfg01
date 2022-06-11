@@ -21,8 +21,10 @@ bindsym KP_Down focus down
 bindsym KP_Next focus right
 
 # Rotated T cursor keys.
-bindsym KP_Left workspace prev
+bindsym KP_Left workspace prev_on_output
 bindsym KP_Right workspace next_on_output
+bindsym Ctrl+KP_Left workspace prev
+bindsym Ctrl+KP_Right workspace next
 
 # Microphone muting (for privacy and phone conferencing).
 # The i3bar displays the status of two microphones:

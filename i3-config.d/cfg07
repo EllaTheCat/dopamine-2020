@@ -13,74 +13,86 @@ font pango:DejaVu Sans 11
 workspace_auto_back_and_forth no
 
 # u/airblader has said that i3 names the initially empty workspace on
-# a screen using a simple algorithm. I expect "wm' and "e0" on $lmon
-# and $cmon, as of 2021-04-16.
+# a screen using a simple algorithm.
 
 workspace "1" output $lmon
 workspace "2" output $cmon
+workspace "3" output $rmon
 
-# Status to the side.
-workspace "wm" output $lmon
-workspace "cg" output $lmon
-
-# Editor and browser straight ahead.  I assume dual monitors are
-# positioned in the left and centre of the three monitor layout.
+# Editor and Browser mixes.
 workspace "e0" output $cmon
-workspace "f0" output $cmon
+workspace "f0" output $lmon
 workspace "g0" output $cmon
+workspace "e4" output $lmon
+workspace "f4" output $cmon
+workspace "g4" output $lmon
 
-# Media to the side.
+assign [class="mpv"] mp
+assign [title="VLC media player$"] vp
+
 workspace "mp" output $lmon
-workspace "hp" output $lmon
-# Volume Controls should be visible without obscuring media.
-workspace "tv" output $cmon
+workspace "vp" output $lmon
 
-# Assign applications to workspaces.
-# Use this method when launching applications indirectly.
-# For example tvheadend calls mpv automatically.
-assign [title="video0 - mpv"]  hp
-assign [class="mpv"]  mp
-assign [instance="wireshark"]  ws
+# Plumbing.
+assign [title="Audio Mixer"] am
 assign [class="Xfce4-terminal" title="tvheadend"] tv
-assign [title="Volume Control"] tv
+
+workspace "wm" output $rmon
+workspace "am" output $rmon
+workspace "tv" output $rmon
+
+# Although making all VirtualBox windows 'layout tabbed' works
+# extremely well with an interactive VM, we try other methods.
+assign [title="VirtualBox Manager"] vm
+assign [title="tbs5922e"     instance="VirtualBox Machine"] v0
+assign [title="manjaro sway" instance="VirtualBox Machine"] v1
+assign [title="dtvkit32"     instance="VirtualBox Machine"] v9
+
+workspace "vm" output $rmon
+workspace "v0" output $rmon
+workspace "v1" output $cmon
+workspace "v9" output $cmon
+
+assign [instance="wireshark"]  ws
+assign [title="Bluetooth Devices"] bt
 assign [title="DVB Inspector"] di
 assign [title="Meld$"] md
 assign [title="SM-G930F"] s7
-assign [title="VLC media player$"] vp
-assign [title="Bluetooth Devices"] bt
-
-# This hack shows 1920x1080 HDMI as a scaled 1280x720 mpv video.
-for_window [title="video0 - mpv"] floating enable;
 
 # Windows that look'n'feel better when floating.
+for_window [class="ffplay"] floating enable;
 for_window [instance="dtvkit"] floating enable;
 for_window [instance="xfce4-notifyd$"] floating enable;
 for_window [instance="yad"] floating enable;
 for_window [title="Cheese"] floating enable;
 for_window [title="Do Not Panic"] floating enable;
+for_window [title="File Operation Progress"] floating enable;
+for_window [title="Scratchpad"] floating enable;
+for_window [title="Unlock Keyring"] floating enable;
 for_window [title="Edit Launcher"] \
            floating enable, move absolute position 2400 48;
 for_window [title="^Launcher"] \
            floating enable, move absolute position 3000 48;
-for_window [title="File Operation Progress"] floating enable;
-for_window [title="Scratchpad"] floating enable;
-for_window [title="Unlock Keyring"] floating enable;
-for_window [class="ffplay"] floating enable;
-# Underscore in title to disable this in favour of tiled.
-for_window [title="Volume_Control"] \
+
+# To disable this in favour of tiled, change spaces to underscores in title.
+for_window [title="Audio_Mixer"] \
            floating enable, move absolute position 2400 48, \
            resize set 50 ppt 80 ppt;
+
+# ImageMagick, respect.
 for_window [class="Display"] floating enable;
 for_window [class="Display-im6"] floating enable;
 for_window [class="Display-im6.q16"] floating enable;
+
 # Turning off the compositor sidesteps a long standing software
 # updater bug that hides everything but the title bar.
 for_window [title="Software Updater"] floating enable, $nocompositor;
-# On the top left of ${cmon} leaving ${lmon} clear in fullscreen.
+
+# On ${cmon} leaving ${lmon} and {rmon} clear for fullscreen video.
 for_window [title="Live Caption"] floating enable,move absolute position 1968 480;
 
 # Windows that look'n'feel better when tiled.
-# Underscore in title to disable these in favour of floating.
+# To disable these in favour of floating, change spaces to underscores in title.
 for_window [title="Bluetooth Devices"] floating disable;
 for_window [title="Volume Control"] floating disable;
 
@@ -91,17 +103,16 @@ for_window [class="Display-im6" title="Browse and Select a File"] \
 for_window [class="Display-im6.q16" title="Browse and Select a File"] \
            floating enable, move absolute position 2400 100, resize set 50 ppt 50 ppt;
 
-# Application windows.
-for_window [instance="xfce4-terminal"] $i3marks numeric
-for_window [instance="emacs"] $i3marks numeric
-for_window [instance="Navigator"] $i3marks numeric
-for_window [instance="google-chrome"] $i3marks numeric
+# Apply i3 vim-like marks.
 for_window [class="mpv"] $i3marks numeric
+for_window [instance="Navigator"] $i3marks numeric
+for_window [instance="emacs"] $i3marks numeric
 for_window [instance="gl"] $i3marks numeric
+for_window [instance="google-chrome"] $i3marks numeric
+for_window [instance="xfce4-terminal"] $i3marks numeric
 for_window [title="SM G930F"] $i3marks numeric
 
-# VirtualBox windows assume full screen dimensions.
-for_window [title="VirtualBox Manager"] layout tabbed;
+# Windows to maximise.
 for_window [title="Meld$"] layout tabbed;
 for_window [title="Spotify"] layout tabbed;
 for_window [title="Clementine"] layout tabbed;

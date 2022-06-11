@@ -35,14 +35,14 @@ declare -A wsapps=(
     ["md"]="meld"
     ["ns"]="nautilus"
     ["sc"]="xfce4-terminal -e scrcpy"
+    ["sp"]="spotify"
     ["sk"]="skype"
     ["sy"]="synaptic-pkexec"
     ["tf"]="tvheadend-firefox"
-    ["tp"]="xfce4-terminal -T 'bpytop' -e bpytop"
+    ["tm"]="xfce4-terminal -T 'bpytop' -e bpytop"
     ["tv"]="tvheadend-start"
-    ["vb"]="virtualbox"
-    ["vc"]="vlc"
-    ["vm"]="vmplayer"
+    ["vm"]="virtualbox"
+    ["vp"]="vlc"
 
 )    #  ---------------------------------------------------------------- #
 
@@ -53,35 +53,21 @@ declare -A not_wsapps=(
     ["gc"]="google-chrome"
     ["ds"]="dropbox start"
     ["th"]="exo-open --launch FileManager"
-    ["vc"]="pavucontrol"
-    ["ww"]="i3-msg 'workspace mp' && sleep 0.2 && i3-msg 'workspace e0'"
-    ["we"]="i3-msg 'workspace 1' && sleep 0.2 && i3-msg 'workspace 2'"
-    ["ws"]="feh --bg-max '${HOME}/local/private/share/fehbg.png'"
+    ["mx"]="pavucontrol"
+    ["we"]="i3-msg 'workspace 1' && sleep 0.2 && i3-msg 'workspace 2' && sleep 0.2 && i3-msg 'workspace 3'"
     ["wz"]="(zenity --info --text='workspace non-empty')&"
     ["wf"]="feh --bg-fill --no-xinerama ${HOME}/local/public/share/fehbg.png"
-    ["wt"]="feh --bg-tile --no-xinerama ${HOME}/local/public/share/fehbg.jpg"
-    ["wc"]="feh --bg-center --no-xinerama ${HOME}/local/public/share/fehbg.jpg"
-    ["h0"]="${HOME}/local/public/bin/hdmi-usb vlc play 0"
-    ["h1"]="${HOME}/local/public/bin/hdmi-usb vlc play 1"
-    ["L1"]="i3-msg 'workspace L1'"
-    ["L2"]="i3-msg 'workspace L2'"
-    ["L3"]="i3-msg 'workspace L3'"
-    ["R1"]="i3-msg 'workspace R1'"
-    ["R2"]="i3-msg 'workspace R2'"
-    ["R3"]="i3-msg 'workspace R3'"
-
 
 )    #  ---------------------------------------------------------------- #
 
-# The we command [e]xposes workspaces 1 and 2 together.  These are
+# The we command [e]xposes workspaces 1 & 2 & 3 together.  These are
 # normally made inaccessible by the cfg03 double digit bindings for
 # workspaces 10 to 99. They are assigned to left and right outputs.
-# Neither 1 nor 2 is tiled so the entire backdrop is visible.
+# Neither 1 nor 2 nor 3 is tiled so the entire backdrop is visible.
 
 # The wz command puts up a dialog box that, being a window, keeps an
 # otherwise empty workspace alive. Show off the backdrop!
 
-# The ww command complements the we command by covering the backdrop
-# with two tiled workspaces instead of the two "empty" ones.
-
-# L1-3 R1-3 are workspaces each dedicated to showing video.
+# The wf command shows a picture of a beach taken by EllaTheCat you
+# are welcome to use as desktop wallpaper. It's 43 Mbytes so isn't on
+# github. md5sum 23df3bc586eb2c4951fbf43ca1112882 fehbg.png

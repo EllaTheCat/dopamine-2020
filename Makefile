@@ -81,6 +81,16 @@ restarted: restart
 	@touch $@
 	@$(I3BIN)/i3-config-scripts restart
 
+# It has been necessary to run this script by hand after runnng 'make'.
+# Rules have been amended to remedy that, but should manual invocation
+# be required, this 'wm' target is tidier.
+
+wm:
+	@$(I3BIN)/i3-config-scripts restart
+
+# Note: An annoyance remains with the script: a dialog complains about
+# the notification area being lost on first invocation. ToDo: Dismiss
+# the dialog automatically assuming no fix for root cause.
 
 # .installdirs
 
@@ -115,7 +125,7 @@ $(I3CFG):  i3-config \
          -i   $(I3CFG)
 	@sed -e '/###INSERT_CFG09_HERE###/ {' -e 'r i3-config.d/cfg09' -e 'd' -e '}' \
          -i   $(I3CFG)
-	@touch reload
+	@touch restart
 
 $(COMPOSITORCFG): compton.conf
 	@install -m $(CFGMODE) compton.conf $@

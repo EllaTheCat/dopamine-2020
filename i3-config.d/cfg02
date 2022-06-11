@@ -6,8 +6,7 @@
 # This key chord works for my right hand. reserved.
 bindsym Control+Delete nop
 
-# Kill a window, kill a workspace.
-bindsym Control+Mod1+Delete kill
+# Kill a workspace. I think it needs both hands.
 bindsym Control+Mod4+Delete [workspace="__focused__"] kill
 
 #

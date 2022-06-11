@@ -4,25 +4,15 @@
 # EXECUTABLE SETTINGS BEGIN HERE.
 #
 
-
-# Under evaluation: Bind bookmark-clicks to workspaces.
-#
-# The router and the access point share a workspace.
-for_window [title="Plusnet Hub Manager"] \
-           move container to workspace ip, workspace --no-auto-back-and-forth ip;
-
 # Microphones' defaults (see key bindings). 1 = mute here.
 exec --no-startup-id pactl set-source-mute $usbaudiosource 1
 exec --no-startup-id pactl set-source-mute $analogaudiosource 1
 exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
 
 # My machine has HDMI driving DVI on the monitor so I use analogue
-# audio from the green 3.5 mm jack.
-exec --no-startup-id pactl set-default-sink $analogaudiosink
-
-# Spindown at startup by default. Explicit PATH required here.
-exec --no-startup-id $HOME/local/bin/my-usb-disks configure banana
-exec --no-startup-id $HOME/local/bin/my-usb-disks  spindown banana
+# audio from any green 3.5 mm jack located on either the rear of the
+# PC or a USB audio dongle. 2022-06-09: USB.
+exec --no-startup-id pactl set-default-sink $usbaudiosink
 
 # My "xubuntu fix broken bluetooth" incantation.
 # Authenticated automatically by '/etc/sudoers.d/shevek'.
@@ -35,7 +25,7 @@ exec --no-startup-id sudo modprobe btusb
 # much higher than 100% during startup, prevent speaker damage.
 exec --no-startup-id pactl set-sink-volume $analogaudiosink 70%
 
-# EllaTheCat's JSON IPC for 'mpv'.
+# EllaTheCat's inotify method for remote launching as local.
 $etcfilewatcher
 
 # These are i3wm variables, not bash variables.
@@ -50,8 +40,9 @@ set $file "command"
 # 'i3-config' are invoked and executed. At startup the user sees the
 # 'wm' workspace of 'i3-config-scripts appear, and after a modest
 # delay, the workspaces specified below appear relatively quickly.
-exec --no-startup-id sleep 21s && echo 'tv' > $dir/$file
-exec --no-startup-id sleep 23s && echo 'tt' > $dir/$file
+exec --no-startup-id sleep 19s && echo 'tm' > $dir/$file
+exec --no-startup-id sleep 20s && echo 'tv' > $dir/$file
+exec --no-startup-id sleep 23s && echo 'mx' > $dir/$file
 exec --no-startup-id sleep 25s && echo 'ds' > $dir/$file
 exec --no-startup-id sleep 27s && echo 'f0' > $dir/$file
 exec --no-startup-id sleep 30s && echo 'g9' > $dir/$file

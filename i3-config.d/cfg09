@@ -10,6 +10,7 @@ bar {
     # Show the bar on the 1920x1080 screens:
     output $lmon
     output $cmon
+    output $rmon
     # Hardcoded path!
     i3bar_command /usr/bin/i3bar
     position bottom
