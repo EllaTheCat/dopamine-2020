@@ -81,9 +81,15 @@ restarted: restart
 	@touch $@
 	@$(I3BIN)/i3-config-scripts restart
 
-# It has been necessary to run this script by hand after runnng 'make'.
-# Rules have been amended to remedy that, but should manual invocation
-# be required, this 'wm' target is tidier.
+# It no longer necessary to run this script by hand after running
+# 'make' but the automatic restart rules are "better safe than sorry"
+# such that you may prefer to disable them to avoid visual disturbance
+# upon restart after any config change, even a bindsym, which is
+# overkill. I intend to write better rules.
+#
+# Should discretionary manual invocation be your preference, comment
+# out the entiree 'restarted:' rule immediately above this comment and
+# use the 'wm' target immediately below instead.
 
 wm:
 	@$(I3BIN)/i3-config-scripts restart
@@ -313,7 +319,7 @@ $(I3BIN)/%: $(MYSCRIPTS)/%
 	@install -m $(EXEMODE) $< $(I3BIN)
 
 $(I3CONFIG)/i3status.conf : $(I3SCRIPTS)/i3-status
-	@echo "Workaround for bug tbc ."
+	@echo "Workaround for bug tbc."
 	@touch $<
 #
 # Done.

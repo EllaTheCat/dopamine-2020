@@ -76,15 +76,19 @@ for_window [title="Do Not Panic"] floating enable;
 for_window [title="File Operation Progress"] floating enable;
 for_window [title="Scratchpad"] floating enable;
 for_window [title="Unlock Keyring"] floating enable;
-for_window [title="Edit Launcher"] \
-           floating enable, move absolute position 2400 48;
-for_window [title="^Launcher"] \
-           floating enable, move absolute position 3000 48;
 
-# To disable this in favour of tiled, change spaces to underscores in title.
-for_window [title="PulseAudio_Mixer"] \
-           floating enable, move absolute position 2400 48, \
-           resize set 50 ppt 80 ppt;
+# xfce4 dialogs. I have 2 monitors but 3 outputs; HDM11 and VGA1 are
+# on the same monitor so I must use HDMI2, my left side, hence the
+# positioning of the dialog by its top left corner.
+for_window [title="Add New Items"] \
+           floating enable, move absolute position 400 48;
+for_window [title="Edit Launcher"] \
+           floating enable, move absolute position 400 48;
+for_window [title="^Launcher"] \
+           floating enable, move absolute position 400 48;
+# xfce4 panel widgets.
+for_window [title="PulseAudio Volume Meter"] \
+           floating enable, move absolute position 400 48;
 
 # ImageMagick, respect.
 for_window [class="Display"] floating enable;
@@ -99,9 +103,15 @@ for_window [title="Software Updater"] floating enable, $nocompositor;
 for_window [title="Live Caption"] floating enable,move absolute position 1968 480;
 
 # Windows that look'n'feel better when tiled.
-# To disable these in favour of floating, change spaces to underscores in title.
 for_window [title="Bluetooth Devices"] floating disable;
-for_window [title="Volume Control"] floating disable;
+
+# Windows that look'n'feel better floating or tiled, but which one?
+# Provide both, ensure at least two words in the condition criterion.
+# With space separating the words = enabled, underscore = disabled.
+for_window [title="Volume Control"] \
+           floating enable, move absolute position 400 48, \
+           resize set 50 ppt 80 ppt;
+for_window [title="Volume_Control"] floating disable;
 
 # A long standing issue with ImageMagick dialogs. The list is
 # incomplete but sufficient.
