@@ -33,10 +33,14 @@ assign [title="VLC media player$"] vp
 workspace "mp" output $lmon
 workspace "vp" output $lmon
 
+# Nautilus pairs
+workspace "n0" output $lmon
+workspace "n1" output $lmon
+workspace "n2" output $cmon
+workspace "n3" output $cmon
+
 # This is experimental. Define two command aliases per application,
 # try to position them usefully.
-workspace "ns" output $lmon
-workspace "nt" output $cmon
 workspace "gi" output $lmon
 workspace "go" output $cmon
 
