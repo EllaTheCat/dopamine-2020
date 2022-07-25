@@ -9,11 +9,6 @@ exec --no-startup-id pactl set-source-mute $usbaudiosource 1
 exec --no-startup-id pactl set-source-mute $analogaudiosource 1
 exec --no-startup-id pactl set-source-mute $webcamaudiosource 1
 
-# My machine has HDMI driving DVI on the monitor so I use analogue
-# audio from any green 3.5 mm jack located on either the rear of the
-# PC or a USB audio dongle. 2022-06-09: USB.
-exec --no-startup-id pactl set-default-sink $usbaudiosink
-
 # My "xubuntu fix broken bluetooth" incantation.
 # Authenticated automatically by '/etc/sudoers.d/shevek'.
 # Do not use dunst if you use this.
@@ -39,15 +34,16 @@ $i3cmdprompt number 0
 #
 # These are the last commands to execute. They are invoked and are
 # waiting to execute, meanwhile the remaining commands and scripts of
-# 'i3-config' are invoked and executed. At startup the user sees the
-# 'wm' workspace of 'i3-config-scripts appear, and after a modest
-# delay, the workspaces specified below appear relatively quickly.
-exec --no-startup-id sleep 19s && echo 'tm' > $dir/$file
+# 'i3-config' are invoked and executed. Some juggling is required to
+# achieve a visually satisfying result.
+
+# VGA1
 exec --no-startup-id sleep 20s && echo 'tv' > $dir/$file
-exec --no-startup-id sleep 23s && echo 'mx' > $dir/$file
+exec --no-startup-id sleep 22s && echo 'tm' > $dir/$file
+# HDMI1 / xfce4-panel
 exec --no-startup-id sleep 25s && echo 'ds' > $dir/$file
 exec --no-startup-id sleep 27s && echo 'f0' > $dir/$file
-exec --no-startup-id sleep 30s && echo 'g9' > $dir/$file
+exec --no-startup-id sleep 30s && echo 'g0' > $dir/$file
 exec --no-startup-id sleep 33s && echo 'e0' > $dir/$file
 
 #

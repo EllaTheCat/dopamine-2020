@@ -19,6 +19,10 @@ workspace "1" output $lmon
 workspace "2" output $cmon
 workspace "3" output $rmon
 
+# 2022-06-08: I still have two monitors, on outputs HDMI1 as $lmon and
+# HDMI2 as $cmon, but quietpc has 3 outputs, achieved by connecting
+# VGA1 as $rmon to the VGA input of $cmon.
+
 # Editor and Browser mixes.
 workspace "e0" output $cmon
 workspace "f0" output $lmon
@@ -48,21 +52,21 @@ workspace "go" output $cmon
 assign [title="PulseAudio Mixer"] mx
 assign [class="Xfce4-terminal" title="tvheadend"] tv
 
-workspace "wm" output $rmon
-workspace "am" output $rmon
-workspace "tv" output $rmon
+workspace "wm" output $lmon
+workspace "am" output $cmon
+workspace "tv" output $cmon
 
 # Although making all VirtualBox windows 'layout tabbed' works
-# extremely well with an interactive VM, we try other methods.
+# extremely well with an interactive VM.
 assign [title="VirtualBox Manager"] vm
-assign [title="tbs5922e"     instance="VirtualBox Machine"] v0
-assign [title="manjaro sway" instance="VirtualBox Machine"] v1
-assign [title="dtvkit32"     instance="VirtualBox Machine"] v9
+### assign [title="tbs5922e"     instance="VirtualBox Machine"] v0
+### assign [title="manjaro sway" instance="VirtualBox Machine"] v1
+### assign [title="dtvkit32"     instance="VirtualBox Machine"] v9
 
-workspace "vm" output $rmon
-workspace "v0" output $rmon
-workspace "v1" output $cmon
-workspace "v9" output $cmon
+workspace "vm" output $cmon
+### workspace "v0" output $cmon
+### workspace "v1" output $cmon
+### workspace "v9" output $cmon
 
 assign [instance="wireshark"]  ws
 assign [title="Bluetooth Devices"] bt
@@ -82,17 +86,17 @@ for_window [title="Scratchpad"] floating enable;
 for_window [title="Unlock Keyring"] floating enable;
 
 # xfce4 dialogs. I have 2 monitors but 3 outputs; HDM11 and VGA1 are
-# on the same monitor so I must use HDMI2, my left side, hence the
-# positioning of the dialog by its top left corner.
+# on the same monitor. Note the positioning of the dialog by its top
+# left corner.
 for_window [title="Add New Items"] \
-           floating enable, move absolute position 400 48;
+           floating enable, move absolute position 2400 48;
 for_window [title="Edit Launcher"] \
-           floating enable, move absolute position 400 48;
+           floating enable, move absolute position 2400 48;
 for_window [title="^Launcher"] \
-           floating enable, move absolute position 400 48;
+           floating enable, move absolute position 2400 48;
 # xfce4 panel widgets.
 for_window [title="PulseAudio Volume Meter"] \
-           floating enable, move absolute position 400 48;
+           floating enable, move absolute position 2400 48;
 
 # ImageMagick, respect.
 for_window [class="Display"] floating enable;
@@ -113,16 +117,16 @@ for_window [title="Bluetooth Devices"] floating disable;
 # Provide both, ensure at least two words in the condition criterion.
 # With space separating the words = enabled, underscore = disabled.
 for_window [title="Volume Control"] \
-           floating enable, move absolute position 400 48, \
+           floating enable, move absolute position 2400 48, \
            resize set 50 ppt 80 ppt;
 for_window [title="Volume_Control"] floating disable;
 
 # A long standing issue with ImageMagick dialogs. The list is
 # incomplete but sufficient.
 for_window [class="Display-im6" title="Browse and Select a File"] \
-           floating enable, move absolute position 2400 100, resize set 50 ppt 50 ppt;
+           floating enable, move absolute position 2000 100, resize set 50 ppt 50 ppt;
 for_window [class="Display-im6.q16" title="Browse and Select a File"] \
-           floating enable, move absolute position 2400 100, resize set 50 ppt 50 ppt;
+           floating enable, move absolute position 2000 100, resize set 50 ppt 50 ppt;
 
 # Apply i3 vim-like marks.
 for_window [class="mpv"] $i3marks numeric
@@ -137,6 +141,7 @@ for_window [title="SM G930F"] $i3marks numeric
 for_window [title="Meld$"] layout tabbed;
 for_window [title="Spotify"] layout tabbed;
 for_window [title="Clementine"] layout tabbed;
+for_window [title="VirtualBox Manager"] layout tabbed;
 
 # Windows to hide.
 for_window [title="KeyClick"] move scratchpad;

@@ -21,13 +21,14 @@ bindsym KP_Down focus down
 bindsym KP_Next focus right
 
 # Rotated T cursor keys.
-bindsym KP_Left workspace prev_on_output
+# Why would the modifier be allocated like this?
+bindsym Ctrl+KP_Left workspace prev_on_output
 bindsym KP_Right workspace next_on_output
-bindsym Ctrl+KP_Left workspace prev
+bindsym KP_Left workspace prev
 bindsym Ctrl+KP_Right workspace next
 
 # Microphone muting (for privacy and phone conferencing).
-# The i3bar displays the status of two microphones:
+# The i3bar may be used to display the microphone status:
 # 0 == muted; 1 == not muted == a "hot" microphone.
 # These are NOT bound in Primary or Secondary modes.
 bindsym KP_Delete \
@@ -35,14 +36,19 @@ bindsym KP_Delete \
 bindsym KP_Multiply \
         exec --no-startup-id pactl set-source-mute $analogaudiosource toggle
 
+# My machine has HDMI driving DVI on the monitor so I use a dedicated
+# audio out connector.
+exec --no-startup-id pactl set-default-sink $iec958audiosink
+
 # Volume controls. The upper and smaller key is volume up, the lower
-# and larger key is volume down.
+# and larger key is volume down. These control whatever pulseaudio
+# thinks id the default.
 bindsym KP_Add \
         exec --no-startup-id /bin/bash -c \
-        "pactl set-sink-input-volume $usbaudiosink $(cat /dev/shm/$USER/i3/app-pulse-id) -6%"
+        "pactl set-sink-input-volume @DEFAULT_SINK@ $(cat /dev/shm/$USER/i3/app-pulse-id) -6%"
 bindsym KP_Subtract \
         exec --no-startup-id /bin/bash -c \
-        "pactl set-sink-input-volume $usbaudiosink $(cat /dev/shm/$USER/i3/app-pulse-id) +6%"
+        "pactl set-sink-input-volume @DEFAULTSINK@ $(cat /dev/shm/$USER/i3/app-pulse-id) +6%"
 
 #
 # NUMPAD BINDINGS END HERE.

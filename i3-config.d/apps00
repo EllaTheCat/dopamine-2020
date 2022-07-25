@@ -5,10 +5,10 @@ declare -A wsapps=(
     ["e1"]="i3-emacsclient t"
     ["e2"]="i3-emacsclient t"
     ["e3"]="i3-emacsclient t"
-    ["e4"]="emacsclient -c"
-    ["e5"]="emacsclient -c"
-    ["e6"]="emacsclient -c"
-    ["e7"]="emacsclient -c"
+    ["e4"]="i3-emacsclient t"
+    ["e5"]="i3-emacsclient t"
+    ["e6"]="i3-emacsclient t"
+    ["e7"]="i3-emacsclient t"
     ["e8"]="emacsclient -c"
     ["e9"]="emacsclient -c"
     ["f0"]="firefox"     ["f1"]="firefox"
@@ -62,6 +62,8 @@ declare -A not_wsapps=(
     ["tt"]="xfce4-terminal -T 'xfce4-terminal'"
     ["we"]="i3-msg 'workspace 1' && sleep 0.2 && i3-msg 'workspace 2' && sleep 0.2 && i3-msg 'workspace 3'"
     ["wf"]="feh --bg-fill --no-xinerama ${HOME}/local/public/share/fehbg.png"
+    ["ws"]="feh --bg-fill -bg-tile ${HOME}/local/private/share/ws1.jpg ${HOME}/local/private/share/ws2.jpg ${HOME}/local/private/share/ws3.jpg"
+    ["wb"]="feh --bg-center --bg-fill --no-xinerama ${HOME}/local/public/share/books3.png"
     ["wz"]="(zenity --info --text='workspace non-empty')&"
 )    #  ---------------------------------------------------------------- #
 
