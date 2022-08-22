@@ -30,7 +30,7 @@ xmodmapkeys()
     # Keycode 51 is to the lower left of Return on my UK keyboard.
     # This function makes the asciitilde easier to type than the key
     # left of 1, and makes Return better resemble a US keyboard.
-    xmodmap -e 'keycode 51 = Return asciitilde'
+    ###    xmodmap -e 'keycode 51 = Return asciitilde'
     xmodmap -e 'pointer = default'
 }
 
