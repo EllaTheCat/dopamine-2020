@@ -1,110 +1,198 @@
 # -*- Mode: Shell-script -*-
 #
-# CLASSIC BINDINGS BEGIN HERE.
+# ETCMODE BINDINGS BEGIN HERE.
 #
 
-# The standard terminal binding is defined at the head of this file.
-# EllaTheCat recommends terminal bindings with preceding splits.
-bindsym $mod+t  split h,exec --no-startup-id xfce4-terminal -T "xfce4-terminal"
-bindsym $mod+y  split v,exec --no-startup-id xfce4-terminal -T "xfce4-terminal"
 
-# Kill focused window.
-bindsym $mod+Shift+q kill
-# Kill focused floating window. When killing popups this cannot kill
-# the (tiled) parent (as can happen by accident).
-bindsym $mod+Shift+w [floating] kill
+mode "kill - space to cancel" {
 
-# Start dmenu (a program launcher).
-bindsym $mod+d exec dmenu_run
-
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-# split in horizontal orientation
-bindsym $mod+semicolon split h
-bindsym $mod+b split h
-
-# split in vertical orientation
-bindsym $mod+v split v
-
-#
-# fullscreen toggle and fullscreen toggle global
-# I have only had to disable these because of my PD.
-# They work. I use Primary f and Primary g instead.
-#
-bindsym $mod+f nop
-bindsym $mod+g nop
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# Toggle the window between tiling | floating.
-bindsym $mod+Shift+space floating toggle
-
-# Change focus between tiling | floating windows.
-bindsym $mod+space focus mode_toggle
-
-# Focus the parent container. 'A' for adult.
-bindsym $mod+Shift+a focus parent
-# Focus the child container. 'D' for daughter.
-bindsym $mod+Shift+d focus child
-
-# Resize window.
-mode "resize" {
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
-
-        # Same bindings, but for the arrow keys.
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # Back to the default.
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym space mode "default"
+    bindsym q $default, kill;
+    bindsym w [floating] $default, kill;
+    bindsym space $default
 }
-bindsym $mod+r mode "resize"
 
-# EllaTheCat support for multiple monitors.
-bindsym $mod+z move workspace to output $lmon
-bindsym $mod+x move workspace to output $cmon
-bindsym $mod+c move workspace to output $rmon
+mode "layouts"  {
+    bindsym d layout default
+    bindsym s layout stacking
+    bindsym t layout tabbed
+    bindsym f layout toggle split
 
-# EllaTheCat support for large|small floating windows.
-bindsym --release  $mod+Control+space       floating enable, resize set 60 ppt 60 ppt, move position center;
-bindsym --release  $mod+Control+Shift+space floating enable, resize set 30 ppt 30 ppt, move position center;
+    bindsym h $default, focus down, split h, focus up, move down, move left;
+    bindsym v $default, focus right, split v, focus left, move right, move up ;
+
+    bindsym q $default, kill;
+    bindsym w [floating] $default, kill;
+    bindsym space $default
+}
+
+mode "f_ocus - m_ove r_esize" {
+    bindsym h focus left
+    bindsym j focus down
+    bindsym k focus up
+    bindsym l focus right
+
+    bindsym a focus parent # adult
+    bindsym s focus child  # son
+    bindsym d focus child  # daughter
+
+    bindsym u $default, [urgent=latest] focus
+
+    bindsym m mode "m_ove - r_esize f_ocus"
+    bindsym r mode "r_esize - f_ocus m_ove"
+
+    bindsym grave mode "etcmode"
+    bindcode   51 mode "etcmode"
+    bindsym space $default
+}
+
+mode "m_ove - r_esize f_ocus" {
+    bindsym h move left
+    bindsym j move down
+    bindsym k move up
+    bindsym l move right
+
+    bindsym f mode "f_ocus - m_ove r_esize"
+    bindsym r mode "r_esize - f_ocus m_ove"
+
+    bindsym grave mode "etcmode"
+    bindcode   51 mode "etcmode"
+    bindsym space $default
+}
+
+mode "r_esize - f_ocus m_ove" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    bindsym f mode "f_ocus - m_ove r_esize"
+    bindsym m mode "m_ove - r_esize f_ocus"
+
+    bindsym grave mode "etcmode"
+    bindcode   51 mode "etcmode"
+    bindsym space $default
+}
+
+mode "workspace" {
+    bindsym h workspace prev
+    bindsym j workspace prev_on_output
+    bindsym k workspace next_on_output
+    bindsym l workspace next
+
+    bindsym z $default, move workspace to output $lmon
+    bindsym x $default, move workspace to output $cmon
+    bindsym c $default, move workspace to output $rmon
+
+    bindsym w mode "move_workspace"
+
+    bindsym 1 mode ws1
+    bindsym 2 mode ws2
+    bindsym 3 mode ws3
+    bindsym 4 mode ws4
+    bindsym 5 mode ws5
+    bindsym 6 mode ws6
+    bindsym 7 mode ws7
+    bindsym 8 mode ws8
+    bindsym 9 mode ws9
+
+    # (R)ename a workspace.
+    bindsym r $default, exec --no-startup-id i3-input -f $i3inputfont -l 2 \
+            -P '(rename this workspace to): ' \
+            -F 'rename workspace to "%s"'
+
+    # Move [f]ocused (thing:container,window) to a workspace.
+    bindsym f $default, exec --no-startup-id i3-input -f $i3inputfont -l 2 \
+            -P '(move focused to workspace): ' \
+            -F 'move focused to workspace "%s"'
+
+    # (V)isit a workspace. If the workspace does not exist beforehand
+    # it is created, if it already exists, it is focused.
+    bindsym v $default, exec --no-startup-id i3-input -f $i3inputfont -l 2 \
+         -P '(workspace): ' -F 'workspace "%s"'
+
+    bindsym grave mode "etcmode"
+    bindcode   51 mode "etcmode"
+    bindsym space $default
+}
+
+mode "move workspace" {
+    bindsym 0 mode cws0
+    bindsym 1 mode cws1
+    bindsym 2 mode cws2
+    bindsym 3 mode cws3
+    bindsym 4 mode cws4
+    bindsym 5 mode cws5
+    bindsym 6 mode cws6
+    bindsym 7 mode cws7
+    bindsym 8 mode cws8
+    bindsym 9 mode cws9
+
+    bindsym grave mode "etcmode"
+    bindcode   51 mode "etcmode"
+    bindsym space $default
+}
+
+mode "screen" {
+    bindsym f floating disable, toggle fullscreen;
+    bindsym g floating disable, toggle fullscreen global;
+
+    bindsym --release b $default, \
+            exec --no-startup-id xset dpms force off;
+
+    bindsym grave mode "etcmode"
+    bindcode   51 mode "etcmode"
+    bindsym space $default
+}
+
+# xfce4 is a popular DE amongst i3 users.
+set $etcterminal exec --no-startup-id /usr/bin/xfce4-terminal; -T $etctitlebar
+set $etctitlebar "xfce4-terminal"
+set $etcpanel exec --no-startup-id xfce4-panel --disable-wm-check;
+set $noetcpanel exec /usr/bin/killall xfce4-panel
+
+mode "etcmode" {
+
+    bindsym t $default, split h, $etcterminal;
+    bindsym y $default, split v, $etcterminal;
+    bindsym p $default, $etcpanel
+    bindsym o $default, $noetcpanel
+
+    bindsym q $default, mode "kill - space to cancel";
+    bindsym a $default, [floating] mode "kill - space to cancel";
+
+    bindsym d $default, exec dmenu_run
+
+    bindsym b $default, split h
+    bindsym v $default, split v
+
+    bindsym comma $default, \
+            floating enable, resize set 30 ppt 30 ppt, move position center;
+    bindsym period $default, \
+            floating enable, resize set 60 ppt 60 ppt, move position center;
+    bindsym slash $default, floating toggle;
+
+    bindsym f mode "f_ocus - m_ove r_esize"
+    bindsym m mode "m_ove - r_esize f_ocus"
+    bindsym r mode "r_esize - f_ocus m_ove"
+
+    bindsym l mode "layouts"
+    bindsym s mode "screen"
+    bindsym w mode "workspace"
+
+    # Press once to visit the mode, press again to self-insert once.
+    bindsym grave $default, exec xdotool key grave;
+    bindcode   51 $default, exec xdotool key backslash;
+    # For consistency over efficiency.
+    bindsym space $default
+}
+# On a PC105 keyboard the accent grave key is to the left of the '1'
+# key and the key with code 51 is to the left of the Return key and
+# just above the shift key on the right.
+bindsym grave mode "etcmode"
+bindcode   51 mode "etcmode"
+
+
 
 #
-# CLASSIC BINDINGS END HERE.
+# ETCMODE BINDINGS END HERE.
 #
