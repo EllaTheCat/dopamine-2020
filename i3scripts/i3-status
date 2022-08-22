@@ -5,7 +5,7 @@
 i3status "$@" | while :
 do
     read -r line
-    compositor=$(pgrep -c -f '(compton|picom)')
+    compositor=$(pgrep -c -f '(compton|picom)')q
     wcam=$(lsof /dev/video0 | awk '{print $1}' | grep -v COMMAND | uniq | sed 's/skypeforl*/skype/g')
     wcam=${wcam:-'idle'}
     wmic=$(pactl list sources | grep -A 7 alsa_input.usb-Alcor_Micro__Corp._TeckNet-02.mono-fallback | grep -c 'Mute: no')
@@ -24,9 +24,11 @@ do
     pactl list sink-inputs | grep 'Sink Input'| tail -1 | \
         sed 's/Sink Input \#//g' > /dev/shm/"$USER"/i3/app-pulse-id
     api=$(cat /dev/shm/"$USER"/i3/app-pulse-id)
-    cfan=$(sensors | grep fan1 | awk '{print $2}') # CPU_FAN
-    sfan=$(sensors | grep fan5 | awk '{print $2}') # SYS_FAN1
-    echo "| cursor $X $Y | app-pulse-id ${api} | compositor ${compositor} | ${ccmt} | webcam ${wcam} | mic ${wmic} | ${cfan} ${sfan} | ${kaiju} ${orion} ${titan} | ${line}" || exit 1
+    # BIOS order.
+    cpu0=$(sensors | grep fan1 | awk '{print $2}') # CPU_FAN  120mm rear
+    sys1=$(sensors | grep fan3 | awk '{print $2}') # SYS_FAN1 120mm disks
+    sys2=$(sensors | grep fan5 | awk '{print $2}') # SYS_FAN2 80mm  cooler
+    echo "| cursor $X $Y | app-pulse-id ${api} | compositor ${compositor} | ${ccmt} | webcam ${wcam} | mic ${wmic} | ${cpu0} ${sys1} ${sys2}| ${kaiju} ${orion} ${titan} | ${line}" || exit 1
 done
 
 #

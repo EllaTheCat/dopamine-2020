@@ -84,7 +84,7 @@ restarted: restart
 # It no longer necessary to run this script by hand after running
 # 'make' but the automatic restart rules are "better safe than sorry"
 # such that you may prefer to disable them to avoid visual disturbance
-# upon restart after any config change, even a bindsym, which is
+# upon restartafter any config change, even a bindsym, which is
 # overkill. I intend to write better rules.
 #
 # Should discretionary manual invocation be your preference, comment
@@ -294,7 +294,7 @@ $(I3BIN)/i3-status: \
 	$(I3SCRIPTS)/i3-status \
 	$(I3SCRIPTS)/i3-status.log
 	@install -m $(EXEMODE) $(I3SCRIPTS)/i3-status $(I3BIN)
-	@touch restarted
+	@touch restart
 
 $(I3SCRIPTS)/i3-status.log: $(I3SCRIPTS)/i3-status
 	@shellcheck $(I3SCRIPTS)/i3-status > $@
