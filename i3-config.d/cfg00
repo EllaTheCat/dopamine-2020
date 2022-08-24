@@ -1,90 +1,153 @@
 # -*- Mode: Shell-script -*-
-#
-# ETCMODE BINDINGS BEGIN HERE.
+#   etc i3 configuration file
+#    etc isn't et cetera, etc is EllaThcat!
 #
 
+# Choose your cursor keys. Default is like 'vi'. Beware binding a key
+# to two operations within a mode. The resulting cursor keypad is the
+# only one.
+set $h h
+set $j j
+set $k k
+set $l l  # or semicolon or right arrow or ctrl-F
+
+# Each output is associated with a letter, the first three letters are
+# {z,x,c}.xc Defining three names.  The values shewn here were provided by
+# 'xrandr' on my machine.
+set $zop HDMI2
+set $xop HDMI1
+set $cop VGA1
+
+# On-screen help popup.
+set $help exec --no-startup-id /usr/local/bin/i3help -f ~/.i3/this
+
+# Dismiss all objects in all workspaces on the specified output.
+set $killzop $i3configbash "kill" $zop
+set $killxop $i3configbash "kill" $xop
+set $killcop $i3configbash "kill" $cop
+
+# BINDINGS DEFINITIONS BEGIN HERE.
 
 mode "kill - space to cancel" {
-
-    bindsym q $default, kill;
-    bindsym w [floating] $default, kill;
-    bindsym space $default
+    # Dismiss the focused object.
+    bindsym q kill, mode "default"
+    # Dismiss ALL floating objects.
+    bindsym f [floating] kill, mode "default"
+    # Dismiss all objects in the current workspace.
+    bindsym w [workspace="__focused__"] kill, mode "default"
+    # Dismiss all objects in the specifed output.
+    bindsym z $killoutput $zop, mode "default"
+    bindsym x $killoutput $xop, mode "default"
+    bindsym c $killoutput $cop, mode "default"
+    # Dismiss the xfce4-panel.
+    bindsym p mode "default", $noetcpanel
+    bindsym space mode "default"
 }
 
 mode "layouts"  {
+    # One nice thing about modes is that a mnemonic exists among the
+    # available keys, e.g. these three have matching initial letters.
     bindsym d layout default
     bindsym s layout stacking
     bindsym t layout tabbed
+
+    # Doh, no obvious mnemonic, f => sdft contiguous => one region.
     bindsym f layout toggle split
 
-    bindsym h $default, focus down, split h, focus up, move down, move left;
-    bindsym v $default, focus right, split v, focus left, move right, move up ;
+    # Pivot bindings. An experiment by EllaTheCat.
+    # With A focused, change the column AB into the r_ow AB.
+    bindsym r mode "default", \
+            focus down, split h, focus up, move down, move left;
+    # With A focused, change the row AB into the c_olumn AB.
+    bindsym c mode "default", \
+            focus right, split v, focus left, move right, move up ;
 
-    bindsym q $default, kill;
-    bindsym w [floating] $default, kill;
-    bindsym space $default
+    bindsym space mode "default"
 }
 
 mode "f_ocus - m_ove r_esize" {
-    bindsym h focus left
-    bindsym j focus down
-    bindsym k focus up
-    bindsym l focus right
+    bindsym $h focus left
+    bindsym $j focus down
+    bindsym $k focus up
+    bindsym $l focus right
 
     bindsym a focus parent # adult
     bindsym s focus child  # son
     bindsym d focus child  # daughter
+    bindsym p focus parent # parent
+    bindsym o focus child  # offspring
 
-    bindsym u $default, [urgent=latest] focus
+    bindsym u mode "default", [urgent=latest] focus
+
+    bindsym f mode "default", focus mode_toggle;
 
     bindsym m mode "m_ove - r_esize f_ocus"
     bindsym r mode "r_esize - f_ocus m_ove"
 
     bindsym grave mode "etcmode"
-    bindcode   51 mode "etcmode"
-    bindsym space $default
+    bindsym space mode "default"
 }
 
 mode "m_ove - r_esize f_ocus" {
-    bindsym h move left
-    bindsym j move down
-    bindsym k move up
-    bindsym l move right
+    bindsym $h move left
+    bindsym $j move down
+    bindsym $k move up
+    bindsym $l move right
 
     bindsym f mode "f_ocus - m_ove r_esize"
     bindsym r mode "r_esize - f_ocus m_ove"
 
     bindsym grave mode "etcmode"
-    bindcode   51 mode "etcmode"
-    bindsym space $default
+    bindsym space mode "default"
 }
 
 mode "r_esize - f_ocus m_ove" {
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
+    bindsym $h resize shrink width 10 px or 10 ppt
+    bindsym $j resize grow height 10 px or 10 ppt
+    bindsym $k resize shrink height 10 px or 10 ppt
+    bindsym $l resize grow width 10 px or 10 ppt
 
     bindsym f mode "f_ocus - m_ove r_esize"
     bindsym m mode "m_ove - r_esize f_ocus"
 
     bindsym grave mode "etcmode"
-    bindcode   51 mode "etcmode"
-    bindsym space $default
+    bindsym space mode "default"
+}
+
+mode "output z" {
+    bindsym m mode "default", move workspace to output $zop
+    bindsym $j workspace prev_on_output
+    bindsym $k workspace next_on_output
+    bindsym space mode "default"
+}
+mode "output x" {
+    bindsym m mode "default", move workspace to output $xop
+    bindsym $j workspace prev_on_output
+    bindsym $k workspace next_on_output
+    bindsym space mode "default"
+}
+mode "output c" {
+    bindsym m mode "default", move workspace to output $cop
+    bindsym $j workspace prev_on_output
+    bindsym $k workspace next_on_output
+    bindsym space mode "default"
 }
 
 mode "workspace" {
-    bindsym h workspace prev
-    bindsym j workspace prev_on_output
-    bindsym k workspace next_on_output
-    bindsym l workspace next
+    bindsym $h workspace prev
+    bindsym $j workspace prev_on_output
+    bindsym $k workspace next_on_output
+    bindsym $l workspace next
 
-    bindsym z $default, move workspace to output $lmon
-    bindsym x $default, move workspace to output $cmon
-    bindsym c $default, move workspace to output $rmon
+    # This is unusual syntax but it works for me.
+    bindsym z mode "output z"
+    bindsym x mode "output x"
+    bindsym c mode "output c"
 
+    # Prepare to move a 2 digit workspace 10 to 99.
     bindsym w mode "move_workspace"
 
+    # 1st digit of a 2 digit workspace 10 to 99 to be focused.
     bindsym 1 mode ws1
     bindsym 2 mode ws2
     bindsym 3 mode ws3
@@ -96,27 +159,27 @@ mode "workspace" {
     bindsym 9 mode ws9
 
     # (R)ename a workspace.
-    bindsym r $default, exec --no-startup-id i3-input -f $i3inputfont -l 2 \
+    bindsym r mode "default", exec --no-startup-id i3-input -f $i3inputfont -l 2 \
             -P '(rename this workspace to): ' \
             -F 'rename workspace to "%s"'
 
     # Move [f]ocused (thing:container,window) to a workspace.
-    bindsym f $default, exec --no-startup-id i3-input -f $i3inputfont -l 2 \
+    bindsym f mode "default", exec --no-startup-id i3-input -f $i3inputfont -l 2 \
             -P '(move focused to workspace): ' \
             -F 'move focused to workspace "%s"'
 
     # (V)isit a workspace. If the workspace does not exist beforehand
     # it is created, if it already exists, it is focused.
-    bindsym v $default, exec --no-startup-id i3-input -f $i3inputfont -l 2 \
+    bindsym v mode "default", exec --no-startup-id i3-input -f $i3inputfont -l 2 \
          -P '(workspace): ' -F 'workspace "%s"'
 
     bindsym grave mode "etcmode"
-    bindcode   51 mode "etcmode"
-    bindsym space $default
+    bindsym space mode "default"
 }
 
 mode "move workspace" {
-    bindsym 0 mode cws0
+    # 1st digit of a 2 digit workspace 10 to 99 to be moved.
+    # 2nd digit is in etc's "dopamine-2020" repo file "cfg03".
     bindsym 1 mode cws1
     bindsym 2 mode cws2
     bindsym 3 mode cws3
@@ -128,48 +191,35 @@ mode "move workspace" {
     bindsym 9 mode cws9
 
     bindsym grave mode "etcmode"
-    bindcode   51 mode "etcmode"
-    bindsym space $default
+    bindsym space mode "default"
 }
 
 mode "screen" {
     bindsym f floating disable, toggle fullscreen;
     bindsym g floating disable, toggle fullscreen global;
 
-    bindsym --release b $default, \
+    bindsym --release b mode "default", \
             exec --no-startup-id xset dpms force off;
 
     bindsym grave mode "etcmode"
-    bindcode   51 mode "etcmode"
-    bindsym space $default
+    bindsym space mode "default"
 }
 
-# xfce4 is a popular DE amongst i3 users.
-set $etcterminal exec --no-startup-id /usr/bin/xfce4-terminal; -T $etctitlebar
-set $etctitlebar "xfce4-terminal"
-set $etcpanel exec --no-startup-id xfce4-panel --disable-wm-check;
-set $noetcpanel exec /usr/bin/killall xfce4-panel
-
+#
+#
+#
 mode "etcmode" {
 
-    bindsym t $default, split h, $etcterminal;
-    bindsym y $default, split v, $etcterminal;
-    bindsym p $default, $etcpanel
-    bindsym o $default, $noetcpanel
+    bindsym q mode "kill - space to cancel";
 
-    bindsym q $default, mode "kill - space to cancel";
-    bindsym a $default, [floating] mode "kill - space to cancel";
+    bindsym t mode "default", split h, $etcterminal;
+    bindsym y mode "default", split v, $etcterminal;
+    bindsym p mode "default", $etcpanel
 
-    bindsym d $default, exec dmenu_run
+    bindsym d mode "default", exec dmenu_run
 
-    bindsym b $default, split h
-    bindsym v $default, split v
-
-    bindsym comma $default, \
-            floating enable, resize set 30 ppt 30 ppt, move position center;
-    bindsym period $default, \
-            floating enable, resize set 60 ppt 60 ppt, move position center;
-    bindsym slash $default, floating toggle;
+    bindsym b mode "default", split h
+    bindsym v mode "default", split v
 
     bindsym f mode "f_ocus - m_ove r_esize"
     bindsym m mode "m_ove - r_esize f_ocus"
@@ -179,20 +229,49 @@ mode "etcmode" {
     bindsym s mode "screen"
     bindsym w mode "workspace"
 
-    # Press once to visit the mode, press again to self-insert once.
-    bindsym grave $default, exec xdotool key grave;
-    bindcode   51 $default, exec xdotool key backslash;
-    # For consistency over efficiency.
-    bindsym space $default
+    # Toggle a window between being tiled and being floating, with
+    # xywh options for the tidy-minded.
+    bindsym f mode "default", floating enable, \
+            resize set 30 ppt 30 ppt, move position center;
+    bindsym g mode "default", floating enable, \
+            resize set 60 ppt 60 ppt, move position center;
+    bindsym x mode "default", floating toggle;
+
+    # Surround the cursor with a circular red throbbing thing.
+    bindsym c mode "default", exec --no-startup-id xfce4-find-cursor
+    # Cheat sheet for bindings should be at the top-level.
+    # https://github.com/glennular/i3help
+    bindsym i mode "default", $help;
+    # The exemplary i3 user guide!
+    bindsym u exec --no-startup-id \
+            xdg-open https://i3wm.org/docs/userguide.html
+
+    # This binding must be provided in all modes except default.
+    bindsym space mode "default"
 }
-# On a PC105 keyboard the accent grave key is to the left of the '1'
-# key and the key with code 51 is to the left of the Return key and
-# just above the shift key on the right.
+# On a PC105 keyboard the "grave" key is to the left of the '1'
+# key. Self-inserts when the mode is active.
 bindsym grave mode "etcmode"
-bindcode   51 mode "etcmode"
-
-
 
 #
-# ETCMODE BINDINGS END HERE.
+#
+#
+mode "etcsays" {
+    bindsym space mode "default"
+}
+# On a PC 105 keyboard the key with code 94 is in between the left
+# Shift key and the 'z' key. Self-inserts when the mode is active.
+bindcode 94 mode "etcsays"
+
+# DEPRECATED_BEGIN
+
+# Commands to respectively invoke and kill a compositor which must be
+# OFF by default on Ubuntu 20.04 LTS for the Ubuntu Software Updater.
+set $compositor exec --no-startup-id compton -b --config ~/.config/compton.conf
+set $nocompositor exec --no-startup-id killall compton
+
+# DEPRECATED_ENDS
+
+#
+# BINDINGS DEFINITIONS END HERE.
 #
